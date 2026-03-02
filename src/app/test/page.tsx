@@ -108,6 +108,19 @@ function HomeScreen({ onStart }: { onStart: () => void }) {
 
         </motion.div>
 
+      {/* Product Hunt badge: top-left */}
+      <div className="fixed top-3 left-4 z-50">
+        <a href="https://www.producthunt.com/posts/how-claude-code-are-you?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-how-claude-code-are-you" target="_blank" rel="noopener noreferrer">
+          <img
+            src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_slug=how-claude-code-are-you&theme=light"
+            alt="How Claude Code Are You? - Featured on Product Hunt"
+            style={{ width: "180px", height: "40px" }}
+            width="180"
+            height="40"
+          />
+        </a>
+      </div>
+
       {/* Credit: top-right on desktop, centered row below content on mobile */}
       <div className="fixed top-0 left-0 right-0 z-50 flex justify-center sm:justify-end px-4 py-3 pointer-events-none">
         <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer"
