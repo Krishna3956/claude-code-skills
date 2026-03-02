@@ -201,12 +201,22 @@ function ResultContent() {
           style={{ color: "var(--v5-text-tertiary)" }}>
           &larr; Play Again
         </Link>
+
+        {/* Credit: inline below Play Again on mobile only */}
+        <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer"
+          className="flex sm:hidden items-center gap-1.5 mt-4 transition-opacity hover:opacity-80"
+          style={{ textDecoration: "none" }}>
+          <span style={{ color: "var(--v5-text-tertiary)", fontSize: "13px" }}>Made with</span>
+          <span style={{ color: "var(--v5-accent)", fontSize: "14px" }}>♥</span>
+          <span style={{ color: "var(--v5-text-tertiary)", fontSize: "13px" }}>by</span>
+          <span style={{ color: "var(--v5-accent)", fontSize: "13px", fontWeight: 600 }}>Krishna Goyal</span>
+        </a>
       </motion.div>
 
-      {/* Credit: centered on mobile, top-right on desktop */}
-      <div className="fixed top-0 left-0 right-0 z-50 flex justify-center sm:justify-end px-4 py-3 pointer-events-none">
+      {/* Credit: fixed top-right on desktop only */}
+      <div className="hidden sm:flex fixed top-0 right-0 z-50 px-4 py-3">
         <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer"
-          className="flex items-center gap-1.5 transition-opacity hover:opacity-80 pointer-events-auto"
+          className="flex items-center gap-1.5 transition-opacity hover:opacity-80"
           style={{ textDecoration: "none" }}>
           <span style={{ color: "var(--v5-text-tertiary)", fontSize: "13px" }}>Made with</span>
           <span style={{ color: "var(--v5-accent)", fontSize: "14px" }}>♥</span>
