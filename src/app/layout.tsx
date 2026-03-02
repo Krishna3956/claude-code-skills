@@ -10,18 +10,29 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "How Claude Code Are You?",
   description:
-    "Test your Claude Code knowledge across 7 skill dimensions. 18 questions, 3 minutes, zero signup. Get your spider-web skill profile and shareable score card.",
+    "Test your Claude Code knowledge across 7 skill dimensions. 15 challenges, 6 rounds, ~3 minutes, zero signup. Get your spider-web skill profile and shareable scorecard.",
+  metadataBase: new URL("https://claude-code.vercel.app"),
   openGraph: {
-    title: "How Claude Code Are You?",
+    title: "How well do you know Claude Code?",
     description:
-      "Test your Claude Code skills — from CLAUDE.md to Subagents, Hooks to MCP. 18 questions. 3 minutes. No signup.",
+      "15 challenges. 6 rounds. ~3 minutes. No signup. Test your Claude Code skills and get a shareable scorecard.",
     type: "website",
+    url: "https://claude-code.vercel.app",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "How well do you know Claude Code?",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "How Claude Code Are You?",
+    title: "How well do you know Claude Code?",
     description:
-      "Test your Claude Code skills — 18 questions, 3 minutes, zero signup.",
+      "15 challenges. 6 rounds. ~3 minutes. No signup. Test your Claude Code skills.",
+    images: ["/og-image.png"],
   },
 };
 
