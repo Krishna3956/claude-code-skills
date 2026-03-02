@@ -118,6 +118,23 @@ function HomeScreen({ onStart }: { onStart: () => void }) {
 
         </motion.div>
 
+      {/* Product Hunt badge: top-left on desktop, centered on mobile */}
+      <div className="hidden sm:flex fixed top-0 left-0 z-50 px-4 py-3 pointer-events-none">
+        <a
+          href="https://www.producthunt.com/products/how-claude-code-are-you?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-claude-code-skill-map"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="pointer-events-auto transition-opacity hover:opacity-80"
+        >
+          <img
+            src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1088194&theme=light&t=1772444117435"
+            alt="Claude Code Skill Map - Interactive game that tests how well you know Claude Code | Product Hunt"
+            width="180"
+            height="39"
+          />
+        </a>
+      </div>
+
       {/* Credit: fixed top-right on desktop only */}
       <div className="hidden sm:flex fixed top-0 right-0 z-50 px-4 py-3">
         <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer"
