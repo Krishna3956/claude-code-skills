@@ -4,16 +4,18 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
   async redirects() {
     return [
-      { source: "/", destination: "/v6", permanent: false },
-      { source: "/quiz", destination: "/v6", permanent: false },
-      { source: "/result", destination: "/v6", permanent: false },
-      { source: "/v2", destination: "/v6", permanent: false },
-      { source: "/v3", destination: "/v6", permanent: false },
-      { source: "/v3/results", destination: "/v6", permanent: false },
-      { source: "/v4", destination: "/v6", permanent: false },
-      { source: "/v4/results", destination: "/v6", permanent: false },
-      { source: "/v5", destination: "/v6", permanent: false },
-      { source: "/v5/results", destination: "/v6", permanent: false },
+      { source: "/", destination: "/test", permanent: false },
+      { source: "/quiz", destination: "/test", permanent: false },
+      { source: "/result", destination: "/test", permanent: false },
+      { source: "/v2", destination: "/test", permanent: false },
+      { source: "/v3", destination: "/test", permanent: false },
+      { source: "/v3/results", destination: "/test", permanent: false },
+      { source: "/v4", destination: "/test", permanent: false },
+      { source: "/v4/results", destination: "/test", permanent: false },
+      { source: "/v5", destination: "/test", permanent: false },
+      { source: "/v5/results", destination: "/test", permanent: false },
+      { source: "/v6", destination: "/test", permanent: false },
+      { source: "/v6/results", destination: "/test", permanent: false },
     ];
   },
 };
