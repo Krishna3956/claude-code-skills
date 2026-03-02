@@ -23,7 +23,7 @@ const LINKEDIN_URL = "https://www.linkedin.com/in/krishnaa-goyal/";
 // ────────────────────────────────────────────────────────────
 function HomeScreen({ onStart }: { onStart: () => void }) {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center px-4">
+    <div className="flex min-h-screen flex-col items-center justify-center px-4 py-12">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
