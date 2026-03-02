@@ -31,7 +31,7 @@ function ResultContent() {
   }
 
   const archetype = getArchetype(result.overallScore);
-  const siteUrl = typeof window !== "undefined" ? `${window.location.origin}/test` : "";
+  const siteUrl = "https://claude-code.vercel.app";
 
   const shareMessage = `I just took "How well do you know Claude Code?" and scored ${result.overallScore}/100 — that makes me a ${archetype.title}!\n\nThink you can beat my score? 15 challenges, 6 rounds, no coding required.\n\nTry it yourself 👇`;
 
@@ -158,7 +158,7 @@ function ResultContent() {
           <div className="px-5 py-3 flex items-center justify-center"
             style={{ borderTop: "1px solid #292524" }}>
             <span style={{ color: "#78716C", fontSize: "9px" }}>
-              howclaudecode.dev
+              claude-code.vercel.app
             </span>
           </div>
         </div>
