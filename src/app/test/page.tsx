@@ -14,6 +14,7 @@ import {
 } from "@/data/v4challenges";
 import { ChallengeResult, calculateV2Results } from "@/lib/v2scoring";
 import { encodeResult } from "@/lib/scoring";
+import { track } from "@vercel/analytics";
 
 const LINKEDIN_URL = "https://www.linkedin.com/in/krishnaa-goyal/";
 
@@ -91,7 +92,7 @@ function HomeScreen({ onStart }: { onStart: () => void }) {
           </div>
 
           <button
-            onClick={onStart}
+            onClick={() => { track("quiz_started"); onStart(); }}
             className="w-full py-4 rounded-xl text-base font-semibold transition-all active:scale-[0.98]"
             style={{
               background: "var(--v5-accent)",
@@ -190,12 +191,12 @@ function TruthOrMythCard({ challenge, onAnswer }: { challenge: TruthOrMythChalle
         </p>
       </div>
       <div className="flex gap-3 w-full">
-        <button onClick={() => handlePick(true)} disabled={answered !== null}
+        <button onClick={() => { track("answer_truth_myth", { choice: "truth" }); handlePick(true); }} disabled={answered !== null}
           className="flex-1 py-4 rounded-xl text-base font-semibold transition-all active:scale-[0.97]"
           style={btnStyle(true)}>
           Truth
         </button>
-        <button onClick={() => handlePick(false)} disabled={answered !== null}
+        <button onClick={() => { track("answer_truth_myth", { choice: "myth" }); handlePick(false); }} disabled={answered !== null}
           className="flex-1 py-4 rounded-xl text-base font-semibold transition-all active:scale-[0.97]"
           style={btnStyle(false)}>
           Myth
@@ -233,7 +234,7 @@ function ThisOrThatCard({ challenge, onAnswer }: { challenge: ThisOrThatChalleng
         <p className="text-base sm:text-lg leading-relaxed" style={{ color: "var(--v5-text)" }}>{challenge.scenario}</p>
       </div>
       <div className="flex gap-3 w-full">
-        <button onClick={() => handlePick("A")} disabled={picked !== null}
+        <button onClick={() => { track("answer_this_or_that", { choice: "A" }); handlePick("A"); }} disabled={picked !== null}
           className="flex-1 py-5 px-3 rounded-xl transition-all active:scale-[0.97]"
           style={optStyle("A")}>
           <span className="text-sm sm:text-base font-medium">{challenge.optionA}</span>
@@ -241,7 +242,7 @@ function ThisOrThatCard({ challenge, onAnswer }: { challenge: ThisOrThatChalleng
         <div className="flex items-center px-1">
           <span style={{ color: "var(--v5-text-tertiary)", fontSize: "10px", fontWeight: 700, textTransform: "uppercase" as const }}>or</span>
         </div>
-        <button onClick={() => handlePick("B")} disabled={picked !== null}
+        <button onClick={() => { track("answer_this_or_that", { choice: "B" }); handlePick("B"); }} disabled={picked !== null}
           className="flex-1 py-5 px-3 rounded-xl transition-all active:scale-[0.97]"
           style={optStyle("B")}>
           <span className="text-sm sm:text-base font-medium">{challenge.optionB}</span>
@@ -280,7 +281,7 @@ function QuickPickCard({ challenge, onAnswer }: { challenge: QuickPickChallenge;
       </div>
       <div className="flex flex-col gap-2.5 w-full">
         {challenge.options.map((opt: string) => (
-          <button key={opt} onClick={() => handlePick(opt)} disabled={picked !== null}
+          <button key={opt} onClick={() => { track("answer_quick_pick", { choice: opt }); handlePick(opt); }} disabled={picked !== null}
             className="w-full px-5 py-4 rounded-xl text-left text-sm font-medium transition-all active:scale-[0.98]"
             style={optStyle(opt)}>
             {opt}
@@ -360,7 +361,7 @@ function SpeedPickCard({ challenge, onAnswer }: { challenge: SpeedPickChallenge;
       <p className="text-base text-center" style={{ color: "var(--v5-text-secondary)" }}>{challenge.prompt}</p>
       <div className="flex flex-wrap gap-2.5 justify-center w-full">
         {allItems.current.map((item: string) => (
-          <button key={item} onClick={() => toggleItem(item)} disabled={done}
+          <button key={item} onClick={() => { track("answer_speed_pick", { item }); toggleItem(item); }} disabled={done}
             className="px-4 py-3 rounded-xl text-sm font-medium transition-all active:scale-95"
             style={chipStyle(item)}>
             {item}
@@ -368,7 +369,7 @@ function SpeedPickCard({ challenge, onAnswer }: { challenge: SpeedPickChallenge;
         ))}
       </div>
       {!done && (
-        <button onClick={finishRound}
+        <button onClick={() => { track("speed_pick_lock_in"); finishRound(); }}
           className="mt-1 px-8 py-2.5 rounded-xl text-sm font-bold transition-all active:scale-95"
           style={{ background: "var(--v5-text)", color: "var(--v5-bg)" }}>
           Lock In
@@ -414,7 +415,7 @@ function OddOneOutCard({ challenge, onAnswer }: { challenge: OddOneOutChallenge;
       </div>
       <div className="grid grid-cols-2 gap-3 w-full">
         {shuffled.current.map((item: string) => (
-          <button key={item} onClick={() => handlePick(item)} disabled={picked !== null}
+          <button key={item} onClick={() => { track("answer_odd_one_out", { choice: item }); handlePick(item); }} disabled={picked !== null}
             className="py-5 px-4 rounded-xl text-sm font-medium text-center transition-all active:scale-[0.97]"
             style={itemStyle(item)}>
             {item}
@@ -537,7 +538,7 @@ export default function V6Page() {
 
       {answered && (
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="mt-6">
-          <button onClick={handleNext}
+          <button onClick={() => { track(currentIndex < total - 1 ? "next_question" : "see_results", { questionIndex: currentIndex }); handleNext(); }}
             className="inline-flex items-center gap-2 rounded-xl px-8 py-3 text-sm font-semibold transition-all active:scale-[0.97]"
             style={{ background: "var(--v5-accent)", color: "#FFFFFF" }}>
             {currentIndex < total - 1 ? "Next" : "See Results"}

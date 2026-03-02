@@ -8,6 +8,7 @@ import { getArchetype } from "@/data/archetypes";
 import RadarChart from "@/components/RadarChart";
 import { motion } from "framer-motion";
 import { toPng } from "html-to-image";
+import { track } from "@vercel/analytics";
 
 const LINKEDIN_URL = "https://www.linkedin.com/in/krishnaa-goyal/";
 
@@ -44,6 +45,7 @@ function ResultContent() {
 
   const downloadCard = async () => {
     if (!cardRef.current || downloading) return;
+    track("scorecard_downloaded", { score: result.overallScore, archetype: archetype.title });
     setDownloading(true);
     if (saveBtnRef.current) saveBtnRef.current.style.display = "none";
     try {
@@ -170,6 +172,7 @@ function ResultContent() {
               href={twitterUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => track("share_x", { score: result.overallScore, archetype: archetype.title })}
               className="flex-1 flex items-center justify-center gap-2.5 py-3 rounded-xl text-sm font-semibold transition-all active:scale-[0.98]"
               style={{ background: "#1C1917", color: "#FFFFFF" }}
             >
@@ -182,6 +185,7 @@ function ResultContent() {
               href={linkedinUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => track("share_linkedin", { score: result.overallScore, archetype: archetype.title })}
               className="flex-1 flex items-center justify-center gap-2.5 py-3 rounded-xl text-sm font-semibold transition-all active:scale-[0.98]"
               style={{ background: "#0A66C2", color: "#FFFFFF" }}
             >
@@ -193,7 +197,7 @@ function ResultContent() {
           </div>
         </div>
 
-        <Link href="/test" className="text-xs transition-colors mt-1 flex items-center gap-1"
+        <Link href="/test" onClick={() => track("play_again", { score: result.overallScore })} className="text-xs transition-colors mt-1 flex items-center gap-1"
           style={{ color: "var(--v5-text-tertiary)" }}>
           &larr; Play Again
         </Link>
