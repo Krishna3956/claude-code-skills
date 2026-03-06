@@ -12,13 +12,13 @@ export const metadata: Metadata = {
   title: "How Claude Code Are You?",
   description:
     "Test your Claude Code knowledge across 7 skill dimensions. 15 challenges, 6 rounds, ~3 minutes, zero signup. Get your spider-web skill profile and shareable scorecard.",
-  metadataBase: new URL("https://claude-code.vercel.app"),
+  metadataBase: new URL("https://www.howwellyouknow.com"),
   openGraph: {
     title: "How well do you know Claude Code?",
     description:
       "15 challenges. 6 rounds. ~3 minutes. No signup. Test your Claude Code skills and get a shareable scorecard.",
     type: "website",
-    url: "https://claude-code.vercel.app",
+    url: "https://www.howwellyouknow.com/play/claude-code",
     images: [
       {
         url: "/og-image.png",

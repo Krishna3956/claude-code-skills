@@ -496,7 +496,7 @@ export default function V6Page() {
     } else {
       const finalResult = calculateV2Results(results);
       const encoded = encodeResult(finalResult);
-      router.push(`/test/results?${encoded}`);
+      router.push(`/play/claude-code/results?${encoded}`);
     }
   }, [currentIndex, total, results, router]);
 

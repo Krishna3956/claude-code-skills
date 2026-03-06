@@ -1,13 +1,14 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { Suspense, useRef, useState } from "react";
+import { Suspense, useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import { decodeResult } from "@/lib/scoring";
 import { getArchetype } from "@/data/archetypes";
 import RadarChart from "@/components/RadarChart";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { toPng } from "html-to-image";
+import { track } from "@vercel/analytics";
 
 const LINKEDIN_URL = "https://www.linkedin.com/in/krishnaa-goyal/";
 
@@ -16,13 +17,14 @@ function ResultContent() {
   const result = decodeResult(searchParams);
   const cardRef = useRef<HTMLDivElement>(null);
   const [downloading, setDownloading] = useState(false);
+  const [showPHPopup, setShowPHPopup] = useState(false);
 
   if (!result) {
     return (
       <div className="flex min-h-dvh items-center justify-center px-4">
         <div className="text-center">
           <p style={{ color: "var(--v5-text-secondary)" }} className="mb-4">No results found.</p>
-          <Link href="/v6" style={{ color: "var(--v5-accent)" }} className="hover:underline text-sm">
+          <Link href="/play/claude-code" style={{ color: "var(--v5-accent)" }} className="hover:underline text-sm">
             Take the test &rarr;
           </Link>
         </div>
@@ -31,7 +33,7 @@ function ResultContent() {
   }
 
   const archetype = getArchetype(result.overallScore);
-  const siteUrl = typeof window !== "undefined" ? `${window.location.origin}/v6` : "";
+  const siteUrl = "https://www.howwellyouknow.com/play/claude-code";
 
   const shareMessage = `I just took "How well do you know Claude Code?" and scored ${result.overallScore}/100 — that makes me a ${archetype.title}!\n\nThink you can beat my score? 15 challenges, 6 rounds, no coding required.\n\nTry it yourself 👇`;
 
@@ -44,6 +46,7 @@ function ResultContent() {
 
   const downloadCard = async () => {
     if (!cardRef.current || downloading) return;
+    track("scorecard_downloaded", { score: result.overallScore, archetype: archetype.title });
     setDownloading(true);
     if (saveBtnRef.current) saveBtnRef.current.style.display = "none";
     try {
@@ -61,6 +64,13 @@ function ResultContent() {
     if (saveBtnRef.current) saveBtnRef.current.style.display = "";
     setDownloading(false);
   };
+
+  useEffect(() => {
+    const dismissed = sessionStorage.getItem("ph_popup_dismissed");
+    if (dismissed) return;
+    const timer = setTimeout(() => setShowPHPopup(true), 3000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="flex min-h-dvh flex-col items-center px-4 py-8">
@@ -158,7 +168,7 @@ function ResultContent() {
           <div className="px-5 py-3 flex items-center justify-center"
             style={{ borderTop: "1px solid #292524" }}>
             <span style={{ color: "#78716C", fontSize: "9px" }}>
-              howclaudecode.dev
+              howwellyouknow.com
             </span>
           </div>
         </div>
@@ -170,6 +180,7 @@ function ResultContent() {
               href={twitterUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => track("share_x", { score: result.overallScore, archetype: archetype.title })}
               className="flex-1 flex items-center justify-center gap-2.5 py-3 rounded-xl text-sm font-semibold transition-all active:scale-[0.98]"
               style={{ background: "#1C1917", color: "#FFFFFF" }}
             >
@@ -182,6 +193,7 @@ function ResultContent() {
               href={linkedinUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => track("share_linkedin", { score: result.overallScore, archetype: archetype.title })}
               className="flex-1 flex items-center justify-center gap-2.5 py-3 rounded-xl text-sm font-semibold transition-all active:scale-[0.98]"
               style={{ background: "#0A66C2", color: "#FFFFFF" }}
             >
@@ -193,10 +205,20 @@ function ResultContent() {
           </div>
         </div>
 
-        <Link href="/v6" className="text-xs transition-colors mt-1 flex items-center gap-1"
+        <Link href="/play/claude-code" onClick={() => track("play_again", { score: result.overallScore })} className="text-xs transition-colors mt-1 flex items-center gap-1"
           style={{ color: "var(--v5-text-tertiary)" }}>
           &larr; Play Again
         </Link>
+
+        {/* Credit: inline below Play Again on mobile only */}
+        <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer"
+          className="flex sm:hidden items-center gap-1.5 mt-4 transition-opacity hover:opacity-80"
+          style={{ textDecoration: "none" }}>
+          <span style={{ color: "var(--v5-text-tertiary)", fontSize: "13px" }}>Made with</span>
+          <span style={{ color: "var(--v5-accent)", fontSize: "14px" }}>♥</span>
+          <span style={{ color: "var(--v5-text-tertiary)", fontSize: "13px" }}>by</span>
+          <span style={{ color: "var(--v5-accent)", fontSize: "13px", fontWeight: 600 }}>Krishna Goyal</span>
+        </a>
       </motion.div>
 
       {/* Product Hunt badge: top-left on desktop, centered on mobile */}
@@ -216,10 +238,10 @@ function ResultContent() {
         </a>
       </div>
 
-      {/* Credit: top-right on desktop, below PH badge on mobile */}
-      <div className="fixed top-0 left-0 right-0 z-50 flex justify-center sm:justify-end px-4 py-3 pointer-events-none" style={{ top: "60px" }}>
+      {/* Credit: fixed top-right on desktop only */}
+      <div className="hidden sm:flex fixed top-0 right-0 z-50 px-4 py-3">
         <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer"
-          className="flex items-center gap-1.5 transition-opacity hover:opacity-80 pointer-events-auto"
+          className="flex items-center gap-1.5 transition-opacity hover:opacity-80"
           style={{ textDecoration: "none" }}>
           <span style={{ color: "var(--v5-text-tertiary)", fontSize: "13px" }}>Made with</span>
           <span style={{ color: "var(--v5-accent)", fontSize: "14px" }}>♥</span>
@@ -227,6 +249,95 @@ function ResultContent() {
           <span style={{ color: "var(--v5-accent)", fontSize: "13px", fontWeight: 600 }}>Krishna Goyal</span>
         </a>
       </div>
+
+      {/* Product Hunt upvote popup */}
+      <AnimatePresence>
+        {showPHPopup && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center px-4"
+            style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(4px)" }}
+            onClick={() => {
+              setShowPHPopup(false);
+              sessionStorage.setItem("ph_popup_dismissed", "1");
+            }}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+              className="w-full max-w-sm rounded-2xl p-6 text-center relative"
+              style={{
+                background: "var(--v5-bg)",
+                border: "1px solid var(--v5-border)",
+                boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
+              }}
+            >
+              <button
+                onClick={() => {
+                  setShowPHPopup(false);
+                  sessionStorage.setItem("ph_popup_dismissed", "1");
+                }}
+                className="absolute top-3 right-3 w-7 h-7 flex items-center justify-center rounded-full transition-colors"
+                style={{ color: "var(--v5-text-tertiary)", background: "var(--v5-bg-surface-light)" }}
+              >
+                &times;
+              </button>
+
+              <p style={{ fontSize: "28px", lineHeight: 1 }} className="mb-3">🧡</p>
+
+              <h3
+                style={{
+                  fontFamily: "var(--font-v5-serif), ui-serif, Georgia, serif",
+                  fontSize: "20px",
+                  color: "var(--v5-text)",
+                  marginBottom: "8px",
+                }}
+              >
+                Enjoyed the quiz?
+              </h3>
+
+              <p style={{ color: "var(--v5-text-secondary)", fontSize: "13px", lineHeight: 1.6, marginBottom: "20px" }}>
+                This was a weekend project built for fun. If you liked it, an upvote on Product Hunt would mean a lot.
+              </p>
+
+              <a
+                href="https://www.producthunt.com/products/how-claude-code-are-you?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-claude-code-skill-map"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2.5 w-full py-3 rounded-xl text-sm font-semibold transition-all active:scale-[0.98]"
+                style={{ background: "#DA552F", color: "#FFFFFF" }}
+                onClick={() => {
+                  track("ph_upvote_click", { score: result.overallScore });
+                  sessionStorage.setItem("ph_popup_dismissed", "1");
+                  setShowPHPopup(false);
+                }}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 19V5" />
+                  <path d="M5 12l7-7 7 7" />
+                </svg>
+                Upvote on Product Hunt
+              </a>
+
+              <button
+                onClick={() => {
+                  setShowPHPopup(false);
+                  sessionStorage.setItem("ph_popup_dismissed", "1");
+                }}
+                className="mt-3 text-xs transition-colors"
+                style={{ color: "var(--v5-text-tertiary)" }}
+              >
+                Maybe later
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
