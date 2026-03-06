@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Webinar Platforms — User Journey Comparison</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #09090b;
+    --surface: #111114;
+    --surface2: #18181c;
+    --border: #27272a;
+    --text: #fafafa;
+    --text2: #a1a1aa;
+    --text3: #71717a;
+    --accent: #8b5cf6;
+    --accent2: #c4b5fd;
+    --green: #22c55e;
+    --red: #ef4444;
+    --orange: #f59e0b;
+    --blue: #3b82f6;
+    --pink: #ec4899;
+    --cyan: #06b6d4;
+    --contrast-color: #8b5cf6;
+    --welcome-color: #f59e0b;
+    --livestorm-color: #3b82f6;
+    --demio-color: #22c55e;
+    --zoom-color: #2563eb;
+    --hopin-color: #06b6d4;
+  }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+  /* Header */
+  .header {
+    text-align: center;
+    padding: 5rem 2rem 3rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .header h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  .header p { color: var(--text2); font-size: 1.1rem; }
+
+  /* Toggle */
+  .toggle-bar {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(9,9,11,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .toggle-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text2);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .toggle-btn:hover { border-color: var(--text3); color: var(--text); }
+  .toggle-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+
+  /* Main content */
+  .container { max-width: 1300px; margin: 0 auto; padding: 2rem; }
+
+  /* Platform selector row */
+  .platform-row {
+    display: grid;
+    grid-template-columns: 180px repeat(6, 1fr);
+    gap: 0;
+    margin-bottom: 0;
+    position: sticky;
+    top: 52px;
+    z-index: 99;
+    background: var(--bg);
+    border-bottom: 2px solid var(--border);
+  }
+  .platform-header {
+    padding: 1rem 0.75rem;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+  .platform-header .p-icon { font-size: 1.5rem; display: block; margin-bottom: 0.25rem; }
+  .platform-header .p-meta { font-size: 0.65rem; color: var(--text3); font-weight: 500; margin-top: 0.15rem; }
+  .stage-label-header { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text3); display: flex; align-items: center; }
+
+  /* Stage rows */
+  .stage-section { margin-bottom: 0; }
+  .stage-row {
+    display: grid;
+    grid-template-columns: 180px repeat(6, 1fr);
+    gap: 0;
+    border-bottom: 1px solid rgba(39,39,42,0.5);
+  }
+  .stage-row:hover { background: rgba(139,92,246,0.03); }
+  .stage-label {
+    padding: 1.25rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid var(--border);
+  }
+  .stage-label .s-num {
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text3);
+    margin-bottom: 0.15rem;
+  }
+  .stage-label .s-name { font-size: 0.9rem; font-weight: 700; }
+  .stage-label .s-goal { font-size: 0.7rem; color: var(--text3); margin-top: 0.1rem; }
+
+  .cell {
+    padding: 1rem 0.75rem;
+    font-size: 0.78rem;
+    color: var(--text2);
+    border-right: 1px solid rgba(39,39,42,0.3);
+    line-height: 1.5;
+  }
+  .cell:last-child { border-right: none; }
+  .cell strong { color: var(--text); font-weight: 600; }
+  .cell .good { color: var(--green); font-weight: 600; }
+  .cell .bad { color: var(--red); font-weight: 600; }
+  .cell .mid { color: var(--orange); font-weight: 600; }
+  .cell .na { color: var(--text3); font-style: italic; }
+
+  /* Friction indicator */
+  .friction {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    margin-top: 0.35rem;
+  }
+  .friction-high { background: rgba(239,68,68,0.15); color: var(--red); }
+  .friction-med { background: rgba(245,158,11,0.15); color: var(--orange); }
+  .friction-low { background: rgba(34,197,94,0.15); color: var(--green); }
+  .friction-none { background: rgba(34,197,94,0.1); color: var(--green); }
+
+  /* Emotion bar */
+  .emotion {
+    display: flex;
+    gap: 0.15rem;
+    margin-top: 0.3rem;
+  }
+  .emo-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  /* Section divider */
+  .section-divider {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    border-top: 2px solid var(--border);
+  }
+  .section-divider .div-label {
+    padding: 0.6rem 1rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent2);
+    grid-column: 1 / -1;
+  }
+
+  /* Summary cards */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .summary-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.75rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .summary-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .sc-contrast::before { background: var(--contrast-color); }
+  .sc-welcome::before { background: var(--welcome-color); }
+  .sc-livestorm::before { background: var(--livestorm-color); }
+  .sc-demio::before { background: var(--demio-color); }
+  .sc-zoom::before { background: var(--zoom-color); }
+  .sc-hopin::before { background: var(--hopin-color); }
+  .summary-card h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.2rem; }
+  .summary-card .sc-sub { font-size: 0.8rem; color: var(--text3); margin-bottom: 1rem; }
+  .summary-card .metric-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+  .metric {
+    background: var(--surface2);
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    text-align: center;
+    min-width: 70px;
+  }
+  .metric .m-val { font-size: 1.1rem; font-weight: 800; }
+  .metric .m-label { font-size: 0.6rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; }
+  .summary-card .takeaway {
+    padding: 0.6rem 0.8rem;
+    background: rgba(139,92,246,0.08);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    font-size: 0.8rem;
+    color: var(--accent2);
+  }
+  .journey-verdict {
+    font-size: 0.8rem;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+  .journey-verdict li {
+    padding: 0.2rem 0;
+    list-style: none;
+    display: flex;
+    gap: 0.4rem;
+  }
+  .journey-verdict li::before { content: '→'; color: var(--accent2); flex-shrink: 0; }
+
+  /* View toggle content */
+  .view-content { display: none; }
+  .view-content.active { display: block; }
+
+  /* Attendee specific */
+  .att-flow {
+    display: flex;
+    gap: 0;
+    align-items: stretch;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+  }
+  .att-platform {
+    min-width: 200px;
+    flex: 1;
+    border-right: 1px solid var(--border);
+  }
+  .att-platform:last-child { border-right: none; }
+  .att-platform-header {
+    padding: 1rem;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    border-bottom: 2px solid var(--border);
+    background: var(--surface2);
+  }
+  .att-step {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid rgba(39,39,42,0.3);
+    font-size: 0.78rem;
+    color: var(--text2);
+    min-height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .att-step strong { color: var(--text); display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.2rem; }
+
+  .footer { text-align: center; padding: 3rem 2rem; color: var(--text3); font-size: 0.8rem; }
+
+  @media (max-width: 1000px) {
+    .stage-row, .platform-row { overflow-x: auto; min-width: 1100px; }
+    .container { overflow-x: auto; }
+    .att-flow { min-width: 1200px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>User Journey<br>Comparison</h1>
+  <p>Side-by-side comparison of the full host and attendee journeys across 6 webinar platforms</p>
+</div>
+
+<div class="toggle-bar">
+  <button class="toggle-btn active" onclick="switchView('host')">🎙️ Host Journey</button>
+  <button class="toggle-btn" onclick="switchView('attendee')">👤 Attendee Journey</button>
+  <button class="toggle-btn" onclick="switchView('summary')">📊 Summary</button>
+</div>
+
+<div class="container">
+
+<!-- ===================== HOST JOURNEY ===================== -->
+<div class="view-content active" id="view-host">
+
+  <!-- Platform headers -->
+  <div class="platform-row">
+    <div class="stage-label-header">Stage</div>
+    <div class="platform-header"><span class="p-icon">⚡</span>Contrast<div class="p-meta">G2: 4.8 · €179/mo</div></div>
+    <div class="platform-header"><span class="p-icon">🎬</span>Welcome<div class="p-meta">G2: 4.7 · $625/mo</div></div>
+    <div class="platform-header"><span class="p-icon">🔄</span>Livestorm<div class="p-meta">G2: 4.4 · $99/mo</div></div>
+    <div class="platform-header"><span class="p-icon">🎯</span>Demio<div class="p-meta">G2: 4.4 · $34/mo</div></div>
+    <div class="platform-header"><span class="p-icon">📹</span>Zoom<div class="p-meta">G2: 4.3 · $79/mo</div></div>
+    <div class="platform-header"><span class="p-icon">🏛️</span>Hopin<div class="p-meta">G2: 4.3 · Custom</div></div>
+  </div>
+
+  <!-- DISCOVERY -->
+  <div class="section-divider"><div class="div-label">Phase 1 — Discovery & Onboarding</div></div>
+
+  <div class="stage-row">
+    <div class="stage-label">
+      <div class="s-num">01</div>
+      <div class="s-name">Discovery</div>
+      <div class="s-goal">How hosts find it</div>
+    </div>
+    <div class="cell"><strong>Sharp niche positioning.</strong> "Webinars for modern software companies." Clean site, strong SaaS social proof.<br><span class="friction friction-none">Zero friction</span></div>
+    <div class="cell"><strong>Premium positioning.</strong> "Webinar Software for Modern Marketer." Webby Award winner. Enterprise case studies.<br><span class="friction friction-none">Zero friction</span></div>
+    <div class="cell"><strong>Broad positioning.</strong> "Video Engagement Platform." Strong SEO. Browser-native messaging.<br><span class="friction friction-low">Low friction</span></div>
+    <div class="cell"><strong>SMB-focused.</strong> "Webinar platform for marketers." Clean site, less brand recognition.<br><span class="friction friction-low">Low friction</span></div>
+    <div class="cell"><strong>Everyone knows Zoom.</strong> Webinar product buried inside broader ecosystem.<br><span class="friction friction-med">Confusing</span></div>
+    <div class="cell"><strong>Identity crisis.</strong> Is it Hopin? RingCentral? Events? Post-acquisition brand confusion.<br><span class="friction friction-high">Brand confusion</span></div>
+  </div>
+
+  <div class="stage-row">
+    <div class="stage-label">
+      <div class="s-num">02</div>
+      <div class="s-name">Signup</div>
+      <div class="s-goal">Time to get access</div>
+    </div>
+    <div class="cell"><span class="good">Free plan, no CC.</span> Instant access. 30 registrants/mo. Unlimited team members.<br><span class="friction friction-none">~1 min</span></div>
+    <div class="cell"><span class="bad">Demo-gated. Sales-led.</span> $625/mo minimum. Must book a call. No self-serve at all.<br><span class="friction friction-high">Days to weeks</span></div>
+    <div class="cell"><span class="mid">Free plan, no CC.</span> But crippled: 20 min limit, 30 contacts. Useless for real events.<br><span class="friction friction-med">~2 min, then hits wall</span></div>
+    <div class="cell"><span class="mid">14-day free trial.</span> 20 attendees, 1hr limit. Time-limited, not usage-limited.<br><span class="friction friction-med">~2 min</span></div>
+    <div class="cell"><span class="bad">Requires Workplace plan + add-on.</span> Can't buy standalone. Complex plan structure.<br><span class="friction friction-high">15-30 min</span></div>
+    <div class="cell"><span class="bad">Custom pricing. Demo-gated.</span> No self-serve. Enterprise sales process.<br><span class="friction friction-high">Days to weeks</span></div>
+  </div>
+
+  <!-- EVENT CREATION -->
+  <div class="section-divider"><div class="div-label">Phase 2 — Event Setup</div></div>
+
+  <div class="stage-row">
+    <div class="stage-label">
+      <div class="s-num">03</div>
+      <div class="s-name">Event Creation</div>
+      <div class="s-goal">How fast to first event</div>
+    </div>
+    <div class="cell"><strong>"2 clicks" philosophy.</strong> Schedule or start instantly. Live or pre-recorded. PDF slides upload + studio control.<br><span class="friction friction-none">~5 min total</span></div>
+    <div class="cell"><strong>Welcome Studio.</strong> Green room, overlays, countdown timers, intro videos, agenda builder. <span class="bad">Steep learning curve.</span><br><span class="friction friction-med">30+ min first time</span></div>
+    <div class="cell"><strong>Easy recurring events.</strong> Automation sequences built-in. Limited templates. No studio equivalent.<br><span class="friction friction-low">~10 min</span></div>
+    <div class="cell"><strong>Flexible setup.</strong> Live, automated, or hybrid. Multi-cam (3 sources). OBS integration.<br><span class="friction friction-low">~10 min</span></div>
+    <div class="cell"><strong>Basic webinar settings.</strong> Registration management. Branding options. Feels like "Zoom Meeting with extra settings."<br><span class="friction friction-med">15-20 min</span></div>
+    <div class="cell"><strong>Multi-venue architecture.</strong> Reception + Stage + Sessions + Expo + Networking. <span class="bad">Overkill for a simple webinar.</span><br><span class="friction friction-high">Hours first time</span></div>
+  </div>
+
+  <div class="stage-row">
+    <div class="stage-label">
+      <div class="s-num">04</div>
+      <div class="s-name">Registration Page</div>
+      <div class="s-goal">How attendees sign up</div>
+    </div>
+    <div class="cell"><span class="good">Beautiful by default.</span> Custom logo, font, colors, backgrounds. Passwordless access. UTM tracking. Embeddable. <span class="bad">Only 2 widget types.</span></div>
+    <div class="cell"><strong>Custom branded pages.</strong> Custom fields. Integrates with HubSpot, Marketo. Standard but solid.</div>
+    <div class="cell"><strong>Custom landing pages.</strong> Embeddable. Good but not differentiated. Standard forms.</div>
+    <div class="cell"><strong>Good templates.</strong> Lead capture fields (name, email, company, role). Embeddable on blogs.</div>
+    <div class="cell"><span class="bad">Looks corporate/generic.</span> Hard to brand beautifully. Approval workflows available.</div>
+    <div class="cell"><strong>Ticketing built-in</strong> (free + paid). Custom fields. Complex ticket configuration.</div>
+  </div>
+
+  <!-- PRE-EVENT -->
+  <div class="section-divider"><div class="div-label">Phase 3 — Pre-Event</div></div>
+
+  <div class="stage-row">
+    <div class="stage-label">
+      <div class="s-num">05</div>
+      <div class="s-name">Email Automation</div>
+      <div class="s-goal">Reminders & follow-ups</div>
+    </div>
+    <div class="cell"><strong>Auto reminders.</strong> Confirmation + reminder emails. Email editor exists but not deeply customizable.</div>
+    <div class="cell"><strong>Auto emails.</strong> Integrated with marketing automation (HubSpot, Marketo).</div>
+    <div class="cell"><span class="good">Best-in-class automation.</span> Immediate confirm → 1hr reminder → post-event replay. Built-in, no Zapier needed.</div>
+    <div class="cell"><strong>Customizable notifications.</strong> Standard email sequence. Nothing remarkable.</div>
+    <div class="cell"><strong>Basic Zoom emails.</strong> Generic reminders. Not customizable like dedicated platforms.</div>
+    <div class="cell"><strong>Standard emails.</strong> Event confirmation + reminders.</div>
+  </div>
+
+  <div class="stage-row">
+    <div class="stage-label">
+      <div class="s-num">06</div>
+      <div class="s-name">Speaker Prep</div>
+      <div class="s-goal">Getting speakers ready</div>
+    </div>
+    <div class="cell"><span class="good">Backstage / green room.</span> Private space for speakers. Audio/video check before going live.</div>
+    <div class="cell"><span class="good">Green Room.</span> + Built-in design templates for countdowns, intros. Most polished prep.<br><span class="bad">Complex for simple events.</span></div>
+    <div class="cell"><span class="bad">No backstage.</span> No green room. No practice mode. Speakers join cold.</div>
+    <div class="cell"><span class="bad">No backstage.</span> No green room. Host can test, but no speaker prep space.</div>
+    <div class="cell"><span class="mid">Practice sessions.</span> Rehearsal mode available. But requires all speakers to have Zoom installed.</div>
+    <div class="cell"><span class="good">Backstage.</span> Speakers "ask to share" → appear in moderation queue. <span class="bad">StreamYard integration confusing.</span></div>
+  </div>
+
+  <!-- LIVE EVENT -->
+  <div class="section-divider"><div class="div-label">Phase 4 — Live Event</div></div>
+
+  <div class="stage-row">
+    <div class="stage-label">
+      <div class="s-num">07</div>
+      <div class="s-name">Live Experience</div>
+      <div class="s-goal">The actual show</div>
+    </div>
+    <div class="cell"><span class="good">Multiple layouts</span> (Talk Show, PiP, Focus, Thumbnails, Magic). 1-click speaker add/remove. PDF slides. Screen share.<br><span class="good">Feels like a produced show.</span></div>
+    <div class="cell"><span class="good">Production-grade.</span> HD. Dynamic overlays. Pre-recorded + live intermix. Screen-share layouts. Countdown timers.<br><span class="good">Closest to broadcast TV.</span></div>
+    <div class="cell"><strong>HD browser-based.</strong> Polls, Q&A, screen share. <span class="bad">Quality depends on internet (WebRTC). No virtual backgrounds.</span> Less polished.</div>
+    <div class="cell"><strong>HD streaming.</strong> Bring attendees on stage (mic + cam). Multi-cam. OBS. Pre-recorded injection.<br><span class="bad">Session closes 10min after host disconnect.</span></div>
+    <div class="cell"><strong>Most stable video</strong> (native app). But <span class="bad">requires download</span> which kills 15-20% attendance. Dated UI.</div>
+    <div class="cell"><strong>Multi-stage.</strong> Expo booths. Backstage. <span class="bad">StreamYard streaming = confusing. Browser audio/video issues.</span></div>
+  </div>
+
+  <div class="stage-row">
+    <div class="stage-label">
+      <div class="s-num">08</div>
+      <div class="s-name">Engagement Tools</div>
+      <div class="s-goal">Keeping audience active</div>
+    </div>
+    <div class="cell"><span class="good">Polls, CTAs, Q&A overlay ON video</span> (not sidebar). Chat separated (speaker + audience). Q&A spotlight on stream.<br><span class="good">CORE DIFFERENTIATOR</span><br><span class="bad">No breakout rooms. No networking.</span></div>
+    <div class="cell"><span class="good">Slack-like threaded chat.</span> On-stage Q&A. Polls. Clickable buttons. Pin messages. <span class="bad">Can be overwhelming for small events.</span></div>
+    <div class="cell">Polls, Q&A, chat, screen share. <span class="bad">Standard sidebar placement. Functional but not delightful.</span></div>
+    <div class="cell">Polls, <span class="good">live offers with urgency timers</span>, handouts, @mentions, gestures, private + public chat. <span class="bad">UI can feel busy.</span></div>
+    <div class="cell">Polls, Q&A, reactions, raise hand, <span class="good">breakout rooms</span>. <span class="bad">All sidebar-based. Bolted-on feel.</span></div>
+    <div class="cell">Chat, Q&A, polls, <span class="good">1:1 speed networking</span> (random video pairing). <span class="bad">Multi-area chat is confusing.</span></div>
+  </div>
+
+  <!-- POST-EVENT -->
+  <div class="section-divider"><div class="div-label">Phase 5 — Post-Event</div></div>
+
+  <div class="stage-row">
+    <div class="stage-label">
+      <div class="s-num">09</div>
+      <div class="s-name">Replay & Content</div>
+      <div class="s-goal">After the live ends</div>
+    </div>
+    <div class="cell"><span class="good">Auto replay with chapters.</span> Modern player. Embeddable. <span class="good">Repurpose AI: auto clips, blog posts, social posts.</span> Webinar channel (branded hub).<br><span class="bad">15-day storage on free. 5-25 clips/mo.</span></div>
+    <div class="cell"><span class="good">AI Content Creator:</span> branded clips with subtitles + transcriptions. <span class="bad">Processing not instant. Must wait for recording to finish.</span></div>
+    <div class="cell">Auto recording. Auto replay link sent. <span class="good">Evergreen/on-demand webinars</span> (auto-replay on schedule). <span class="bad">No AI repurposing. No clips.</span></div>
+    <div class="cell">Automated replays. On-demand sessions. Solid replay automation. <span class="bad">No AI clips. No repurpose features.</span></div>
+    <div class="cell">Cloud recording. Download MP4. <span class="bad">No AI. No clips. No content lifecycle. No replay page.</span></div>
+    <div class="cell">Recording available. <span class="bad">No AI. No clips. No content repurposing.</span></div>
+  </div>
+
+  <div class="stage-row">
+    <div class="stage-label">
+      <div class="s-num">10</div>
+      <div class="s-name">Analytics</div>
+      <div class="s-goal">Measuring success</div>
+    </div>
+    <div class="cell"><span class="good">20+ metrics.</span> Watch time, retention curves, drop-off. Conversion rates. Source tracking. <span class="good">CRM sync (HubSpot, Salesforce).</span><br><span class="bad">Gated behind Pro.</span></div>
+    <div class="cell">Standard analytics. CRM integration. SOC 2 compliant data handling. <span class="bad">Not as granular as Contrast.</span></div>
+    <div class="cell">Who attended, how long, CRM sync. Good for lead scoring. <span class="bad">"Active Contact" pricing makes analytics expensive at scale.</span></div>
+    <div class="cell">Session duration, avg time attended, avg time focused, per-attendee breakdown. CSV export. <span class="bad">No CRM on lower plans.</span></div>
+    <div class="cell"><span class="bad">Basic:</span> registration vs attendance, Q&A logs, poll results. No watch time. No retention. No CRM-native sync.</div>
+    <div class="cell">Cross-venue analytics. Sponsor engagement. <span class="bad">Complex dashboard. Hard to extract insights quickly.</span></div>
+  </div>
+
+  <!-- EVERGREEN -->
+  <div class="section-divider"><div class="div-label">Phase 6 — Ongoing / Automation</div></div>
+
+  <div class="stage-row">
+    <div class="stage-label">
+      <div class="s-num">11</div>
+      <div class="s-name">Automated Webinars</div>
+      <div class="s-goal">Running on autopilot</div>
+    </div>
+    <div class="cell"><span class="bad">None.</span> Pre-recorded exists but requires live host. No evergreen. No auto-replay scheduling.</div>
+    <div class="cell"><span class="bad">None.</span> Pre-recorded intermixing but no fully automated webinars.</div>
+    <div class="cell"><span class="good">Best-in-class.</span> Evergreen webinars. Auto-replay on schedule. "Set it and forget it" for recurring demos.</div>
+    <div class="cell"><span class="good">Strong.</span> Automated events with pre-recorded videos. Recurring schedules. On-demand sessions. Live chat overlay.</div>
+    <div class="cell"><span class="bad">None.</span> No automated or evergreen options.</div>
+    <div class="cell"><span class="bad">None.</span> Built for live events, not automation.</div>
+  </div>
+
+</div>
+
+<!-- ===================== ATTENDEE JOURNEY ===================== -->
+<div class="view-content" id="view-attendee">
+
+  <div style="margin-bottom:2rem;">
+    <h2 style="font-size:1.5rem; font-weight:800; margin-bottom:0.5rem;">The Attendee Experience</h2>
+    <p style="color:var(--text2); font-size:0.9rem;">What it actually feels like to attend a webinar on each platform, step by step.</p>
+  </div>
+
+  <div style="overflow-x:auto; border:1px solid var(--border); border-radius:16px; background:var(--surface);">
+    <div class="att-flow">
+
+      <!-- Contrast -->
+      <div class="att-platform">
+        <div class="att-platform-header" style="border-bottom-color:var(--contrast-color);">⚡ Contrast</div>
+        <div class="att-step"><strong>Register</strong>Beautiful branded page. Minimal fields. Passwordless. Feels premium.</div>
+        <div class="att-step"><strong>Pre-event</strong>Calendar auto-added. Email reminders. Same link for live + replay.</div>
+        <div class="att-step"><strong>Join</strong><span class="good">1-click. No download. No login. Instant.</span></div>
+        <div class="att-step"><strong>Watch</strong>Modern UI. <span class="good">Polls, CTAs, reactions overlay ON the video.</span> Feels like a produced show.</div>
+        <div class="att-step"><strong>Engage</strong>Vote in polls on-screen. Ask questions (Q&A spotlighted on stream). Chat with audience.</div>
+        <div class="att-step"><strong>Network</strong><span class="bad">Not possible. No attendee-to-attendee interaction.</span></div>
+        <div class="att-step"><strong>Replay</strong><span class="good">Same URL → chaptered replay with modern player.</span> Searchable.</div>
+        <div class="att-step"><strong>Follow-up</strong>Automated replay email. CRM captures engagement data for personalized sales outreach.</div>
+      </div>
+
+      <!-- Welcome -->
+      <div class="att-platform">
+        <div class="att-platform-header" style="border-bottom-color:var(--welcome-color);">🎬 Welcome</div>
+        <div class="att-step"><strong>Register</strong>Custom branded page. Standard form. Professional look.</div>
+        <div class="att-step"><strong>Pre-event</strong>Email reminders. Calendar integration.</div>
+        <div class="att-step"><strong>Join</strong><span class="good">1-click. No download. Browser-based.</span></div>
+        <div class="att-step"><strong>Watch</strong><span class="good">Production-grade overlays.</span> HD video. Countdown timers. Intro videos. Closest to TV.</div>
+        <div class="att-step"><strong>Engage</strong>Slack-like threaded chat. On-stage Q&A. Polls. Pin messages. <span class="mid">Can feel overwhelming.</span></div>
+        <div class="att-step"><strong>Network</strong><span class="bad">Not possible.</span></div>
+        <div class="att-step"><strong>Replay</strong>Recording available. AI-generated branded clips shared.</div>
+        <div class="att-step"><strong>Follow-up</strong>CRM-integrated follow-up. Marketing automation sync.</div>
+      </div>
+
+      <!-- Livestorm -->
+      <div class="att-platform">
+        <div class="att-platform-header" style="border-bottom-color:var(--livestorm-color);">🔄 Livestorm</div>
+        <div class="att-step"><strong>Register</strong>Custom landing page. Standard form. Embeddable.</div>
+        <div class="att-step"><strong>Pre-event</strong><span class="good">Great auto emails:</span> immediate confirm, 1hr reminder, post-event replay.</div>
+        <div class="att-step"><strong>Join</strong><span class="good">1-click. No download. Browser-native.</span> 15-20% higher attendance vs Zoom.</div>
+        <div class="att-step"><strong>Watch</strong>Clean but standard UI. HD depends on internet. No virtual backgrounds.</div>
+        <div class="att-step"><strong>Engage</strong>Polls, Q&A, chat, screen share. <span class="mid">Sidebar-based. Functional but not exciting.</span></div>
+        <div class="att-step"><strong>Network</strong><span class="bad">Not possible.</span></div>
+        <div class="att-step"><strong>Replay</strong>Auto replay link sent. <span class="good">Evergreen replays available on schedule.</span></div>
+        <div class="att-step"><strong>Follow-up</strong>Automated replay email with replay link. CRM sync.</div>
+      </div>
+
+      <!-- Demio -->
+      <div class="att-platform">
+        <div class="att-platform-header" style="border-bottom-color:var(--demio-color);">🎯 Demio</div>
+        <div class="att-step"><strong>Register</strong>Nice templates. Lead capture (name, email, company, role).</div>
+        <div class="att-step"><strong>Pre-event</strong>Customizable email notifications. Standard.</div>
+        <div class="att-step"><strong>Join</strong><span class="good">1-click. No download. Browser-based.</span></div>
+        <div class="att-step"><strong>Watch</strong>HD streaming. Clean. Can be brought on stage (mic + camera).</div>
+        <div class="att-step"><strong>Engage</strong>Polls, <span class="good">live offers with urgency timers</span>, handouts, gifts, @mentions, gestures, private chat.</div>
+        <div class="att-step"><strong>Network</strong><span class="bad">Not possible.</span></div>
+        <div class="att-step"><strong>Replay</strong>On-demand sessions. Automated replays available.</div>
+        <div class="att-step"><strong>Follow-up</strong>Standard follow-up. No AI personalization.</div>
+      </div>
+
+      <!-- Zoom -->
+      <div class="att-platform">
+        <div class="att-platform-header" style="border-bottom-color:var(--zoom-color);">📹 Zoom</div>
+        <div class="att-step"><strong>Register</strong>Corporate form. Hard to brand. Functional but generic.</div>
+        <div class="att-step"><strong>Pre-event</strong>Generic Zoom reminders. Calendar invite.</div>
+        <div class="att-step"><strong>Join</strong><span class="bad">Requires Zoom download/install.</span> Kills 15-20% attendance. Login required.</div>
+        <div class="att-step"><strong>Watch</strong>Most stable video quality. But <span class="bad">dated UI. Feels like a meeting, not a show.</span></div>
+        <div class="att-step"><strong>Engage</strong>Polls, Q&A, reactions, raise hand. <span class="good">Breakout rooms.</span> <span class="bad">All sidebar. Bolted-on.</span></div>
+        <div class="att-step"><strong>Network</strong><span class="mid">Breakout rooms only</span> (host must create them). No spontaneous networking.</div>
+        <div class="att-step"><strong>Replay</strong><span class="bad">Download MP4 file. No replay page. No chapters.</span></div>
+        <div class="att-step"><strong>Follow-up</strong>Basic. No AI. No personalization.</div>
+      </div>
+
+      <!-- Hopin -->
+      <div class="att-platform">
+        <div class="att-platform-header" style="border-bottom-color:var(--hopin-color);">🏛️ Hopin</div>
+        <div class="att-step"><strong>Register</strong>Ticketing (free + paid). Custom fields. Complex but powerful.</div>
+        <div class="att-step"><strong>Pre-event</strong>Event emails. Ticket confirmation.</div>
+        <div class="att-step"><strong>Join</strong><span class="good">Browser-based. No download.</span></div>
+        <div class="att-step"><strong>Watch</strong>Multi-stage. Expo booths to explore. <span class="bad">Can feel complex/overwhelming.</span></div>
+        <div class="att-step"><strong>Engage</strong>Chat, Q&A, polls. <span class="bad">Chat across multiple areas = confusing.</span></div>
+        <div class="att-step"><strong>Network</strong><span class="good">1:1 SPEED NETWORKING.</span> Random video pairing. Exchange contacts. 100+ connections per event possible.</div>
+        <div class="att-step"><strong>Replay</strong>Recording available. Standard.</div>
+        <div class="att-step"><strong>Follow-up</strong>Connection summaries. Lead gen data.</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- ===================== SUMMARY ===================== -->
+<div class="view-content" id="view-summary">
+
+  <div style="margin-bottom:2rem;">
+    <h2 style="font-size:1.5rem; font-weight:800; margin-bottom:0.5rem;">Journey Verdicts</h2>
+    <p style="color:var(--text2); font-size:0.9rem;">The emotional arc, time-to-value, and strategic takeaway for each platform.</p>
+  </div>
+
+  <div class="summary-grid">
+
+    <div class="summary-card sc-contrast">
+      <h3>⚡ Contrast</h3>
+      <p class="sc-sub">"Refreshingly simple" → "Looks professional" → "Content for the week"</p>
+      <div class="metric-row">
+        <div class="metric"><div class="m-val" style="color:var(--green);">~5m</div><div class="m-label">Time to Value</div></div>
+        <div class="metric"><div class="m-val" style="color:var(--green);">Low</div><div class="m-label">Host Stress</div></div>
+        <div class="metric"><div class="m-val" style="color:var(--green);">High</div><div class="m-label">Attendee UX</div></div>
+      </div>
+      <ul class="journey-verdict">
+        <li>Best signup-to-first-webinar flow in the category</li>
+        <li>Overlay engagement is genuinely unique — nobody else does it</li>
+        <li>Repurpose AI extends value beyond the live event</li>
+        <li><strong style="color:var(--red);">Gap:</strong> No automation, no networking, no AI during creation or live</li>
+      </ul>
+      <div class="takeaway" style="margin-top:1rem;">Win by being faster (AI setup) + smarter (AI during live) + more social (networking)</div>
+    </div>
+
+    <div class="summary-card sc-welcome">
+      <h3>🎬 Welcome</h3>
+      <p class="sc-sub">"This feels premium" → "Setup is complex" → "Content output is amazing"</p>
+      <div class="metric-row">
+        <div class="metric"><div class="m-val" style="color:var(--red);">Days</div><div class="m-label">Time to Value</div></div>
+        <div class="metric"><div class="m-val" style="color:var(--red);">High</div><div class="m-label">Host Stress</div></div>
+        <div class="metric"><div class="m-val" style="color:var(--green);">High</div><div class="m-label">Attendee UX</div></div>
+      </div>
+      <ul class="journey-verdict">
+        <li>Best production quality in the category (Welcome Studio)</li>
+        <li>Sales-gated = huge time-to-value problem. Days before first webinar.</li>
+        <li>$625/mo kills adoption. No PLG motion at all.</li>
+        <li><strong style="color:var(--red);">Gap:</strong> Price, self-serve, automation, networking, uncertain future</li>
+      </ul>
+      <div class="takeaway" style="margin-top:1rem;">Their customers want production quality but can't justify $625/mo. Offer it at $99/mo with AI.</div>
+    </div>
+
+    <div class="summary-card sc-livestorm">
+      <h3>🔄 Livestorm</h3>
+      <p class="sc-sub">"Easy to start" → "Automation is great" → "Where's the AI?"</p>
+      <div class="metric-row">
+        <div class="metric"><div class="m-val" style="color:var(--green);">~10m</div><div class="m-label">Time to Value</div></div>
+        <div class="metric"><div class="m-val" style="color:var(--green);">Low</div><div class="m-label">Host Stress</div></div>
+        <div class="metric"><div class="m-val" style="color:var(--orange);">Medium</div><div class="m-label">Attendee UX</div></div>
+      </div>
+      <ul class="journey-verdict">
+        <li>Best recurring/evergreen webinar automation</li>
+        <li>15-20% higher attendance vs Zoom (no download)</li>
+        <li>"Active Contact" pricing trap — costs scale unpredictably</li>
+        <li><strong style="color:var(--red);">Gap:</strong> No AI, no repurposing, no production quality, bland live UX</li>
+      </ul>
+      <div class="takeaway" style="margin-top:1rem;">Steal their evergreen automation. Beat them with AI + production quality + better pricing.</div>
+    </div>
+
+    <div class="summary-card sc-demio">
+      <h3>🎯 Demio</h3>
+      <p class="sc-sub">"Affordable" → "Great for sales" → "Limited for scale"</p>
+      <div class="metric-row">
+        <div class="metric"><div class="m-val" style="color:var(--green);">~10m</div><div class="m-label">Time to Value</div></div>
+        <div class="metric"><div class="m-val" style="color:var(--green);">Low</div><div class="m-label">Host Stress</div></div>
+        <div class="metric"><div class="m-val" style="color:var(--orange);">Medium</div><div class="m-label">Attendee UX</div></div>
+      </div>
+      <ul class="journey-verdict">
+        <li>Cheapest entry ($34/mo) — great for solopreneurs</li>
+        <li>Live offers with urgency timers = unique sales feature</li>
+        <li>Attendee-on-stage = great for interactive sessions</li>
+        <li><strong style="color:var(--red);">Gap:</strong> No AI, no content repurposing, limited CRM, dated UI</li>
+      </ul>
+      <div class="takeaway" style="margin-top:1rem;">Not a direct competitor if you target mid-market. Steal their urgency timers idea.</div>
+    </div>
+
+    <div class="summary-card sc-zoom">
+      <h3>📹 Zoom Webinars</h3>
+      <p class="sc-sub">"Everyone knows it" → "It's just a big meeting" → "Where's the value?"</p>
+      <div class="metric-row">
+        <div class="metric"><div class="m-val" style="color:var(--orange);">15-30m</div><div class="m-label">Time to Value</div></div>
+        <div class="metric"><div class="m-val" style="color:var(--orange);">Medium</div><div class="m-label">Host Stress</div></div>
+        <div class="metric"><div class="m-val" style="color:var(--red);">Low</div><div class="m-label">Attendee UX</div></div>
+      </div>
+      <ul class="journey-verdict">
+        <li>Brand trust + most stable video = only real advantages</li>
+        <li>Download requirement kills 15-20% attendance</li>
+        <li>No content lifecycle at all — recording is where it ends</li>
+        <li><strong style="color:var(--red);">Gap:</strong> Everything. This is a meeting tool, not a webinar platform.</li>
+      </ul>
+      <div class="takeaway" style="margin-top:1rem;">Zoom users are the easiest to convert. They already know webinars are painful on Zoom.</div>
+    </div>
+
+    <div class="summary-card sc-hopin">
+      <h3>🏛️ Hopin / RingCentral</h3>
+      <p class="sc-sub">"So many features" → "This is complex" → "Great for conferences only"</p>
+      <div class="metric-row">
+        <div class="metric"><div class="m-val" style="color:var(--red);">Days</div><div class="m-label">Time to Value</div></div>
+        <div class="metric"><div class="m-val" style="color:var(--red);">High</div><div class="m-label">Host Stress</div></div>
+        <div class="metric"><div class="m-val" style="color:var(--orange);">Medium</div><div class="m-label">Attendee UX</div></div>
+      </div>
+      <ul class="journey-verdict">
+        <li>1:1 speed networking is genuinely brilliant — steal it</li>
+        <li>Multi-venue architecture is overkill for simple webinars</li>
+        <li>StreamYard integration causes real tech issues</li>
+        <li><strong style="color:var(--red);">Gap:</strong> Way too complex for 90% of webinar use cases</li>
+      </ul>
+      <div class="takeaway" style="margin-top:1rem;">Don't compete here. Just steal speed networking and leave conferences to them.</div>
+    </div>
+
+  </div>
+</div>
+
+</div>
+
+<div class="footer">User Journey Comparison · March 2026 · For Krishna Goyal</div>
+
+<script>
+function switchView(view) {
+  document.querySelectorAll('.view-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.toggle-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('view-' + view).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
