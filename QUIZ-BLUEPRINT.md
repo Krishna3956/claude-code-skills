@@ -418,7 +418,7 @@ The scorecard (radar chart, dimension bars, score number) must only display data
 ### Rule 9: No favicon.ico in src/app/
 Never create or place a `favicon.ico` file in `src/app/`. Next.js treats it as a special file-based convention that silently overrides every `icons` metadata export in every layout across the entire app. Per-quiz favicons will stop working with no error or warning.
 
-**What went wrong:** A `favicon.ico` in `src/app/` was overriding all 25 per-quiz favicons. Every quiz tab showed the same Claude Code logo instead of its own brand logo. The fix was moving it to `public/default-favicon.ico` and referencing it via the root layout's metadata `icons` field.
+**What went wrong:** A `favicon.ico` in `src/app/` was overriding all 25 per-quiz favicons. Every quiz tab showed the same Claude Code logo instead of its own brand logo. The fix was moving it to `public/default-favicon.ico` and referencing it via the root layout's metadata `icons` field. The root layout now uses the HWYK monogram (`/logos/hwyk-logo.svg`) as the default favicon for all non-quiz pages.
 
 ---
 
@@ -507,7 +507,9 @@ The layout.tsx `icons` metadata field sets the browser tab icon. Point it to the
 icons: { icon: "/logos/{tool-slug}.{ext}" },
 ```
 
-**CRITICAL: Never place a `favicon.ico` file in `src/app/`.** Next.js treats `src/app/favicon.ico` as a special file-based metadata convention that overrides ALL `icons` metadata in every layout, including child layouts. If one exists, no per-quiz favicon will ever load - they'll all show the root favicon instead. The platform's default favicon lives at `public/default-favicon.ico` and is referenced via the root layout's metadata. This is intentional.
+**CRITICAL: Never place a `favicon.ico` file in `src/app/`.** Next.js treats `src/app/favicon.ico` as a special file-based metadata convention that overrides ALL `icons` metadata in every layout, including child layouts. If one exists, no per-quiz favicon will ever load - they'll all show the root favicon instead.
+
+**Default favicon rule:** The root layout (`src/app/layout.tsx`) uses the HWYK monogram (`/logos/hwyk-logo.svg`) as the default favicon. This applies to the homepage, brand guidelines, and any future non-quiz pages. Quiz pages override this with their own tool-specific favicon via their layout.tsx `icons` metadata. Never change the root favicon to anything other than the HWYK monogram.
 
 ---
 
