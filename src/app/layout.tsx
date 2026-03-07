@@ -9,32 +9,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "How Claude Code Are You?",
+  title: "How Well You Know",
   description:
-    "Test your Claude Code knowledge across 7 skill dimensions. 15 challenges, 6 rounds, ~3 minutes, zero signup. Get your spider-web skill profile and shareable scorecard.",
+    "Test your knowledge of the tools you use every day. 15 challenges, 6 rounds, ~3 minutes, zero signup. Get your skill profile and shareable scorecard.",
   metadataBase: new URL("https://www.howwellyouknow.com"),
-  openGraph: {
-    title: "How well do you know Claude Code?",
-    description:
-      "15 challenges. 6 rounds. ~3 minutes. No signup. Test your Claude Code skills and get a shareable scorecard.",
-    type: "website",
-    url: "https://www.howwellyouknow.com/play/claude-code",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "How well do you know Claude Code?",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "How well do you know Claude Code?",
-    description:
-      "15 challenges. 6 rounds. ~3 minutes. No signup. Test your Claude Code skills.",
-    images: ["/og-image.png"],
-  },
+  icons: { icon: "/claude-logo.png", apple: "/claude-logo.png" },
 };
 
 export default function RootLayout({
@@ -44,10 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link rel="icon" href="/claude-logo.png" />
-        <link rel="apple-touch-icon" href="/claude-logo.png" />
-      </head>
+      <head />
       <body className={`${geistMono.variable} antialiased`}>
         {children}
         <Analytics />

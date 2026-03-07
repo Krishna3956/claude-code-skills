@@ -7,11 +7,10 @@ import {
   PolarAngleAxis,
   ResponsiveContainer,
 } from "recharts";
-import { DimensionScore } from "@/lib/scoring";
+import type { DimensionScore } from "@/components/quiz/types";
 
 interface Props {
   dimensions: DimensionScore[];
-  size?: number;
   accentColor?: string;
   gridColor?: string;
   labelColor?: string;
@@ -19,6 +18,8 @@ interface Props {
 }
 
 export default function RadarChart({ dimensions, accentColor = "#e2b714", gridColor = "#2a2a4a", labelColor = "#646687", bgColor = "#1a1a2e" }: Props) {
+  if (dimensions.length < 3) return null;
+
   const data = dimensions.map((d) => ({
     subject: d.label,
     score: d.score,

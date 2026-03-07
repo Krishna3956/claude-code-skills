@@ -31,6 +31,9 @@ const nextConfig: NextConfig = {
       { source: "/v5/results", destination: "/play/claude-code/results", permanent: false },
       { source: "/v6", destination: "/play/claude-code", permanent: false },
       { source: "/v6/results", destination: "/play/claude-code/results", permanent: false },
+      // v0 renamed to Vercel
+      { source: "/play/v0", destination: "/play/vercel", permanent: true },
+      { source: "/play/v0/results", destination: "/play/vercel/results", permanent: true },
     ];
   },
 };
