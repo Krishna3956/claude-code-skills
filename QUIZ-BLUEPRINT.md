@@ -415,6 +415,11 @@ Result URLs use Base64-encoded payloads with a checksum. Users cannot see or mod
 ### Rule 8: Scorecard Shows Only Real Data
 The scorecard (radar chart, dimension bars, score number) must only display data from dimensions that had actual questions. No defaults, no placeholders, no hardcoded values.
 
+### Rule 9: No favicon.ico in src/app/
+Never create or place a `favicon.ico` file in `src/app/`. Next.js treats it as a special file-based convention that silently overrides every `icons` metadata export in every layout across the entire app. Per-quiz favicons will stop working with no error or warning.
+
+**What went wrong:** A `favicon.ico` in `src/app/` was overriding all 25 per-quiz favicons. Every quiz tab showed the same Claude Code logo instead of its own brand logo. The fix was moving it to `public/default-favicon.ico` and referencing it via the root layout's metadata `icons` field.
+
 ---
 
 ## 8. Available Fonts
@@ -501,6 +506,8 @@ The layout.tsx `icons` metadata field sets the browser tab icon. Point it to the
 ```typescript
 icons: { icon: "/logos/{tool-slug}.{ext}" },
 ```
+
+**CRITICAL: Never place a `favicon.ico` file in `src/app/`.** Next.js treats `src/app/favicon.ico` as a special file-based metadata convention that overrides ALL `icons` metadata in every layout, including child layouts. If one exists, no per-quiz favicon will ever load - they'll all show the root favicon instead. The platform's default favicon lives at `public/default-favicon.ico` and is referenced via the root layout's metadata. This is intentional.
 
 ---
 
@@ -658,7 +665,66 @@ Score <  40 -> 8th
 
 ---
 
-## 16. Design Principles
+## 16. Platform Branding ("Powered by" Badge & Logo Usage)
+
+### Brand Assets Location
+All HWYK brand assets live in `/public/logos/`:
+
+| File | Description | Use When |
+|------|-------------|----------|
+| `hwyk-logo.svg` | Monogram (hwyk square icon), light bg | Light backgrounds, with white bg |
+| `hwyk-logo-dark.svg` | Monogram, dark bg | Dark backgrounds, with dark bg |
+| `hwyk-logo-transparent.svg` | Monogram, no bg | Light backgrounds, transparent |
+| `hwyk-logo-dark-transparent.svg` | Monogram, no bg | Dark backgrounds, transparent |
+| `hwyk-lockup-light.png` | Full lockup (monogram + wordmark), white bg | Homepage, light contexts |
+| `hwyk-lockup-dark.png` | Full lockup, black bg | Dark-themed contexts |
+| `hwyk-lockup-cream.png` | Full lockup, cream bg | Warm/off-white contexts |
+| `hwyk-lockup-transparent.png` | Full lockup, transparent bg | Overlaying on any background |
+
+### When to Use Which Logo
+- **Full lockup** (`hwyk-lockup-*.png`): Homepage, landing pages, scorecards, social share images, email headers - anywhere the brand name needs to be read.
+- **Monogram** (`hwyk-logo-*.svg`): Favicons, nav bar icons, app icons, badges on quiz pages, small corners of scorecards, mobile headers - anywhere space is tight.
+
+### "Powered by" Badge — Mandatory Format
+Every "Powered by" badge MUST follow this exact element order: **"Powered by" text → monogram logo → ↗ arrow**. No exceptions. The ↗ (top-right facing arrow) signals that clicking takes the user to an external page. Never omit the arrow. Never rearrange the order.
+
+The badge links to the HWYK homepage (`/`). It is implemented in the shared `QuizPage.tsx` and `ResultsPage.tsx` components, so it automatically appears on all quizzes.
+
+**Quiz Home Screen — Desktop (sm and above):** Inline under the title, inside the hero section.
+- Pill shape with rounded border (`borderRadius: 20`)
+- Background: `var(--v5-bg-surface)`, border: `var(--v5-border)`
+- Layout: `"Powered by" text → monogram (28×28) → ↗ arrow (10px)`
+- Hover: border turns brand yellow (`rgba(250,204,21,0.5)`), background gets faint yellow tint (`rgba(250,204,21,0.08)`)
+- Uses `hwyk-logo-transparent.svg`
+
+**Quiz Home Screen — Mobile (below sm):** Fixed top-left corner.
+- Same pill style, slightly smaller (logo 26×26, text 11px, arrow 9px)
+- Fixed position: `top: 0, left: 0` with `px-4 py-3` spacing
+- Uses `hwyk-logo-transparent.svg`
+
+**Scorecard (Results Page):** Inside the scorecard card, top-left corner (mirrors Save button on top-right).
+- Glass style: `background: rgba(255,255,255,0.06)`, `border: 1px solid rgba(255,255,255,0.1)`
+- Layout: `monogram (16×16) → "Powered by" text → ↗ arrow (9px)`
+- Uses `hwyk-logo-dark-transparent.svg` (light monogram for dark scorecard backgrounds)
+- Appears in the downloaded PNG as well
+
+**All versions:**
+- Link to `/` (homepage)
+- Always include the ↗ external link arrow
+- Arrow SVG: `<svg viewBox="0 0 24 24"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>` with `strokeWidth: 2.5`, `opacity: 0.5`
+
+### "Made with ♥ by Krishna Goyal" Credit
+- **Desktop:** Fixed bottom-right corner
+- **Mobile:** Inline at the bottom of the hero section, below the "~3 min" text
+
+### Homepage
+- Route: `/` (`src/app/page.tsx`)
+- White background, centered full lockup logo (`hwyk-lockup-light.png`), "COMING SOON" text below
+- Brand guidelines page at `/brand-guidelines`
+
+---
+
+## 17. Design Principles
 
 1. **No signup friction** - zero barrier to entry
 2. **Variety over repetition** - 5 challenge types prevent quiz fatigue
@@ -680,10 +746,12 @@ Score <  40 -> 8th
 18. **Per-quiz favicon** - each tab shows the tool's brand logo, not a generic icon
 19. **Per-quiz tab title** - "How {Tool} Are You?" in the browser tab
 20. **Answer integrity** - every `blank` must exist in `options`, every `oddItem` must exist in `items`, `correct` must be "A" or "B", `correctItems` and `wrongItems` must never overlap
+21. **"Powered by" badge** - every quiz page shows a "Powered by" pill with the HWYK monogram, linking to the homepage; desktop: inline under title, mobile: fixed top-left
+22. **Brand credit placement** - "Made with ♥ by Krishna Goyal" sits at bottom-right on desktop, inline on mobile
 
 ---
 
-## 17. Checklist for New Quiz
+## 18. Checklist for New Quiz
 
 Use this checklist every time you create a new quiz:
 

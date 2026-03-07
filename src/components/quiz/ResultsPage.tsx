@@ -92,6 +92,14 @@ function ResultContent({ config }: { config: QuizConfig }) {
           }} />
 
           <div className="px-6 pt-6 pb-3 text-center relative">
+            <a href="/" className="absolute top-4 left-4 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-medium transition-all hover:opacity-80"
+              style={{ background: "rgba(255,255,255,0.06)", color: config.scorecardLabelColor, border: "1px solid rgba(255,255,255,0.1)", textDecoration: "none" }}>
+              Powered by
+              <img src="/logos/hwyk-logo-dark-transparent.svg" alt="HWYK" width="16" height="16" style={{ objectFit: "contain" }} />
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke={config.scorecardLabelColor} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.5 }}>
+                <path d="M7 17L17 7" /><path d="M7 7h10v10" />
+              </svg>
+            </a>
             <button ref={saveBtnRef} onClick={downloadCard} disabled={downloading}
               className="absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-medium transition-all hover:opacity-80 active:scale-95 disabled:opacity-40"
               style={{ background: "rgba(255,255,255,0.06)", color: config.scorecardLabelColor, border: "1px solid rgba(255,255,255,0.1)" }}>
@@ -151,7 +159,8 @@ function ResultContent({ config }: { config: QuizConfig }) {
             ))}
           </div>
 
-          <div className="px-5 py-3 flex items-center justify-center" style={{ borderTop: `1px solid ${config.scorecardDivider}` }}>
+          <div className="px-5 py-3 flex items-center justify-center gap-2" style={{ borderTop: `1px solid ${config.scorecardDivider}` }}>
+            <img src="/logos/hwyk-logo-transparent.svg" alt="" width="14" height="14" style={{ objectFit: "contain", opacity: 0.7 }} />
             <span style={{ color: config.scorecardLabelColor, fontSize: "9px" }}>howwellyouknow.com</span>
           </div>
         </div>
@@ -185,23 +194,13 @@ function ResultContent({ config }: { config: QuizConfig }) {
         </Link>
 
         <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer"
-          className="flex sm:hidden items-center gap-1.5 mt-4 transition-opacity hover:opacity-80" style={{ textDecoration: "none" }}>
+          className="flex items-center gap-1.5 mt-6 mb-4 transition-opacity hover:opacity-80" style={{ textDecoration: "none" }}>
           <span style={{ color: "var(--v5-text-tertiary)", fontSize: "13px" }}>Made with</span>
           <span style={{ color: "var(--v5-accent)", fontSize: "14px" }}>♥</span>
           <span style={{ color: "var(--v5-text-tertiary)", fontSize: "13px" }}>by</span>
           <span style={{ color: "var(--v5-accent)", fontSize: "13px", fontWeight: 600 }}>Krishna Goyal</span>
         </a>
       </motion.div>
-
-      <div className="hidden sm:flex fixed top-0 right-0 z-50 px-4 py-3">
-        <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer"
-          className="flex items-center gap-1.5 transition-opacity hover:opacity-80" style={{ textDecoration: "none" }}>
-          <span style={{ color: "var(--v5-text-tertiary)", fontSize: "13px" }}>Made with</span>
-          <span style={{ color: "var(--v5-accent)", fontSize: "14px" }}>♥</span>
-          <span style={{ color: "var(--v5-text-tertiary)", fontSize: "13px" }}>by</span>
-          <span style={{ color: "var(--v5-accent)", fontSize: "13px", fontWeight: 600 }}>Krishna Goyal</span>
-        </a>
-      </div>
     </div>
   );
 }

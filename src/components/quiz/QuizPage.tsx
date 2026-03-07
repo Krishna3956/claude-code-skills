@@ -333,6 +333,40 @@ function HomeScreen({ config, onStart }: { config: QuizConfig; onStart: () => vo
             style={{ fontFamily: "var(--font-v5-serif), ui-serif, Georgia, serif", color: "var(--v5-accent)" }}>
             know {config.toolName}?
           </h1>
+          <a
+            href="/"
+            className="hidden sm:inline-flex items-center gap-2 mt-2 group cursor-pointer"
+            style={{
+              textDecoration: "none",
+              border: "1px solid var(--v5-border)",
+              borderRadius: 8,
+              padding: "4px 4px 4px 12px",
+              background: "var(--v5-bg-surface)",
+              transition: "all 0.2s ease",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = "rgba(250,204,21,0.5)";
+              e.currentTarget.style.background = "rgba(250,204,21,0.08)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = "var(--v5-border)";
+              e.currentTarget.style.background = "var(--v5-bg-surface)";
+            }}
+          >
+            <span style={{ fontSize: 12, fontWeight: 600, color: "var(--v5-text-tertiary)", letterSpacing: 0.2 }}>
+              Powered by
+            </span>
+            <img
+              src="/logos/hwyk-logo-transparent.svg"
+              alt="How Well You Know"
+              width="28"
+              height="28"
+              style={{ objectFit: "contain" }}
+            />
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--v5-text-tertiary)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.5 }}>
+              <path d="M7 17L17 7" /><path d="M7 7h10v10" />
+            </svg>
+          </a>
         </div>
 
         <p style={{ color: "var(--v5-text-secondary)", fontSize: "14px", lineHeight: "1.6" }}>
@@ -373,25 +407,47 @@ function HomeScreen({ config, onStart }: { config: QuizConfig; onStart: () => vo
         </a>
       </motion.div>
 
-      {/* Product Hunt badge: top-left on desktop */}
-      <div className="hidden sm:flex fixed top-0 left-0 z-50 px-4 py-3 pointer-events-none">
+
+      {/* Powered-by: fixed top-left on mobile */}
+      <div className="flex sm:hidden fixed top-0 left-0 z-50 px-4 py-3">
         <a
-          href="https://www.producthunt.com/products/how-claude-code-are-you?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-claude-code-skill-map"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="pointer-events-auto transition-opacity hover:opacity-80"
+          href="/"
+          className="inline-flex items-center gap-2"
+          style={{
+            textDecoration: "none",
+            border: "1px solid var(--v5-border)",
+            borderRadius: 8,
+            padding: "5px 5px 5px 12px",
+            background: "var(--v5-bg-surface)",
+            transition: "all 0.2s ease",
+          }}
+          onTouchStart={(e) => {
+            e.currentTarget.style.borderColor = "rgba(250,204,21,0.5)";
+            e.currentTarget.style.background = "rgba(250,204,21,0.08)";
+          }}
+          onTouchEnd={(e) => {
+            e.currentTarget.style.borderColor = "var(--v5-border)";
+            e.currentTarget.style.background = "var(--v5-bg-surface)";
+          }}
         >
+          <span style={{ fontSize: 11, fontWeight: 600, color: "var(--v5-text-tertiary)", letterSpacing: 0.2 }}>
+            Powered by
+          </span>
           <img
-            src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1088194&theme=light&t=1772444117435"
-            alt="How Well You Know on Product Hunt"
-            width="180"
-            height="39"
+            src="/logos/hwyk-logo-transparent.svg"
+            alt="How Well You Know"
+            width="26"
+            height="26"
+            style={{ objectFit: "contain" }}
           />
+          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="var(--v5-text-tertiary)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.5, marginLeft: -4 }}>
+            <path d="M7 17L17 7" /><path d="M7 7h10v10" />
+          </svg>
         </a>
       </div>
 
-      {/* Credit: fixed top-right on desktop */}
-      <div className="hidden sm:flex fixed top-0 right-0 z-50 px-4 py-3">
+      {/* Credit: fixed bottom-right on desktop */}
+      <div className="hidden sm:flex fixed bottom-0 right-0 z-50 px-4 py-3">
         <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer"
           className="flex items-center gap-1.5 transition-opacity hover:opacity-80" style={{ textDecoration: "none" }}>
           <span style={{ color: "var(--v5-text-tertiary)", fontSize: "13px" }}>Made with</span>
@@ -489,10 +545,18 @@ export default function QuizPage({ config }: { config: QuizConfig }) {
     <div className="flex min-h-dvh flex-col items-center px-4 py-6 sm:py-8">
       <div className="w-full max-w-lg mb-6">
         <div className="flex items-center justify-between mb-3">
-          <span className="flex items-center gap-2" style={{ fontSize: "12px", color: "var(--v5-text-secondary)" }}>
+          <div className="flex items-center gap-2" style={{ fontSize: "12px", color: "var(--v5-text-secondary)" }}>
+            <button
+              onClick={() => { setStarted(false); setCurrentIndex(0); setResults([]); setAnswered(false); }}
+              className="flex items-center transition-opacity hover:opacity-70"
+              title="Back to start"
+              style={{ background: "none", border: "none", cursor: "pointer", padding: 0, marginRight: 2, color: "var(--v5-text-tertiary)" }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
             <span className="flex items-center"><RoundIcon name={currentRound?.name ?? ""} size={14} color="var(--v5-text-secondary)" /></span>
             <span>{currentRound?.name}</span>
-          </span>
+          </div>
           <div className="flex gap-1.5">
             {Array.from({ length: roundSize }).map((_, i) => (
               <div key={i} className="w-1.5 h-1.5 rounded-full transition-colors"
