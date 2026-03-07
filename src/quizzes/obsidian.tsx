@@ -3,7 +3,7 @@ import type { QuizConfig } from "@/components/quiz/types";
 export const obsidianConfig: QuizConfig = {
   slug: "obsidian",
   toolName: "Obsidian",
-  tagline: "6 rounds. 15 challenges. No account required.",
+  tagline: "6 rounds. ~3 min. No account required.",
   subtitle: "Just you vs. Obsidian trivia.",
   sansFont: "inter",
   serifFont: "lora",

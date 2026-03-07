@@ -5,7 +5,7 @@ import { claudeCodeConfig } from "@/quizzes/claude-code";
 export const metadata: Metadata = {
   title: "How Claude Code Are You?",
   description:
-    "15 challenges. 6 rounds. ~3 minutes. No signup. Test your Claude Code skills and get a shareable scorecard.",
+    "6 rounds. ~3 min. No signup. Test your Claude Code skills and get a shareable scorecard.",
   icons: { icon: "/claude-logo.png" },
 };
 

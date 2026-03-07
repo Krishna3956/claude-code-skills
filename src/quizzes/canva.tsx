@@ -3,7 +3,7 @@ import type { QuizConfig } from "@/components/quiz/types";
 export const canvaConfig: QuizConfig = {
   slug: "canva",
   toolName: "Canva",
-  tagline: "6 rounds. 15 challenges. No account required.",
+  tagline: "6 rounds. ~3 min. No account required.",
   subtitle: "Just you vs. Canva trivia.",
   sansFont: "poppins",
   serifFont: "playfair-display",

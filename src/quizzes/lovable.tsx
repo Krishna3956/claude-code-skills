@@ -3,7 +3,7 @@ import type { QuizConfig } from "@/components/quiz/types";
 export const lovableConfig: QuizConfig = {
   slug: "lovable",
   toolName: "Lovable",
-  tagline: "6 rounds. 15 challenges. No coding required.",
+  tagline: "6 rounds. ~3 min. No coding required.",
   subtitle: "Just you vs. Lovable trivia.",
   sansFont: "nunito-sans",
   serifFont: "lora",

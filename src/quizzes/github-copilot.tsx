@@ -3,7 +3,7 @@ import type { QuizConfig } from "@/components/quiz/types";
 export const githubCopilotConfig: QuizConfig = {
   slug: "github-copilot",
   toolName: "GitHub Copilot",
-  tagline: "6 rounds. 15 challenges. No account required.",
+  tagline: "6 rounds. ~3 min. No account required.",
   subtitle: "Just you vs. Copilot trivia.",
   sansFont: "inter",
   serifFont: "source-serif-4",

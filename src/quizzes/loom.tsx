@@ -3,7 +3,7 @@ import type { QuizConfig } from "@/components/quiz/types";
 export const loomConfig: QuizConfig = {
   slug: "loom",
   toolName: "Loom",
-  tagline: "6 rounds. 15 challenges. No account required.",
+  tagline: "6 rounds. ~3 min. No account required.",
   subtitle: "Just you vs. Loom trivia.",
   sansFont: "inter",
   serifFont: "source-serif-4",

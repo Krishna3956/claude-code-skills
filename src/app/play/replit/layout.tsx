@@ -5,7 +5,7 @@ import { replitConfig } from "@/quizzes/replit";
 export const metadata: Metadata = {
   title: "How Replit Are You?",
   description:
-    "15 challenges. 6 rounds. ~3 minutes. No signup. Test your Replit skills and get a shareable scorecard.",
+    "6 rounds. ~3 min. No signup. Test your Replit skills and get a shareable scorecard.",
   icons: { icon: "/logos/replit.png" },
 };
 

@@ -5,7 +5,7 @@ import { slackConfig } from "@/quizzes/slack";
 export const metadata: Metadata = {
   title: "How Slack Are You?",
   description:
-    "15 challenges. 6 rounds. ~3 minutes. No signup. Test your Slack skills and get a shareable scorecard.",
+    "6 rounds. ~3 min. No signup. Test your Slack skills and get a shareable scorecard.",
   icons: { icon: "/logos/slack.png" },
 };
 

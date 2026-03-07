@@ -3,7 +3,7 @@ import type { QuizConfig } from "@/components/quiz/types";
 export const perplexityConfig: QuizConfig = {
   slug: "perplexity",
   toolName: "Perplexity",
-  tagline: "6 rounds. 15 challenges. No subscription required.",
+  tagline: "6 rounds. ~3 min. No subscription required.",
   subtitle: "Just you vs. Perplexity trivia.",
   sansFont: "ibm-plex-sans",
   serifFont: "source-serif-4",

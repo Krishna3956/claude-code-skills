@@ -43,7 +43,7 @@ function ResultContent({ config }: { config: QuizConfig }) {
     });
   }, [prefix, result.overallScore, archetype.title]);
 
-  const shareMessage = `I just took "How well do you know ${config.toolName}?" and scored ${result.overallScore}/100 - that makes me a ${archetype.title}!\n\nThink you can beat my score? 15 challenges, 6 rounds, no signup required.\n\nTry it yourself`;
+  const shareMessage = `I just took "How well do you know ${config.toolName}?" and scored ${result.overallScore}/100 - that makes me a ${archetype.title}!\n\nThink you can beat my score? 6 rounds, ~3 min, no signup required.\n\nTry it yourself`;
 
   const twitterText = `I scored ${result.overallScore}/100 on "How well do you know ${config.toolName}?" - I'm a ${archetype.title}\n\nThink you can beat me?`;
   const twitterUrl = `https://x.com/intent/post?text=${encodeURIComponent(twitterText)}&url=${encodeURIComponent(siteUrl)}`;

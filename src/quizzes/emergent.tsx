@@ -3,7 +3,7 @@ import type { QuizConfig } from "@/components/quiz/types";
 export const emergentConfig: QuizConfig = {
   slug: "emergent",
   toolName: "Emergent",
-  tagline: "6 rounds. 15 challenges. No account required.",
+  tagline: "6 rounds. ~3 min. No account required.",
   subtitle: "Just you vs. Emergent trivia.",
   sansFont: "inter",
   serifFont: "source-serif-4",

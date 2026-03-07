@@ -5,7 +5,7 @@ import { notionConfig } from "@/quizzes/notion";
 export const metadata: Metadata = {
   title: "How Notion Are You?",
   description:
-    "15 challenges. 6 rounds. ~3 minutes. No signup. Test your Notion skills and get a shareable scorecard.",
+    "6 rounds. ~3 min. No signup. Test your Notion skills and get a shareable scorecard.",
   icons: { icon: "/logos/notion.png" },
 };
 

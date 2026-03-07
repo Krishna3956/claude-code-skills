@@ -3,7 +3,7 @@ import type { QuizConfig } from "@/components/quiz/types";
 export const postmanConfig: QuizConfig = {
   slug: "postman",
   toolName: "Postman",
-  tagline: "6 rounds. 15 challenges. No API key required.",
+  tagline: "6 rounds. ~3 min. No API key required.",
   subtitle: "Just you vs. Postman trivia.",
   sansFont: "open-sans",
   serifFont: "source-serif-4",

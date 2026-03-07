@@ -3,7 +3,7 @@ import type { QuizConfig } from "@/components/quiz/types";
 export const zapierConfig: QuizConfig = {
   slug: "zapier",
   toolName: "Zapier",
-  tagline: "6 rounds. 15 challenges. No account required.",
+  tagline: "6 rounds. ~3 min. No account required.",
   subtitle: "Just you vs. Zapier trivia.",
   sansFont: "inter",
   serifFont: "source-serif-4",

@@ -3,7 +3,7 @@ import type { QuizConfig } from "@/components/quiz/types";
 export const linearConfig: QuizConfig = {
   slug: "linear",
   toolName: "Linear",
-  tagline: "6 rounds. 15 challenges. No workspace required.",
+  tagline: "6 rounds. ~3 min. No workspace required.",
   subtitle: "Just you vs. Linear trivia.",
   sansFont: "inter",
   serifFont: "playfair-display",

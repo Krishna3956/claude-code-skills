@@ -3,7 +3,7 @@ import type { QuizConfig } from "@/components/quiz/types";
 export const chatgptConfig: QuizConfig = {
   slug: "chatgpt",
   toolName: "ChatGPT",
-  tagline: "6 rounds. 15 challenges. No account required.",
+  tagline: "6 rounds. ~3 min. No account required.",
   subtitle: "Just you vs. ChatGPT trivia.",
   sansFont: "inter",
   serifFont: "source-serif-4",

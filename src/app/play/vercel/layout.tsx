@@ -4,7 +4,7 @@ import { vercelConfig } from "@/quizzes/vercel";
 
 export const metadata: Metadata = {
   title: "How Vercel Are You?",
-  description: "15 challenges. 6 rounds. ~3 minutes. No signup. Test your Vercel skills and get a shareable scorecard.",
+  description: "6 rounds. ~3 min. No signup. Test your Vercel skills and get a shareable scorecard.",
   icons: { icon: "/logos/vercel.svg" },
 };
 

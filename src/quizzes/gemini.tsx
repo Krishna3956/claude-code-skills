@@ -3,7 +3,7 @@ import type { QuizConfig } from "@/components/quiz/types";
 export const geminiConfig: QuizConfig = {
   slug: "gemini",
   toolName: "Gemini",
-  tagline: "6 rounds. 15 challenges. No account required.",
+  tagline: "6 rounds. ~3 min. No account required.",
   subtitle: "Just you vs. Gemini trivia.",
   sansFont: "inter",
   serifFont: "source-serif-4",

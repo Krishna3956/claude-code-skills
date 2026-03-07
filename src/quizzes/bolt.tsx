@@ -3,7 +3,7 @@ import type { QuizConfig } from "@/components/quiz/types";
 export const boltConfig: QuizConfig = {
   slug: "bolt",
   toolName: "Bolt.new",
-  tagline: "6 rounds. 15 challenges. No account required.",
+  tagline: "6 rounds. ~3 min. No account required.",
   subtitle: "Just you vs. Bolt.new trivia.",
   sansFont: "inter",
   serifFont: "source-serif-4",

@@ -3,7 +3,7 @@ import type { QuizConfig } from "@/components/quiz/types";
 export const figmaConfig: QuizConfig = {
   slug: "figma",
   toolName: "Figma",
-  tagline: "6 rounds. 15 challenges. No design degree required.",
+  tagline: "6 rounds. ~3 min. No design degree required.",
   subtitle: "Just you vs. Figma trivia.",
   sansFont: "plus-jakarta-sans",
   serifFont: "instrument-serif",

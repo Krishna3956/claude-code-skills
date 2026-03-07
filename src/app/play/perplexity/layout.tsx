@@ -5,7 +5,7 @@ import { perplexityConfig } from "@/quizzes/perplexity";
 export const metadata: Metadata = {
   title: "How Perplexity Are You?",
   description:
-    "15 challenges. 6 rounds. ~3 minutes. No signup. Test your Perplexity skills and get a shareable scorecard.",
+    "6 rounds. ~3 min. No signup. Test your Perplexity skills and get a shareable scorecard.",
   icons: { icon: "/logos/perplexity.png" },
 };
 

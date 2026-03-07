@@ -5,7 +5,7 @@ import { loomConfig } from "@/quizzes/loom";
 export const metadata: Metadata = {
   title: "How Loom Are You?",
   description:
-    "15 challenges. 6 rounds. ~3 minutes. No signup. Test your Loom skills and get a shareable scorecard.",
+    "6 rounds. ~3 min. No signup. Test your Loom skills and get a shareable scorecard.",
   icons: { icon: "/logos/loom.png" },
 };
 

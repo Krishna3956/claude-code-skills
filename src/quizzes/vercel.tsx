@@ -3,7 +3,7 @@ import type { QuizConfig } from "@/components/quiz/types";
 export const vercelConfig: QuizConfig = {
   slug: "vercel",
   toolName: "Vercel",
-  tagline: "6 rounds. 15 challenges. No coding required.",
+  tagline: "6 rounds. ~3 min. No coding required.",
   subtitle: "Just you vs. Vercel trivia.",
   sansFont: "geist",
   serifFont: "instrument-serif",

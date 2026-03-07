@@ -4,7 +4,7 @@ import { chatgptConfig } from "@/quizzes/chatgpt";
 
 export const metadata: Metadata = {
   title: "How ChatGPT Are You?",
-  description: "15 challenges. 6 rounds. ~3 minutes. No signup. Test your ChatGPT skills and get a shareable scorecard.",
+  description: "6 rounds. ~3 min. No signup. Test your ChatGPT skills and get a shareable scorecard.",
   icons: { icon: "/logos/chatgpt.svg" },
 };
 

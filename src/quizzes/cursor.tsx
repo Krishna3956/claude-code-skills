@@ -3,7 +3,7 @@ import type { QuizConfig } from "@/components/quiz/types";
 export const cursorConfig: QuizConfig = {
   slug: "cursor",
   toolName: "Cursor",
-  tagline: "6 rounds. 15 challenges. No IDE required.",
+  tagline: "6 rounds. ~3 min. No IDE required.",
   subtitle: "Just you vs. Cursor trivia.",
   sansFont: "space-grotesk",
   serifFont: "playfair-display",

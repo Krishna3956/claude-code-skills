@@ -5,7 +5,7 @@ import { zapierConfig } from "@/quizzes/zapier";
 export const metadata: Metadata = {
   title: "How Zapier Are You?",
   description:
-    "15 challenges. 6 rounds. ~3 minutes. No signup. Test your Zapier skills and get a shareable scorecard.",
+    "6 rounds. ~3 min. No signup. Test your Zapier skills and get a shareable scorecard.",
   icons: { icon: "/logos/zapier.png" },
 };
 

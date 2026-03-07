@@ -11,7 +11,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "How Well You Know",
   description:
-    "Test your knowledge of the tools you use every day. 15 challenges, 6 rounds, ~3 minutes, zero signup. Get your skill profile and shareable scorecard.",
+    "Test your knowledge of the tools you use every day. 6 rounds, ~3 min, zero signup. Get your skill profile and shareable scorecard.",
   metadataBase: new URL("https://www.howwellyouknow.com"),
   icons: { icon: "/logos/hwyk-logo.svg" },
 };

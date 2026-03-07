@@ -4,7 +4,7 @@ import { cursorConfig } from "@/quizzes/cursor";
 
 export const metadata: Metadata = {
   title: "How Cursor Are You?",
-  description: "15 challenges. 6 rounds. ~3 minutes. No signup. Test your Cursor skills and get a shareable scorecard.",
+  description: "6 rounds. ~3 min. No signup. Test your Cursor skills and get a shareable scorecard.",
   icons: { icon: "/logos/cursor.png" },
 };
 

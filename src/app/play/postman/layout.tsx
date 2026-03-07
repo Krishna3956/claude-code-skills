@@ -5,7 +5,7 @@ import { postmanConfig } from "@/quizzes/postman";
 export const metadata: Metadata = {
   title: "How Postman Are You?",
   description:
-    "15 challenges. 6 rounds. ~3 minutes. No signup. Test your Postman skills and get a shareable scorecard.",
+    "6 rounds. ~3 min. No signup. Test your Postman skills and get a shareable scorecard.",
   icons: { icon: "/logos/postman.png" },
 };
 

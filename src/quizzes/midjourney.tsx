@@ -3,7 +3,7 @@ import type { QuizConfig } from "@/components/quiz/types";
 export const midjourneyConfig: QuizConfig = {
   slug: "midjourney",
   toolName: "Midjourney",
-  tagline: "6 rounds. 15 challenges. No account required.",
+  tagline: "6 rounds. ~3 min. No account required.",
   subtitle: "Just you vs. Midjourney trivia.",
   sansFont: "inter",
   serifFont: "playfair-display",

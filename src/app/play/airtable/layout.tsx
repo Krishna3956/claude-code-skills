@@ -5,7 +5,7 @@ import { airtableConfig } from "@/quizzes/airtable";
 export const metadata: Metadata = {
   title: "How Airtable Are You?",
   description:
-    "15 challenges. 6 rounds. ~3 minutes. No signup. Test your Airtable skills and get a shareable scorecard.",
+    "6 rounds. ~3 min. No signup. Test your Airtable skills and get a shareable scorecard.",
   icons: { icon: "/logos/airtable.jpg" },
 };
 

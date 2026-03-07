@@ -3,7 +3,7 @@ import type { QuizConfig } from "@/components/quiz/types";
 export const airtableConfig: QuizConfig = {
   slug: "airtable",
   toolName: "Airtable",
-  tagline: "6 rounds. 15 challenges. No account required.",
+  tagline: "6 rounds. ~3 min. No account required.",
   subtitle: "Just you vs. Airtable trivia.",
   sansFont: "inter",
   serifFont: "source-serif-4",

@@ -3,7 +3,7 @@ import type { QuizConfig } from "@/components/quiz/types";
 export const windsurfConfig: QuizConfig = {
   slug: "windsurf",
   toolName: "Windsurf",
-  tagline: "6 rounds. 15 challenges. No IDE required.",
+  tagline: "6 rounds. ~3 min. No IDE required.",
   subtitle: "Just you vs. Windsurf trivia.",
   sansFont: "outfit",
   serifFont: "instrument-serif",

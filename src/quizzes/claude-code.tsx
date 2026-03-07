@@ -3,7 +3,7 @@ import type { QuizConfig } from "@/components/quiz/types";
 export const claudeCodeConfig: QuizConfig = {
   slug: "claude-code",
   toolName: "Claude Code",
-  tagline: "6 rounds. 15 challenges. No coding required.",
+  tagline: "6 rounds. ~3 min. No coding required.",
   subtitle: "Just you vs. Claude Code trivia.",
   sansFont: "dm-sans",
   serifFont: "instrument-serif",

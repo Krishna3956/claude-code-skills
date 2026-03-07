@@ -87,7 +87,7 @@ export const {tool}Config: QuizConfig = {
   // Identity
   slug: "{tool-slug}",
   toolName: "{Tool Name}",
-  tagline: "6 rounds. 15 challenges. No {thing} required.",
+  tagline: "6 rounds. ~3 min. No {thing} required.",
   subtitle: "Just you vs. {Tool} trivia.",
 
   // Typography (pick from available fonts - see font table)
@@ -195,7 +195,7 @@ import { {tool}Config } from "@/quizzes/{tool-slug}";
 
 export const metadata: Metadata = {
   title: "How {Tool Name} Are You?",
-  description: "15 challenges. 6 rounds. ~3 minutes. No signup. Test your {Tool Name} skills and get a shareable scorecard.",
+  description: "6 rounds. ~3 min. No signup. Test your {Tool Name} skills and get a shareable scorecard.",
   icons: { icon: "/logos/{tool-slug}.{ext}" },
 };
 

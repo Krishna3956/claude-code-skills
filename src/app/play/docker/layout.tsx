@@ -5,7 +5,7 @@ import { dockerConfig } from "@/quizzes/docker";
 export const metadata: Metadata = {
   title: "How Docker Are You?",
   description:
-    "15 challenges. 6 rounds. ~3 minutes. No signup. Test your Docker skills and get a shareable scorecard.",
+    "6 rounds. ~3 min. No signup. Test your Docker skills and get a shareable scorecard.",
   icons: { icon: "/logos/docker.svg" },
 };
 
