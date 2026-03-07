@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   description:
     "Test your knowledge of the tools you use every day. 15 challenges, 6 rounds, ~3 minutes, zero signup. Get your skill profile and shareable scorecard.",
   metadataBase: new URL("https://www.howwellyouknow.com"),
-  icons: { icon: "/claude-logo.png", apple: "/claude-logo.png" },
+  icons: { icon: "/default-favicon.ico" },
 };
 
 export default function RootLayout({
