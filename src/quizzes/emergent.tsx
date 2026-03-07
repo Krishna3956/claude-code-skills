@@ -23,7 +23,7 @@ export const emergentConfig: QuizConfig = {
   scorecardDivider: "#2D3548",
   scorecardLabelColor: "#8A95A5",
   scorecardGridColor: "#2D3548",
-  logo: (<img src="/logos/emergent.jpg" alt="Emergent" width={64} height={64} style={{ borderRadius: 14, objectFit: "contain" }} />),
+  logo: (<img src="/logos/emergent.jpg" alt="Emergent" width={80} height={80} style={{ borderRadius: 16, objectFit: "contain" }} />),
   analyticsPrefix: "emergent",
   dimensionLabels: {
     memory: "App Building",
