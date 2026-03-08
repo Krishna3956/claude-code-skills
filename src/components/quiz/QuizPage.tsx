@@ -335,6 +335,7 @@ function HomeScreen({ config, onStart }: { config: QuizConfig; onStart: () => vo
           </h1>
           <a
             href="/"
+            onClick={() => track("powered_by_clicked", { source: "quiz_intro", quiz: config.analyticsPrefix })}
             className="hidden sm:inline-flex items-center gap-2 mt-2 group cursor-pointer"
             style={{
               textDecoration: "none",
@@ -412,6 +413,7 @@ function HomeScreen({ config, onStart }: { config: QuizConfig; onStart: () => vo
       <div className="flex sm:hidden fixed top-0 left-0 z-50 px-4 py-3">
         <a
           href="/"
+          onClick={() => track("powered_by_clicked", { source: "quiz_intro_mobile", quiz: config.analyticsPrefix })}
           className="inline-flex items-center gap-2"
           style={{
             textDecoration: "none",

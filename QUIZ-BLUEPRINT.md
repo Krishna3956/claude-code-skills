@@ -628,8 +628,10 @@ Score <  40 -> 8th
 | `src/components/quiz/*` (all game logic) | `src/quizzes/{tool}.tsx` (config file) |
 | `src/components/RadarChart.tsx` | `src/app/play/{tool}/layout.tsx` (with metadata + favicon) |
 | `src/app/layout.tsx` | `src/app/play/{tool}/page.tsx` (4 lines) |
-| `package.json` / deps | `src/app/play/{tool}/results/page.tsx` (4 lines) |
-| `next.config.ts` | `public/logos/{tool}.{ext}` (brand logo file) |
+| `src/app/api/capture-email/route.ts` | `src/app/play/{tool}/results/page.tsx` (4 lines) |
+| `src/lib/validate-email.ts` + `disposable-domains.ts` | `public/logos/{tool}.{ext}` (brand logo file) |
+| `package.json` / deps | |
+| `next.config.ts` | |
 
 **To add a new quiz: 1 config file + 3 route files + 1 logo file. That's it.**
 
@@ -726,7 +728,94 @@ The badge links to the HWYK homepage (`/`). It is implemented in the shared `Qui
 
 ---
 
-## 17. Design Principles
+## 17. Email Capture (Soft Gate on Results Page)
+
+### How It Works
+
+The results page uses a **soft gate** to capture emails without blocking the core experience:
+
+- **Always visible (no gate):** Score number, archetype title, tool logo, share buttons (X, LinkedIn)
+- **Blurred until email entered:** Spider chart, dimension breakdown bars, archetype description
+- **Inline overlay:** A frosted-glass card sits on top of the blurred section with an email input and "Show My Results" CTA
+- **Save button gating:** The Save/Download button is always visible, but clicking it before entering email smooth-scrolls to the email overlay and auto-focuses the input
+
+### After Email Submission
+
+- Email is sent to the `/api/capture-email` API route, which appends a row to a Google Sheet
+- Blur animates away (0.5s CSS transition)
+- Gate is shown every time (no localStorage persistence) -- each play = fresh email capture
+- Save button works normally (downloads full scorecard PNG)
+- Analytics event `{prefix}_email_captured` fires to Vercel Analytics as a backup
+
+### Email Storage (Google Sheets)
+
+Emails are stored in a Google Sheet via the Google Sheets API (service account auth). Each row contains:
+
+| Timestamp (UTC) | Email | Quiz slug | Score | Archetype | Dimensions | User Agent |
+
+**Setup:** See `.env.example` for the 3 required environment variables (`GOOGLE_SERVICE_ACCOUNT_EMAIL`, `GOOGLE_PRIVATE_KEY`, `GOOGLE_SHEET_ID`). The service account must have Editor access to the sheet.
+
+**API route:** `src/app/api/capture-email/route.ts` -- validates the email server-side, rate-limits by IP (10 req/min), and appends to the sheet. The call is fire-and-forget from the client: if the Sheets API is down, the user still gets unlocked and the Vercel Analytics event still fires.
+
+### Email Validation
+
+Validation happens on both client and server:
+
+1. **Format check** -- standard email regex
+2. **Disposable domain blocklist** -- ~500 known throwaway email providers (mailinator, guerrillamail, yopmail, etc.) in `src/lib/disposable-domains.ts`
+3. **Fake pattern detection** -- rejects obvious fakes like `test@test.com`, `fake@gmail.com`, single-character local parts
+4. **Typo correction** -- suggests fixes for common misspellings (`gmial.com` -> `gmail.com`, `yaho.com` -> `yahoo.com`)
+
+Client validation: `src/lib/validate-email.ts` (used by `InlineEmailForm`)
+Server validation: `src/app/api/capture-email/route.ts` (format + disposable domain check)
+
+### Key Rules
+
+- **Email only** -- no first name, no last name. Collect name later via email flow.
+- **No hard block on share** -- share buttons always work. Sharing spreads the quiz organically.
+- **No localStorage persistence** -- gate shown every time. Each play = fresh email capture for per-session analytics.
+- **Blur, not hide** -- users can see there IS more content. Creates curiosity and FOMO.
+- **Fire-and-forget storage** -- never block the user experience if the storage backend is down.
+
+---
+
+## 18. Analytics Events
+
+All events use `@vercel/analytics` `track()` and are prefixed with `config.analyticsPrefix` (e.g., `chatgpt_`, `vercel_`).
+
+### Quiz Funnel Events
+
+| Event | Trigger | Properties |
+|-------|---------|------------|
+| `{prefix}_started` | User clicks "Let's Go" | — |
+| `{prefix}_answer` | User selects an answer | `round`, `questionId`, `choice`/`item` |
+| `{prefix}_question_result` | Answer evaluated | `questionId`, `correct`, `questionIndex`, `totalQuestions` |
+| `{prefix}_lock_in` | Speed round lock-in | `questionId` |
+| `{prefix}_next` | User clicks "Next" | `questionId`, `questionIndex` |
+| `{prefix}_see_results` | User clicks "See Results" (last question) | `questionId`, `questionIndex` |
+| `{prefix}_completed` | Quiz finished, redirecting | `score`, `correctCount`, `totalQuestions` |
+
+### Results Page Events
+
+| Event | Trigger | Properties |
+|-------|---------|------------|
+| `{prefix}_results_viewed` | Results page loads | `score`, `archetype` |
+| `{prefix}_email_captured` | User submits email on soft gate | `score`, `archetype`, `email` |
+| `{prefix}_email_skipped` | User clicks "Play Again" without entering email | `score` |
+| `{prefix}_scorecard_dl` | User downloads scorecard PNG | `score`, `archetype` |
+| `{prefix}_share_x` | User clicks "Post on X" | `score` |
+| `{prefix}_share_li` | User clicks "Share on LinkedIn" | `score` |
+| `{prefix}_play_again` | User clicks "Play Again" | `score` |
+
+### Platform Events (not quiz-prefixed)
+
+| Event | Trigger | Properties |
+|-------|---------|------------|
+| `powered_by_clicked` | User clicks any "Powered by" badge | `source` ("quiz_intro", "quiz_intro_mobile", "results_scorecard"), `quiz` |
+
+---
+
+## 19. Design Principles
 
 1. **No signup friction** - zero barrier to entry
 2. **Variety over repetition** - 5 challenge types prevent quiz fatigue
@@ -750,10 +839,13 @@ The badge links to the HWYK homepage (`/`). It is implemented in the shared `Qui
 20. **Answer integrity** - every `blank` must exist in `options`, every `oddItem` must exist in `items`, `correct` must be "A" or "B", `correctItems` and `wrongItems` must never overlap
 21. **"Powered by" badge** - every quiz page shows a "Powered by" pill with the HWYK monogram, linking to the homepage; desktop: inline under title, mobile: fixed top-left
 22. **Brand credit placement** - "Made with ♥ by Krishna Goyal" sits at bottom-right on desktop, inline on mobile
+23. **Soft email gate** - results page shows score/title freely but blurs detailed breakdown until email is entered; Save button scrolls to gate when locked
+24. **Analytics coverage** - every user action (start, answer, complete, share, download, email capture, powered-by click) is tracked via Vercel analytics
+25. **Email validation** - disposable domains, fake patterns, and common typos are blocked client-side and server-side; emails are stored in Google Sheets via the `/api/capture-email` route
 
 ---
 
-## 18. Checklist for New Quiz
+## 20. Checklist for New Quiz
 
 Use this checklist every time you create a new quiz:
 
