@@ -24,13 +24,15 @@ export const openclawConfig: QuizConfig = {
   scorecardLabelColor: "#94A3B8",
   scorecardGridColor: "#243447",
   logo: (
-    <img
-      src="/logos/openclaw-wordmark.png"
-      alt="OpenClaw"
-      width={152}
-      height={46}
-      style={{ objectFit: "contain" }}
-    />
+    <div style={{ paddingTop: 10, paddingBottom: 4 }}>
+      <img
+        src="/logos/openclaw-wordmark.png"
+        alt="OpenClaw"
+        width={136}
+        height={40}
+        style={{ objectFit: "contain" }}
+      />
+    </div>
   ),
   scorecardLogo: (
     <img
