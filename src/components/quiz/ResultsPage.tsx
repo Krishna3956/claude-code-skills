@@ -12,12 +12,123 @@ import { decodeResult, getArchetype } from "./scoring";
 
 const SITE_URL = "https://howwellyouknow.com";
 
+function PlayMorePopup({ accentColor, onClose }: { accentColor: string; onClose: () => void }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 50,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "rgba(0,0,0,0.6)",
+        backdropFilter: "blur(4px)",
+        WebkitBackdropFilter: "blur(4px)",
+        padding: "16px",
+      }}
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ type: "spring", damping: 25, stiffness: 300 }}
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          background: "#1a1a2e",
+          borderRadius: 20,
+          border: "1px solid rgba(255,255,255,0.1)",
+          padding: "32px 28px",
+          maxWidth: 360,
+          width: "100%",
+          textAlign: "center",
+          position: "relative",
+        }}
+      >
+        <button
+          onClick={onClose}
+          style={{
+            position: "absolute",
+            top: 12,
+            right: 12,
+            background: "none",
+            border: "none",
+            color: "rgba(255,255,255,0.4)",
+            cursor: "pointer",
+            padding: 4,
+            fontSize: 18,
+            lineHeight: 1,
+          }}
+        >
+          ✕
+        </button>
+
+        <div style={{ fontSize: 40, marginBottom: 12 }}>🎮</div>
+
+        <h2
+          style={{
+            color: "#F5F0EB",
+            fontSize: 20,
+            fontWeight: 700,
+            fontFamily: "var(--font-v5-serif), ui-serif, Georgia, serif",
+            marginBottom: 8,
+          }}
+        >
+          Enjoyed this one?
+        </h2>
+
+        <p
+          style={{
+            color: "rgba(255,255,255,0.55)",
+            fontSize: 14,
+            lineHeight: 1.5,
+            marginBottom: 24,
+          }}
+        >
+          We have 25+ challenges across AI, dev tools, design, and more. Find your next one.
+        </p>
+
+        <a
+          href="/play"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 8,
+            width: "100%",
+            padding: "14px 24px",
+            borderRadius: 12,
+            background: accentColor,
+            color: "#FFFFFF",
+            fontSize: 15,
+            fontWeight: 700,
+            textDecoration: "none",
+            transition: "transform 0.15s, opacity 0.2s",
+          }}
+          onMouseDown={(e) => { e.currentTarget.style.transform = "scale(0.97)"; }}
+          onMouseUp={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
+        >
+          Play More Challenges
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M5 12h14" />
+            <path d="m12 5 7 7-7 7" />
+          </svg>
+        </a>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 function ResultContent({ config }: { config: QuizConfig }) {
   const searchParams = useSearchParams();
   const isEmbed = searchParams.get("embed") === "true";
   const result = decodeResult(searchParams, config);
   const cardRef = useRef<HTMLDivElement>(null);
   const [downloading, setDownloading] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
   const prefix = config.analyticsPrefix;
 
   if (!result) {
@@ -49,6 +160,12 @@ function ResultContent({ config }: { config: QuizConfig }) {
       archetype: archetype.title,
     });
   }, [prefix, result.overallScore, archetype.title]);
+
+  useEffect(() => {
+    if (isEmbed) return;
+    const timer = setTimeout(() => setShowPopup(true), 5000);
+    return () => clearTimeout(timer);
+  }, [isEmbed]);
 
   const shareMessage = `I just took "How well do you know ${config.toolName}?" and scored ${result.overallScore}/100. That makes me a ${archetype.title}!\n\nThink you can beat my score? 6 rounds, ~3 min, no signup required.\n\nTry it yourself`;
 
@@ -399,6 +516,13 @@ function ResultContent({ config }: { config: QuizConfig }) {
           </a>
         )}
       </motion.div>
+
+      {showPopup && (
+        <PlayMorePopup
+          accentColor={cardAccent}
+          onClose={() => setShowPopup(false)}
+        />
+      )}
     </div>
   );
 }
