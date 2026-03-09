@@ -75,12 +75,10 @@ export default function HomePage() {
         <div className="relative mx-auto flex max-w-[1200px] flex-col items-center gap-8 px-4 pb-10 pt-10 sm:gap-10 sm:px-6 sm:pb-14 sm:pt-14 md:flex-row md:items-center md:gap-12 md:pb-20 md:pt-20 lg:gap-16">
           <div className="flex-1" style={{ animation: "fadeInUp 0.8s ease-out both" }}>
             <h1
-              className="mb-4 text-[2rem] font-bold leading-[1.15] tracking-tight sm:text-4xl md:text-5xl md:leading-[1.1] lg:text-[3.5rem]"
-              style={{ color: "var(--m-text)" }}
+              className="mb-4 text-[2rem] font-bold leading-[1.12] tracking-tight sm:text-4xl md:text-5xl md:leading-[1.1] lg:text-[3.25rem]"
+              style={{ color: "var(--m-text)", maxWidth: "520px" }}
             >
-              Turn your product documentation into{" "}
-              <span className="hidden md:inline"><br /></span>
-              <span style={{ color: "var(--m-accent)" }}>interactive learning experiences</span>
+              Turn your product into <span style={{ color: "var(--m-accent)" }}>interactive learning experiences</span>
             </h1>
             <p
               className="mb-6 max-w-lg text-sm leading-relaxed md:text-base"
