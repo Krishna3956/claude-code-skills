@@ -29,6 +29,7 @@ const QUIZ_COLORS: Record<string, { accent: string; bg: string }> = {
   postman: { accent: "#FF6C37", bg: "#FFF5F0" },
   emergent: { accent: "#2563EB", bg: "#F0F5FF" },
   lovable: { accent: "#E11D48", bg: "#FFF0F3" },
+  openclaw: { accent: "#FF173D", bg: "#F7F8FA" },
 };
 
 export async function GET(request: NextRequest) {
