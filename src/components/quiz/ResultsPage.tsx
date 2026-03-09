@@ -9,159 +9,16 @@ import { toPng } from "html-to-image";
 import { track } from "@vercel/analytics";
 import type { QuizConfig } from "./types";
 import { decodeResult, getArchetype } from "./scoring";
-import { validateEmail } from "@/lib/validate-email";
 
 const SITE_URL = "https://howwellyouknow.com";
-
-function InlineEmailForm({
-  onSubmit,
-  accentColor,
-  labelColor,
-  bgColor,
-  inputRef,
-}: {
-  onSubmit: (email: string) => Promise<void> | void;
-  accentColor: string;
-  labelColor: string;
-  bgColor: string;
-  inputRef: React.RefObject<HTMLInputElement | null>;
-}) {
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (submitting) return;
-    const result = validateEmail(email);
-    if (!result.valid) {
-      if (result.suggestion) {
-        setEmail(result.suggestion);
-      }
-      setError(result.error ?? "Please enter a valid email");
-      inputRef.current?.focus();
-      return;
-    }
-    setSubmitting(true);
-    await onSubmit(email.trim().toLowerCase());
-  };
-
-  return (
-    <motion.form
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.2, duration: 0.4 }}
-      onSubmit={handleSubmit}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: 12,
-        background: bgColor,
-        width: "100%",
-        maxWidth: 300,
-      }}
-    >
-      <p
-        style={{
-          color: "#F5F0EB",
-          fontSize: 14,
-          fontWeight: 600,
-          fontFamily: "var(--font-v5-sans), system-ui, sans-serif",
-          textAlign: "center",
-          letterSpacing: "-0.01em",
-        }}
-      >
-        Your full results are ready
-      </p>
-
-      <div style={{ width: "100%" }}>
-        <input
-          ref={inputRef}
-          type="email"
-          placeholder="your@email.com"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-            if (error) setError("");
-          }}
-          style={{
-            width: "100%",
-            padding: "13px 14px",
-            borderRadius: 10,
-            border: error
-              ? "1px solid rgba(220,38,38,0.6)"
-              : "1px solid rgba(255,255,255,0.25)",
-            background: "rgba(255,255,255,0.12)",
-            color: "#F5F0EB",
-            fontSize: 14,
-            outline: "none",
-            boxSizing: "border-box",
-          }}
-        />
-        {error && (
-          <p
-            style={{
-              color: "rgba(220,38,38,0.8)",
-              fontSize: 11,
-              marginTop: 4,
-            }}
-          >
-            {error}
-          </p>
-        )}
-      </div>
-
-      <button
-        type="submit"
-        disabled={submitting}
-        style={{
-          width: "100%",
-          padding: "13px",
-          borderRadius: 10,
-          background: accentColor,
-          color: "#FFFFFF",
-          fontSize: 15,
-          fontWeight: 700,
-          border: "none",
-          cursor: submitting ? "default" : "pointer",
-          transition: "transform 0.15s, opacity 0.2s",
-          letterSpacing: "-0.01em",
-          opacity: submitting ? 0.7 : 1,
-        }}
-        onMouseDown={(e) => { if (!submitting) e.currentTarget.style.transform = "scale(0.97)"; }}
-        onMouseUp={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
-      >
-        {submitting ? "Unlocking..." : "Show My Results"}
-      </button>
-
-      <p
-        style={{
-          color: labelColor,
-          fontSize: 10,
-          opacity: 0.4,
-          textAlign: "center",
-        }}
-      >
-        100% free · no spam · unsubscribe anytime
-      </p>
-    </motion.form>
-  );
-}
 
 function ResultContent({ config }: { config: QuizConfig }) {
   const searchParams = useSearchParams();
   const isEmbed = searchParams.get("embed") === "true";
   const result = decodeResult(searchParams, config);
   const cardRef = useRef<HTMLDivElement>(null);
-  const emailFormRef = useRef<HTMLDivElement>(null);
-  const emailInputRef = useRef<HTMLInputElement>(null);
   const [downloading, setDownloading] = useState(false);
-  const [unlocked, setUnlocked] = useState(isEmbed);
   const prefix = config.analyticsPrefix;
-
-  // Gate shown every time - no localStorage persistence.
-  // Each play = fresh email capture for per-session analytics.
 
   if (!result) {
     return (
@@ -196,58 +53,6 @@ function ResultContent({ config }: { config: QuizConfig }) {
   const shareMessage = `I just took "How well do you know ${config.toolName}?" and scored ${result.overallScore}/100. That makes me a ${archetype.title}!\n\nThink you can beat my score? 6 rounds, ~3 min, no signup required.\n\nTry it yourself`;
 
   const saveBtnRef = useRef<HTMLButtonElement>(null);
-
-  const scrollToEmailForm = () => {
-    emailFormRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "center",
-    });
-    setTimeout(() => emailInputRef.current?.focus(), 400);
-  };
-
-  const handleSaveClick = () => {
-    if (!unlocked) {
-      scrollToEmailForm();
-      return;
-    }
-    downloadCard();
-  };
-
-  const handleEmailSubmit = async (email: string) => {
-    let saved = false;
-    for (let attempt = 0; attempt < 2; attempt++) {
-      try {
-        const res = await fetch("/api/capture-email", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email,
-            quiz: config.slug,
-            score: result.overallScore,
-            archetype: archetype.title,
-            dimensions: result.dimensions
-              .map((d) => `${d.label}: ${d.score}`)
-              .join(", "),
-          }),
-        });
-        if (res.ok) {
-          saved = true;
-          break;
-        }
-      } catch {
-        if (attempt === 0) await new Promise((r) => setTimeout(r, 1000));
-      }
-    }
-    if (!saved) {
-      console.warn("Failed to save email after retries — unlocking anyway");
-    }
-    track(`${prefix}_email_captured`, {
-      score: result.overallScore,
-      archetype: archetype.title,
-      email,
-    });
-    setUnlocked(true);
-  };
 
   const downloadCard = async () => {
     if (!cardRef.current || downloading) return;
@@ -313,7 +118,6 @@ function ResultContent({ config }: { config: QuizConfig }) {
             }}
           />
 
-          {/* --- ALWAYS VISIBLE: logo, score, archetype title --- */}
           <div className="px-6 pt-6 pb-3 text-center relative">
             {isEmbed ? null : (
               <a
@@ -358,7 +162,7 @@ function ResultContent({ config }: { config: QuizConfig }) {
             )}
             <button
               ref={saveBtnRef}
-              onClick={handleSaveClick}
+              onClick={downloadCard}
               disabled={downloading}
               className="absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-medium transition-all hover:opacity-80 active:scale-95 disabled:opacity-40"
               style={{
@@ -442,139 +246,72 @@ function ResultContent({ config }: { config: QuizConfig }) {
             </h1>
           </div>
 
-          {/* --- GATED SECTION: description, spider chart, dimension bars --- */}
-          <div style={{ position: "relative" }}>
-            {/* Full content always rendered */}
-            <div>
-              <div className="px-6 pb-2 text-center">
-                <p
-                  className="mx-auto max-w-[280px]"
-                  style={{
-                    color: config.scorecardLabelColor,
-                    fontSize: "12px",
-                    lineHeight: 1.6,
-                  }}
-                >
-                  {archetype.description}
-                </p>
-              </div>
-
-              <div className="px-2">
-                <RadarChart
-                  dimensions={result.dimensions}
-                  accentColor={cardAccent}
-                  gridColor={config.scorecardGridColor}
-                  labelColor={config.scorecardLabelColor}
-                  bgColor={config.scorecardBg}
-                />
-              </div>
-
-              <div className="px-5 pb-5 flex flex-col gap-2">
-                {result.dimensions.map((dim) => (
-                  <div
-                    key={dim.dimension}
-                    className="flex items-center justify-between py-1"
-                  >
-                    <span
-                      style={{
-                        color: config.scorecardLabelColor,
-                        fontSize: "11px",
-                      }}
-                      className="w-24 truncate"
-                    >
-                      {dim.label}
-                    </span>
-                    <div className="flex items-center gap-2 flex-1 ml-3">
-                      <div
-                        className="flex-1 h-1 rounded-full overflow-hidden"
-                        style={{ background: config.scorecardDivider }}
-                      >
-                        <div
-                          className="h-full rounded-full"
-                          style={{
-                            width: `${dim.score}%`,
-                            background: cardAccent,
-                          }}
-                        />
-                      </div>
-                      <span
-                        className="font-mono w-6 text-right"
-                        style={{
-                          color: cardAccent,
-                          fontSize: "11px",
-                          opacity: 0.7,
-                        }}
-                      >
-                        {dim.score}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Blur overlay with email capture - centered in the blurred zone */}
-            {!unlocked && (
-              <div
-                ref={emailFormRef}
+          <div>
+            <div className="px-6 pb-2 text-center">
+              <p
+                className="mx-auto max-w-[280px]"
                 style={{
-                  position: "absolute",
-                  top: "25%",
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  zIndex: 5,
+                  color: config.scorecardLabelColor,
+                  fontSize: "12px",
+                  lineHeight: 1.6,
                 }}
               >
-                {/* Feather edge */}
+                {archetype.description}
+              </p>
+            </div>
+
+            <div className="px-2">
+              <RadarChart
+                dimensions={result.dimensions}
+                accentColor={cardAccent}
+                gridColor={config.scorecardGridColor}
+                labelColor={config.scorecardLabelColor}
+                bgColor={config.scorecardBg}
+              />
+            </div>
+
+            <div className="px-5 pb-5 flex flex-col gap-2">
+              {result.dimensions.map((dim) => (
                 <div
-                  style={{
-                    height: 36,
-                    background: `linear-gradient(to bottom, transparent, ${config.scorecardBg}30)`,
-                    backdropFilter: "blur(0.5px)",
-                    WebkitBackdropFilter: "blur(0.5px)",
-                    pointerEvents: "none",
-                  }}
-                />
-                {/* Blur pane */}
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 36,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    backdropFilter: "blur(5px)",
-                    WebkitBackdropFilter: "blur(5px)",
-                    background: `${config.scorecardBg}30`,
-                    pointerEvents: "none",
-                  }}
-                />
-                {/* Email form - sits on top of the blur */}
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 36,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    zIndex: 6,
-                    padding: "0 24px",
-                  }}
+                  key={dim.dimension}
+                  className="flex items-center justify-between py-1"
                 >
-                  <InlineEmailForm
-                    onSubmit={handleEmailSubmit}
-                    accentColor={cardAccent}
-                    labelColor={config.scorecardLabelColor}
-                    bgColor="transparent"
-                    inputRef={emailInputRef}
-                  />
+                  <span
+                    style={{
+                      color: config.scorecardLabelColor,
+                      fontSize: "11px",
+                    }}
+                    className="w-24 truncate"
+                  >
+                    {dim.label}
+                  </span>
+                  <div className="flex items-center gap-2 flex-1 ml-3">
+                    <div
+                      className="flex-1 h-1 rounded-full overflow-hidden"
+                      style={{ background: config.scorecardDivider }}
+                    >
+                      <div
+                        className="h-full rounded-full"
+                        style={{
+                          width: `${dim.score}%`,
+                          background: cardAccent,
+                        }}
+                      />
+                    </div>
+                    <span
+                      className="font-mono w-6 text-right"
+                      style={{
+                        color: cardAccent,
+                        fontSize: "11px",
+                        opacity: 0.7,
+                      }}
+                    >
+                      {dim.score}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            )}
+              ))}
+            </div>
           </div>
 
           <div
@@ -621,11 +358,6 @@ function ResultContent({ config }: { config: QuizConfig }) {
         <Link
           href={`/play/${config.slug}`}
           onClick={() => {
-            if (!unlocked) {
-              track(`${prefix}_email_skipped`, {
-                score: result.overallScore,
-              });
-            }
             track(`${prefix}_play_again`, {
               score: result.overallScore,
             });
