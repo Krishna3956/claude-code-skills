@@ -3,20 +3,20 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "Start free with unlimited challenges. Upgrade for analytics, custom branding, lead capture, and team features. Plans from $199/mo.",
+    "Start free with unlimited challenges. Upgrade for analytics, custom branding, lead capture, and team features. Plans from $49/mo.",
   alternates: {
     canonical: "https://www.howwellyouknow.com/pricing",
   },
   openGraph: {
     title: "Pricing - How Well You Know",
     description:
-      "Start free with unlimited challenges. Upgrade for analytics, custom branding, lead capture, and team features. Plans from $199/mo.",
+      "Start free with unlimited challenges. Upgrade for analytics, custom branding, lead capture, and team features. Plans from $49/mo.",
     url: "https://www.howwellyouknow.com/pricing",
   },
   twitter: {
     title: "Pricing - How Well You Know",
     description:
-      "Start free with unlimited challenges. Upgrade for analytics, custom branding, and lead capture. Plans from $199/mo.",
+      "Start free with unlimited challenges. Upgrade for analytics, custom branding, and lead capture. Plans from $49/mo.",
   },
 };
 

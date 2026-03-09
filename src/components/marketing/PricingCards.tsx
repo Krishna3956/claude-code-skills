@@ -34,8 +34,8 @@ const TIERS: Tier[] = [
   },
   {
     name: "Growth",
-    monthly: 199,
-    yearly: 159,
+    monthly: 49,
+    yearly: 39,
     tagline: "For growing teams",
     features: [
       "5 challenges",
@@ -55,8 +55,8 @@ const TIERS: Tier[] = [
   },
   {
     name: "Scale",
-    monthly: 449,
-    yearly: 359,
+    monthly: 149,
+    yearly: 119,
     tagline: "For serious CS teams",
     features: [
       "Unlimited challenges",
