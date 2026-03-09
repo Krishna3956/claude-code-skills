@@ -44,10 +44,10 @@ export default function Navbar() {
             <Image
               src="/logos/hwyk-lockup-transparent.png"
               alt="How Well You Know"
-              width={240}
-              height={42}
+              width={168}
+              height={29}
               priority
-              className="max-h-[48px] w-auto sm:max-h-[64px]"
+              className="max-h-[34px] w-auto sm:max-h-[45px]"
               style={{ objectFit: "contain" }}
             />
           </Link>
