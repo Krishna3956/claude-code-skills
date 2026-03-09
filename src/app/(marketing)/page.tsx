@@ -482,20 +482,6 @@ export default function HomePage() {
           }),
         }}
       />
-      {/* JSON-LD: WebSite with SearchAction */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            name: "How Well You Know",
-            url: "https://www.howwellyouknow.com",
-            description:
-              "Interactive product challenges for B2B SaaS customer education",
-          }),
-        }}
-      />
     </>
   );
 }

@@ -15,6 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.howwellyouknow.com"),
+  applicationName: "How Well You Know",
   title: {
     default: "How Well You Know - Interactive Product Challenges for B2B SaaS",
     template: "%s | How Well You Know",
@@ -42,8 +43,15 @@ export const metadata: Metadata = {
     telephone: false,
   },
   icons: {
-    icon: "/logos/hwyk-logo.svg",
-    apple: "/logos/hwyk-logo.svg",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/logos/hwyk-logo.svg", type: "image/svg+xml" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
   openGraph: {
     title: "How Well You Know - Interactive Product Challenges for B2B SaaS",
@@ -99,6 +107,20 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} ${geistMono.variable} antialiased`}>
         {children}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "How Well You Know",
+              alternateName: ["HWYK", "HowWellYouKnow"],
+              url: "https://www.howwellyouknow.com",
+              description:
+                "Interactive product challenges for B2B SaaS customer education",
+            }),
+          }}
+        />
         <Analytics />
       </body>
     </html>
