@@ -35,7 +35,7 @@ export const postmanConfig: QuizConfig = {
     bestPractices: "Best Practices",
   },
   archetypes: [
-    { title: "API Overlord", emoji: "👑", description: "You've mastered Postman completely. Flows, monitors, mock servers, Newman - you're the API expert everyone consults.", minScore: 90, maxScore: 100 },
+    { title: "API Overlord", emoji: "👑", description: "You've mastered Postman completely. Flows, monitors, mock servers, Newman. You're the API expert everyone consults.", minScore: 90, maxScore: 100 },
     { title: "Request Architect", emoji: "🏗️", description: "Your collection game is strong and your test scripts are solid. A few advanced features left to discover.", minScore: 80, maxScore: 89 },
     { title: "Power Tester", emoji: "⚡", description: "You're well beyond basic GET requests. A few advanced features to explore and you'll be in the top tier.", minScore: 70, maxScore: 79 },
     { title: "Endpoint Explorer", emoji: "🔍", description: "Postman is part of your daily workflow, but there's a whole layer of automation and testing you haven't explored.", minScore: 60, maxScore: 69 },

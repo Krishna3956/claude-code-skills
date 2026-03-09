@@ -1,0 +1,31 @@
+import type { QuizCardData } from "@/components/marketing/QuizCard";
+
+export const QUIZ_LIST: QuizCardData[] = [
+  { slug: "chatgpt", toolName: "ChatGPT", logoFile: "chatgpt.svg", category: "AI Tools" },
+  { slug: "figma", toolName: "Figma", logoFile: "figma.svg", category: "Design" },
+  { slug: "cursor", toolName: "Cursor", logoFile: "cursor.png", category: "Dev Tools" },
+  { slug: "notion", toolName: "Notion", logoFile: "notion.png", category: "Productivity" },
+  { slug: "claude-code", toolName: "Claude Code", logoFile: "claude-ai-icon.webp", category: "AI Tools" },
+  { slug: "hubspot", toolName: "HubSpot", logoFile: "hubspot.png", category: "Marketing" },
+  { slug: "windsurf", toolName: "Windsurf", logoFile: "windsurf.svg", category: "Dev Tools" },
+  { slug: "slack", toolName: "Slack", logoFile: "slack.png", category: "Productivity" },
+  { slug: "canva", toolName: "Canva", logoFile: "canva.jpg", category: "Design" },
+  { slug: "vercel", toolName: "Vercel", logoFile: "vercel.svg", category: "Dev Tools" },
+  { slug: "gemini", toolName: "Gemini", logoFile: "gemini.png", category: "AI Tools" },
+  { slug: "loom", toolName: "Loom", logoFile: "loom.png", category: "Productivity" },
+  { slug: "docker", toolName: "Docker", logoFile: "docker.svg", category: "Dev Tools" },
+  { slug: "perplexity", toolName: "Perplexity", logoFile: "perplexity.png", category: "AI Tools" },
+  { slug: "airtable", toolName: "Airtable", logoFile: "airtable.jpg", category: "Productivity" },
+  { slug: "replit", toolName: "Replit", logoFile: "replit.png", category: "Dev Tools" },
+  { slug: "midjourney", toolName: "Midjourney", logoFile: "midjourney.jpg", category: "AI Tools" },
+  { slug: "zapier", toolName: "Zapier", logoFile: "zapier.png", category: "Productivity" },
+  { slug: "bolt", toolName: "Bolt.new", logoFile: "bolt.png", category: "Dev Tools" },
+  { slug: "linear", toolName: "Linear", logoFile: "linear.jpg", category: "Productivity" },
+  { slug: "github-copilot", toolName: "GitHub Copilot", logoFile: "github-copilot.jpg", category: "Dev Tools" },
+  { slug: "obsidian", toolName: "Obsidian", logoFile: "obsidian.png", category: "Productivity" },
+  { slug: "postman", toolName: "Postman", logoFile: "postman.png", category: "Dev Tools" },
+  { slug: "emergent", toolName: "Emergent", logoFile: "emergent.jpg", category: "Marketing" },
+  { slug: "lovable", toolName: "Lovable", logoFile: "lovable.png", category: "Dev Tools" },
+];
+
+export const CATEGORIES = ["All", "AI Tools", "Dev Tools", "Design", "Productivity", "Marketing"];

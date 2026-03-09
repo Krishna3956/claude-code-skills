@@ -35,7 +35,7 @@ export const figmaConfig: QuizConfig = {
     bestPractices: "Best Practices",
   },
   archetypes: [
-    { title: "Design Deity", emoji: "👑", description: "You know Figma inside and out. Auto layout, variables, dev mode, advanced prototyping - you're the person everyone asks for help.", minScore: 90, maxScore: 100 },
+    { title: "Design Deity", emoji: "👑", description: "You know Figma inside and out. Auto layout, variables, dev mode, advanced prototyping. You're the person everyone asks for help.", minScore: 90, maxScore: 100 },
     { title: "Pixel Architect", emoji: "🏗️", description: "Your component game is strong and your prototypes are polished. A few hidden features left to discover.", minScore: 80, maxScore: 89 },
     { title: "Layout Lord", emoji: "⚡", description: "You're well beyond the basics. Auto layout and components are second nature. Time to explore the deep cuts.", minScore: 70, maxScore: 79 },
     { title: "Frame Builder", emoji: "🔲", description: "Figma is part of your daily workflow, but there's a whole layer of power features you haven't explored.", minScore: 60, maxScore: 69 },

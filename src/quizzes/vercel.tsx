@@ -36,12 +36,12 @@ export const vercelConfig: QuizConfig = {
     bestPractices: "Best Practices",
   },
   archetypes: [
-    { title: "Vercel Virtuoso", emoji: "🎯", description: "You've mastered Vercel completely. v0, deployments, edge functions, analytics - you're shipping apps faster than anyone.", minScore: 90, maxScore: 100 },
+    { title: "Vercel Virtuoso", emoji: "🎯", description: "You've mastered Vercel completely. v0, deployments, edge functions, analytics. You're shipping apps faster than anyone.", minScore: 90, maxScore: 100 },
     { title: "Ship Captain", emoji: "🚀", description: "You know how to get production-quality output from Vercel's ecosystem. Your deployment game is strong and your v0 prompting is precise.", minScore: 80, maxScore: 89 },
     { title: "Rapid Builder", emoji: "⚡", description: "You're well beyond basic deploys. A few advanced techniques to master and you'll be elite.", minScore: 70, maxScore: 79 },
     { title: "Prompt Crafter", emoji: "🔨", description: "Vercel is part of your toolkit, but there's a whole layer of power you haven't explored yet.", minScore: 60, maxScore: 69 },
     { title: "Copy Paster", emoji: "📋", description: "You use v0 to generate components and paste them in. But the real power is in iteration and full-stack features.", minScore: 50, maxScore: 59 },
-    { title: "Window Shopper", emoji: "🪟", description: "You've tried Vercel but barely scratched the surface. Between v0, edge functions, and analytics - there's a lot more to explore.", minScore: 40, maxScore: 49 },
+    { title: "Window Shopper", emoji: "🪟", description: "You've tried Vercel but barely scratched the surface. Between v0, edge functions, and analytics, there's a lot more to explore.", minScore: 40, maxScore: 49 },
     { title: "First Deploy", emoji: "🌱", description: "Everyone starts somewhere. You just discovered that Vercel can do way more than host a static site.", minScore: 0, maxScore: 39 },
   ],
   challenges: [

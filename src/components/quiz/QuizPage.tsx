@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useCallback, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useState, useCallback, useEffect, useRef } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { track } from "@vercel/analytics";
 import {
@@ -38,7 +38,7 @@ function RoundIcon({ name, size = 20, color }: { name: string; size?: number; co
 }
 import { calculateResults, encodeResult } from "./scoring";
 
-const LINKEDIN_URL = "https://www.linkedin.com/in/krishnaa-goyal/";
+const SITE_URL = "https://howwellyouknow.com";
 
 function FeedbackBox({ show, correct, text }: { show: boolean; correct: boolean | null; text: string }) {
   if (!show) return null;
@@ -54,7 +54,7 @@ function FeedbackBox({ show, correct, text }: { show: boolean; correct: boolean 
       }}
     >
       <span className="font-semibold">{correct ? "Correct" : "Not quite"}</span>
-      <span style={{ color: "var(--v5-text-secondary)" }}> - {text}</span>
+      <span style={{ color: "var(--v5-text-secondary)" }}> · {text}</span>
     </motion.div>
   );
 }
@@ -313,9 +313,21 @@ function OddOneOutCard({ challenge, onAnswer, prefix }: { challenge: OddOneOutCh
 // ────────────────────────────────────────────────────────────
 // HOMESCREEN
 // ────────────────────────────────────────────────────────────
-function HomeScreen({ config, onStart }: { config: QuizConfig; onStart: () => void }) {
+function HomeScreen({ config, onStart, isEmbed }: { config: QuizConfig; onStart: () => void; isEmbed: boolean }) {
+  const startButton = (
+    <button
+      onClick={() => { track(`${config.analyticsPrefix}_started`); onStart(); }}
+      className={`${isEmbed ? "px-12" : "w-full"} py-4 rounded-xl text-base font-semibold transition-all active:scale-[0.98]`}
+      style={{ background: "var(--v5-accent)", color: "#FFFFFF" }}>
+      Let&apos;s Go
+    </button>
+  );
+
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center px-4 py-12">
+    <div
+      className="flex min-h-screen flex-col items-center justify-center px-4 py-12"
+      style={isEmbed ? { zoom: 0.75 } : undefined}
+    >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -333,41 +345,43 @@ function HomeScreen({ config, onStart }: { config: QuizConfig; onStart: () => vo
             style={{ fontFamily: "var(--font-v5-serif), ui-serif, Georgia, serif", color: "var(--v5-accent)" }}>
             know {config.toolName}?
           </h1>
-          <a
-            href="/"
-            onClick={() => track("powered_by_clicked", { source: "quiz_intro", quiz: config.analyticsPrefix })}
-            className="hidden sm:inline-flex items-center gap-2 mt-2 group cursor-pointer"
-            style={{
-              textDecoration: "none",
-              border: "1px solid var(--v5-border)",
-              borderRadius: 8,
-              padding: "4px 4px 4px 12px",
-              background: "var(--v5-bg-surface)",
-              transition: "all 0.2s ease",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = "rgba(250,204,21,0.5)";
-              e.currentTarget.style.background = "rgba(250,204,21,0.08)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = "var(--v5-border)";
-              e.currentTarget.style.background = "var(--v5-bg-surface)";
-            }}
-          >
-            <span style={{ fontSize: 12, fontWeight: 600, color: "var(--v5-text-tertiary)", letterSpacing: 0.2 }}>
-              Powered by
-            </span>
-            <img
-              src="/logos/hwyk-logo-transparent.svg"
-              alt="How Well You Know"
-              width="28"
-              height="28"
-              style={{ objectFit: "contain" }}
-            />
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--v5-text-tertiary)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.5 }}>
-              <path d="M7 17L17 7" /><path d="M7 7h10v10" />
-            </svg>
-          </a>
+          {isEmbed ? null : (
+            <a
+              href="/"
+              onClick={() => track("powered_by_clicked", { source: "quiz_intro", quiz: config.analyticsPrefix })}
+              className="hidden sm:inline-flex items-center gap-2 mt-2 group cursor-pointer"
+              style={{
+                textDecoration: "none",
+                border: "1px solid var(--v5-border)",
+                borderRadius: 8,
+                padding: "4px 4px 4px 12px",
+                background: "var(--v5-bg-surface)",
+                transition: "all 0.2s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = "rgba(250,204,21,0.5)";
+                e.currentTarget.style.background = "rgba(250,204,21,0.08)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = "var(--v5-border)";
+                e.currentTarget.style.background = "var(--v5-bg-surface)";
+              }}
+            >
+              <span style={{ fontSize: 12, fontWeight: 600, color: "var(--v5-text-tertiary)", letterSpacing: 0.2 }}>
+                Powered by
+              </span>
+              <img
+                src="/logos/hwyk-logo-transparent.svg"
+                alt="How Well You Know"
+                width="28"
+                height="28"
+                style={{ objectFit: "contain" }}
+              />
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--v5-text-tertiary)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.5 }}>
+                <path d="M7 17L17 7" /><path d="M7 7h10v10" />
+              </svg>
+            </a>
+          )}
         </div>
 
         <p style={{ color: "var(--v5-text-secondary)", fontSize: "14px", lineHeight: "1.6" }}>
@@ -375,6 +389,8 @@ function HomeScreen({ config, onStart }: { config: QuizConfig; onStart: () => vo
           <br />
           {config.subtitle}
         </p>
+
+        {isEmbed && startButton}
 
         <div className="w-full rounded-xl overflow-hidden" style={{ border: "1px solid var(--v5-border)" }}>
           {config.rounds.map((round, i) => (
@@ -387,77 +403,78 @@ function HomeScreen({ config, onStart }: { config: QuizConfig; onStart: () => vo
           ))}
         </div>
 
-        <button
-          onClick={() => { track(`${config.analyticsPrefix}_started`); onStart(); }}
-          className="w-full py-4 rounded-xl text-base font-semibold transition-all active:scale-[0.98]"
-          style={{ background: "var(--v5-accent)", color: "#FFFFFF" }}>
-          Let&apos;s Go
-        </button>
+        {!isEmbed && startButton}
 
         <p style={{ color: "var(--v5-text-tertiary)", fontSize: "11px", lineHeight: "1.5" }}>
           ~3 min · no signup · shareable results
         </p>
 
-        <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer"
-          className="flex sm:hidden items-center gap-1.5 mt-4 transition-opacity hover:opacity-80"
-          style={{ textDecoration: "none" }}>
-          <span style={{ color: "var(--v5-text-tertiary)", fontSize: "13px" }}>Made with</span>
-          <span style={{ color: "var(--v5-accent)", fontSize: "14px" }}>♥</span>
-          <span style={{ color: "var(--v5-text-tertiary)", fontSize: "13px" }}>by</span>
-          <span style={{ color: "var(--v5-accent)", fontSize: "13px", fontWeight: 600 }}>Krishna Goyal</span>
-        </a>
+        {!isEmbed && (
+          <a href={SITE_URL}
+            className="flex sm:hidden items-center gap-1.5 mt-4 transition-opacity hover:opacity-80"
+            style={{ textDecoration: "none" }}>
+            <span style={{ color: "var(--v5-text-tertiary)", fontSize: "13px" }}>Made with</span>
+            <span style={{ color: "var(--v5-accent)", fontSize: "14px" }}>♥</span>
+            <span style={{ color: "var(--v5-text-tertiary)", fontSize: "13px" }}>by</span>
+            <span style={{ color: "var(--v5-accent)", fontSize: "13px", fontWeight: 600 }}>How Well You Know</span>
+          </a>
+        )}
       </motion.div>
 
 
       {/* Powered-by: fixed top-left on mobile */}
-      <div className="flex sm:hidden fixed top-0 left-0 z-50 px-4 py-3">
-        <a
-          href="/"
-          onClick={() => track("powered_by_clicked", { source: "quiz_intro_mobile", quiz: config.analyticsPrefix })}
-          className="inline-flex items-center gap-2"
-          style={{
-            textDecoration: "none",
-            border: "1px solid var(--v5-border)",
-            borderRadius: 8,
-            padding: "5px 5px 5px 12px",
-            background: "var(--v5-bg-surface)",
-            transition: "all 0.2s ease",
-          }}
-          onTouchStart={(e) => {
-            e.currentTarget.style.borderColor = "rgba(250,204,21,0.5)";
-            e.currentTarget.style.background = "rgba(250,204,21,0.08)";
-          }}
-          onTouchEnd={(e) => {
-            e.currentTarget.style.borderColor = "var(--v5-border)";
-            e.currentTarget.style.background = "var(--v5-bg-surface)";
-          }}
-        >
-          <span style={{ fontSize: 11, fontWeight: 600, color: "var(--v5-text-tertiary)", letterSpacing: 0.2 }}>
-            Powered by
-          </span>
-          <img
-            src="/logos/hwyk-logo-transparent.svg"
-            alt="How Well You Know"
-            width="26"
-            height="26"
-            style={{ objectFit: "contain" }}
-          />
-          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="var(--v5-text-tertiary)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.5, marginLeft: -4 }}>
-            <path d="M7 17L17 7" /><path d="M7 7h10v10" />
-          </svg>
-        </a>
-      </div>
+      {!isEmbed && (
+        <div className="flex sm:hidden fixed top-0 left-0 z-50 px-4 py-3">
+          <a
+            href="/"
+            onClick={() => track("powered_by_clicked", { source: "quiz_intro_mobile", quiz: config.analyticsPrefix })}
+            className="inline-flex items-center gap-2"
+            style={{
+              textDecoration: "none",
+              border: "1px solid var(--v5-border)",
+              borderRadius: 8,
+              padding: "5px 5px 5px 12px",
+              background: "var(--v5-bg-surface)",
+              transition: "all 0.2s ease",
+            }}
+            onTouchStart={(e) => {
+              e.currentTarget.style.borderColor = "rgba(250,204,21,0.5)";
+              e.currentTarget.style.background = "rgba(250,204,21,0.08)";
+            }}
+            onTouchEnd={(e) => {
+              e.currentTarget.style.borderColor = "var(--v5-border)";
+              e.currentTarget.style.background = "var(--v5-bg-surface)";
+            }}
+          >
+            <span style={{ fontSize: 11, fontWeight: 600, color: "var(--v5-text-tertiary)", letterSpacing: 0.2 }}>
+              Powered by
+            </span>
+            <img
+              src="/logos/hwyk-logo-transparent.svg"
+              alt="How Well You Know"
+              width="26"
+              height="26"
+              style={{ objectFit: "contain" }}
+            />
+            <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="var(--v5-text-tertiary)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.5, marginLeft: -4 }}>
+              <path d="M7 17L17 7" /><path d="M7 7h10v10" />
+            </svg>
+          </a>
+        </div>
+      )}
 
       {/* Credit: fixed bottom-right on desktop */}
-      <div className="hidden sm:flex fixed bottom-0 right-0 z-50 px-4 py-3">
-        <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer"
-          className="flex items-center gap-1.5 transition-opacity hover:opacity-80" style={{ textDecoration: "none" }}>
-          <span style={{ color: "var(--v5-text-tertiary)", fontSize: "13px" }}>Made with</span>
-          <span style={{ color: "var(--v5-accent)", fontSize: "14px" }}>♥</span>
-          <span style={{ color: "var(--v5-text-tertiary)", fontSize: "13px" }}>by</span>
-          <span style={{ color: "var(--v5-accent)", fontSize: "13px", fontWeight: 600 }}>Krishna Goyal</span>
-        </a>
-      </div>
+      {!isEmbed && (
+        <div className="hidden sm:flex fixed bottom-0 right-0 z-50 px-4 py-3">
+          <a href={SITE_URL}
+            className="flex items-center gap-1.5 transition-opacity hover:opacity-80" style={{ textDecoration: "none" }}>
+            <span style={{ color: "var(--v5-text-tertiary)", fontSize: "13px" }}>Made with</span>
+            <span style={{ color: "var(--v5-accent)", fontSize: "14px" }}>♥</span>
+            <span style={{ color: "var(--v5-text-tertiary)", fontSize: "13px" }}>by</span>
+            <span style={{ color: "var(--v5-accent)", fontSize: "13px", fontWeight: 600 }}>How Well You Know</span>
+          </a>
+        </div>
+      )}
     </div>
   );
 }
@@ -465,8 +482,10 @@ function HomeScreen({ config, onStart }: { config: QuizConfig; onStart: () => vo
 // ────────────────────────────────────────────────────────────
 // MAIN GAME
 // ────────────────────────────────────────────────────────────
-export default function QuizPage({ config }: { config: QuizConfig }) {
+function QuizPageInner({ config }: { config: QuizConfig }) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const isEmbed = searchParams.get("embed") === "true";
   const [started, setStarted] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [results, setResults] = useState<ChallengeResult[]>([]);
@@ -517,15 +536,15 @@ export default function QuizPage({ config }: { config: QuizConfig }) {
         correctCount: results.filter((r) => r.earned > 0).length,
         totalQuestions: total,
       });
-      router.push(`/play/${config.slug}/results?${encoded}`);
+      router.push(`/play/${config.slug}/results?${encoded}${isEmbed ? "&embed=true" : ""}`);
     }
   }, [currentIndex, total, results, router, config]);
 
-  if (!started) return <HomeScreen config={config} onStart={() => setStarted(true)} />;
+  if (!started) return <HomeScreen config={config} onStart={() => setStarted(true)} isEmbed={isEmbed} />;
 
   if (showingRoundIntro && currentRound) {
     return (
-      <div className="flex min-h-dvh items-center justify-center px-4">
+      <div className="flex min-h-dvh items-center justify-center px-4" style={isEmbed ? { zoom: 0.75 } : undefined}>
         <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
           className="flex flex-col items-center gap-3 text-center">
           <div><RoundIcon name={currentRound.name} size={40} /></div>
@@ -544,7 +563,7 @@ export default function QuizPage({ config }: { config: QuizConfig }) {
   const roundSize = currentRound ? currentRound.ids.length : 1;
 
   return (
-    <div className="flex min-h-dvh flex-col items-center px-4 py-6 sm:py-8">
+    <div className="flex min-h-dvh flex-col items-center px-4 py-6 sm:py-8" style={isEmbed ? { zoom: 0.75 } : undefined}>
       <div className="w-full max-w-lg mb-6">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2" style={{ fontSize: "12px", color: "var(--v5-text-secondary)" }}>
@@ -597,5 +616,13 @@ export default function QuizPage({ config }: { config: QuizConfig }) {
         </motion.div>
       )}
     </div>
+  );
+}
+
+export default function QuizPage({ config }: { config: QuizConfig }) {
+  return (
+    <Suspense fallback={<div className="flex min-h-dvh items-center justify-center" />}>
+      <QuizPageInner config={config} />
+    </Suspense>
   );
 }

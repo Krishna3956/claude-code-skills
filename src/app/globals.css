@@ -5,12 +5,25 @@
   --foreground: #d4d4d8;
   --surface: #16213e;
   --surface-light: #1e2d4a;
-  --accent: #e2b714;
-  --accent-dim: #b8960f;
+  --accent: #6366F1;
+  --accent-dim: #4F46E5;
   --correct: #7ec8a0;
   --wrong: #e06c75;
   --muted: #646687;
   --border: #2a2a4a;
+
+  --m-bg: #FFFFFF;
+  --m-bg-secondary: #F6F9FC;
+  --m-bg-tertiary: #EDF1F7;
+  --m-text: #0A2540;
+  --m-text-secondary: #425466;
+  --m-text-tertiary: #8898AA;
+  --m-accent: #635BFF;
+  --m-accent-hover: #5046E5;
+  --m-accent-light: #F0EEFF;
+  --m-brand-yellow: #FFCB57;
+  --m-border: #E3E8EE;
+  --m-border-subtle: #F0F3F7;
 }
 
 @theme inline {
@@ -24,7 +37,7 @@
   --color-wrong: var(--wrong);
   --color-muted: var(--muted);
   --color-border: var(--border);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
 }
 
@@ -37,4 +50,39 @@ body {
 ::selection {
   background: var(--accent);
   color: var(--background);
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-reverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scorecard-logo-wrap img {
+  max-height: 44px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }

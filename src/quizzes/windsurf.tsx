@@ -35,7 +35,7 @@ export const windsurfConfig: QuizConfig = {
     bestPractices: "Best Practices",
   },
   archetypes: [
-    { title: "Windsurf Wizard", emoji: "🧙", description: "You've mastered Windsurf completely. Cascade, Flows, context management - you're getting more done than entire teams.", minScore: 90, maxScore: 100 },
+    { title: "Windsurf Wizard", emoji: "🧙", description: "You've mastered Windsurf completely. Cascade, Flows, context management. You're getting more done than entire teams.", minScore: 90, maxScore: 100 },
     { title: "Flow Architect", emoji: "🏗️", description: "You know how to orchestrate Windsurf for complex tasks. Your workflow is sophisticated and efficient.", minScore: 80, maxScore: 89 },
     { title: "Power Surfer", emoji: "🏄", description: "You're well beyond the basics. A few advanced features to explore and you'll be in the top tier.", minScore: 70, maxScore: 79 },
     { title: "Wave Rider", emoji: "🌊", description: "Windsurf is part of your coding routine, but there's a whole world of features you haven't tapped into yet.", minScore: 60, maxScore: 69 },

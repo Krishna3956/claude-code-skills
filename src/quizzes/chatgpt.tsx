@@ -35,7 +35,7 @@ export const chatgptConfig: QuizConfig = {
     bestPractices: "Best Practices",
   },
   archetypes: [
-    { title: "GPT Grandmaster", emoji: "🧠", description: "You've mastered ChatGPT inside and out. Custom GPTs, advanced prompting, data analysis - you're running circles around everyone.", minScore: 90, maxScore: 100 },
+    { title: "GPT Grandmaster", emoji: "🧠", description: "You've mastered ChatGPT inside and out. Custom GPTs, advanced prompting, data analysis. You're running circles around everyone.", minScore: 90, maxScore: 100 },
     { title: "Prompt Architect", emoji: "🏗️", description: "You know how to get exactly what you want from ChatGPT. Your prompting game is elite and you use features most people don't know exist.", minScore: 80, maxScore: 89 },
     { title: "Power User", emoji: "⚡", description: "You're well beyond the basics. A few advanced features to explore and you'll be in the top tier.", minScore: 70, maxScore: 79 },
     { title: "Daily Driver", emoji: "🚗", description: "ChatGPT is part of your routine, but there's a whole world of features you haven't tapped into yet.", minScore: 60, maxScore: 69 },

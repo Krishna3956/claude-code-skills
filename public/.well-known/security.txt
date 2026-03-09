@@ -1,0 +1,3 @@
+Contact: mailto:hello@howwellyouknow.com
+Preferred-Languages: en
+Canonical: https://www.howwellyouknow.com/.well-known/security.txt

@@ -40,7 +40,7 @@ export const cursorConfig: QuizConfig = {
       title: "Cursor Virtuoso",
       emoji: "🎹",
       description:
-        "You've mastered every corner of Cursor. Agents, rules, MCP servers, multi-file edits - you're running circles around everyone.",
+        "You've mastered every corner of Cursor. Agents, rules, MCP servers, multi-file edits. You're running circles around everyone.",
       minScore: 90,
       maxScore: 100,
     },
@@ -120,7 +120,7 @@ export const cursorConfig: QuizConfig = {
       id: 3,
       dimension: "orchestration",
       statement:
-        "Agent mode can run terminal commands, create files, and make multi-file edits on its own - you just approve the plan and it executes.",
+        "Agent mode can run terminal commands, create files, and make multi-file edits on its own. You just approve the plan and it executes.",
       isTrue: true,
       explanation:
         "Agent mode is the most autonomous option. It can run commands, create and edit files across your codebase, and work through multi-step tasks. You review and approve each step. Chat and Composer are more interactive.",
@@ -154,7 +154,7 @@ export const cursorConfig: QuizConfig = {
       id: 6,
       dimension: "automation",
       scenario:
-        "You need a quick inline edit to fix a function - change the logic, add a parameter, refactor a few lines.",
+        "You need a quick inline edit to fix a function. Change the logic, add a parameter, refactor a few lines.",
       optionA: "Open Composer and describe the change",
       optionB: "Select the code and press Cmd+K for inline edit",
       correct: "B",
@@ -200,14 +200,14 @@ export const cursorConfig: QuizConfig = {
         "Rule-based autocomplete",
       ],
       explanation:
-        "Cursor's tab completion can suggest whole blocks - multiple lines, function bodies, even small snippets. It's smarter than single-token completion. You can accept, reject, or edit before applying.",
+        "Cursor's tab completion can suggest whole blocks: multiple lines, function bodies, even small snippets. It's smarter than single-token completion. You can accept, reject, or edit before applying.",
     },
     {
       type: "quick_pick",
       id: 10,
       dimension: "memory",
       scenario:
-        "You have reusable context - a design system, API spec, or shared patterns - that you want available across many chats. What Cursor feature helps?",
+        "You have reusable context (a design system, API spec, or shared patterns) that you want available across many chats. What Cursor feature helps?",
       blank: "Notepads",
       options: ["Notepads", "Bookmarks", "Snippets", "Templates"],
       explanation:
@@ -229,7 +229,7 @@ export const cursorConfig: QuizConfig = {
       wrongItems: ["GitHub repos", "Slack channels", "Jira tickets", "Email"],
       timeLimit: 15,
       explanation:
-        "@file, @folder, @codebase, @web, @docs - Cursor's @ system pulls in files, folders, codebase search results, web content, and docs. External tools like Slack or Jira need MCP servers.",
+        "@file, @folder, @codebase, @web, @docs. Cursor's @ system pulls in files, folders, codebase search results, web content, and docs. External tools like Slack or Jira need MCP servers.",
     },
     {
       type: "speed_pick",
@@ -263,7 +263,7 @@ export const cursorConfig: QuizConfig = {
       items: ["Chat", "Composer", "Agent", "Terminal AI"],
       oddItem: "Terminal AI",
       explanation:
-        "Chat, Composer, and Agent are real. Chat is conversational, Composer does multi-file edits, Agent runs autonomously with approvals. There's no separate 'Terminal AI' mode - the agent uses the terminal as a tool.",
+        "Chat, Composer, and Agent are real. Chat is conversational, Composer does multi-file edits, Agent runs autonomously with approvals. There's no separate 'Terminal AI' mode. The agent uses the terminal as a tool.",
     },
     {
       type: "odd_one_out",
@@ -279,7 +279,7 @@ export const cursorConfig: QuizConfig = {
       ],
       oddItem: "Push commits to GitHub",
       explanation:
-        "Cursor can handle images, @web for live search, and background agents. It can run git commands in the terminal (with your approval), but it doesn't push commits directly - you approve terminal actions. The agent runs commands; you control what gets executed.",
+        "Cursor can handle images, @web for live search, and background agents. It can run git commands in the terminal (with your approval), but it doesn't push commits directly. You approve terminal actions. The agent runs commands; you control what gets executed.",
     },
 
     // Round 6: Final Boss (id 15)
@@ -288,10 +288,10 @@ export const cursorConfig: QuizConfig = {
       id: 15,
       dimension: "bestPractices",
       statement:
-        "You can scope rules to specific file patterns - for example, one set of rules for *.tsx files and another for *.py - using the .cursor/rules directory.",
+        "You can scope rules to specific file patterns. For example, one set of rules for *.tsx files and another for *.py, using the .cursor/rules directory.",
       isTrue: true,
       explanation:
-        "The .cursor/rules directory supports glob-based rule files. Create rules that apply only to certain paths or file types. Frontend rules for React, backend rules for Python - each gets the right context without polluting the other.",
+        "The .cursor/rules directory supports glob-based rule files. Create rules that apply only to certain paths or file types. Frontend rules for React, backend rules for Python. Each gets the right context without polluting the other.",
     },
   ],
   rounds: [

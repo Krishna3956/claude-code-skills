@@ -1,0 +1,39 @@
+# How Well You Know
+
+## About
+How Well You Know is a platform that turns product documentation into 3-minute interactive challenges for B2B SaaS companies. It helps with customer onboarding, community engagement, lead generation, documentation enhancement, and feature adoption.
+
+## Website
+https://www.howwellyouknow.com
+
+## Key Pages
+- Homepage: https://www.howwellyouknow.com
+- Play Challenges: https://www.howwellyouknow.com/play
+- How It Works: https://www.howwellyouknow.com/how-it-works
+- Pricing: https://www.howwellyouknow.com/pricing
+- Use Cases: https://www.howwellyouknow.com/use-cases
+
+## Use Cases
+- Customer Onboarding: https://www.howwellyouknow.com/use-cases/onboarding
+- Community Engagement: https://www.howwellyouknow.com/use-cases/community
+- Lead Generation: https://www.howwellyouknow.com/use-cases/marketing
+- Documentation Enhancement: https://www.howwellyouknow.com/use-cases/documentation
+- Product Teams: https://www.howwellyouknow.com/use-cases/product-teams
+
+## Product
+How Well You Know converts product knowledge into interactive challenges with 6 game rounds (Truth or Myth, This or That, Quick Pick, Speed Round, Odd One Out, Final Boss) and 15 questions per challenge. Players get a shareable scorecard with a radar chart showing their skill profile across 7 dimensions.
+
+## Stats
+- 25+ interactive challenges live
+- 6,000+ players in week one
+- 73% average completion rate
+- ~3 minute average play time
+
+## Pricing
+- Free: 1 challenge, 10 cards
+- Growth: $199/mo, 5 challenges, custom branding
+- Scale: $349/mo, unlimited challenges, analytics, lead capture
+- Enterprise: Custom pricing, SSO, API access, dedicated support
+
+## Contact
+Email: hello@howwellyouknow.com

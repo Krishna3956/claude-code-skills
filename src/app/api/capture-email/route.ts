@@ -6,7 +6,7 @@ const FORMAT_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const rateMap = new Map<string, { count: number; reset: number }>();
 const RATE_WINDOW_MS = 60_000;
-const RATE_LIMIT = 10;
+const RATE_LIMIT = 20;
 
 function isRateLimited(ip: string): boolean {
   const now = Date.now();
@@ -19,7 +19,7 @@ function isRateLimited(ip: string): boolean {
   return entry.count > RATE_LIMIT;
 }
 
-async function appendToSheet(row: string[]) {
+async function appendToSheet(row: string[], retries = 2): Promise<void> {
   const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
   const key = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n");
   const sheetId = process.env.GOOGLE_SHEET_ID;
@@ -36,12 +36,20 @@ async function appendToSheet(row: string[]) {
 
   const sheets = google.sheets({ version: "v4", auth });
 
-  await sheets.spreadsheets.values.append({
-    spreadsheetId: sheetId,
-    range: "Sheet1!A:G",
-    valueInputOption: "USER_ENTERED",
-    requestBody: { values: [row] },
-  });
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      await sheets.spreadsheets.values.append({
+        spreadsheetId: sheetId,
+        range: "Sheet1!A:G",
+        valueInputOption: "USER_ENTERED",
+        requestBody: { values: [row] },
+      });
+      return;
+    } catch (err) {
+      if (attempt === retries) throw err;
+      await new Promise((r) => setTimeout(r, 1000 * (attempt + 1)));
+    }
+  }
 }
 
 export async function POST(request: NextRequest) {
@@ -52,7 +60,7 @@ export async function POST(request: NextRequest) {
 
     if (isRateLimited(ip)) {
       return NextResponse.json(
-        { error: "Too many requests" },
+        { error: "Too many requests. Please try again in a minute." },
         { status: 429 }
       );
     }
@@ -79,7 +87,7 @@ export async function POST(request: NextRequest) {
     const domain = trimmed.split("@")[1];
     if (DISPOSABLE_DOMAINS.has(domain)) {
       return NextResponse.json(
-        { error: "Disposable emails not allowed" },
+        { error: "Please use a non-disposable email address" },
         { status: 400 }
       );
     }
@@ -103,7 +111,7 @@ export async function POST(request: NextRequest) {
   } catch (err) {
     console.error("capture-email error:", err);
     return NextResponse.json(
-      { error: "Internal server error" },
+      { error: "Something went wrong. Please try again." },
       { status: 500 }
     );
   }

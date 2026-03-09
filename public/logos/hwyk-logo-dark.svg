@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220">
   <rect width="220" height="220" fill="#0F172A"/>
-  <rect x="110" y="110" width="90" height="90" rx="0" fill="#FACC15" opacity="0.55"/>
+  <rect x="110" y="110" width="90" height="90" rx="0" fill="#635BFF" opacity="0.55"/>
   <text x="65" y="97" font-family="'Red Hat Display', sans-serif" font-weight="800" font-size="88" fill="#FFFFFF" text-anchor="middle">h</text>
   <text x="155" y="97" font-family="'Red Hat Display', sans-serif" font-weight="800" font-size="88" fill="#FFFFFF" text-anchor="middle">w</text>
   <text x="65" y="169" font-family="'Red Hat Display', sans-serif" font-weight="800" font-size="88" fill="#FFFFFF" text-anchor="middle">y</text>

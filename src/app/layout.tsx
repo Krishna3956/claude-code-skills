@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
-import { Geist_Mono } from "next/font/google";
+import { Inter, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+});
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -9,11 +14,75 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "How Well You Know",
-  description:
-    "Test your knowledge of the tools you use every day. 6 rounds, ~3 min, zero signup. Get your skill profile and shareable scorecard.",
   metadataBase: new URL("https://www.howwellyouknow.com"),
-  icons: { icon: "/logos/hwyk-logo.svg" },
+  title: {
+    default: "How Well You Know - Interactive Product Challenges for B2B SaaS",
+    template: "%s | How Well You Know",
+  },
+  description:
+    "Turn your product docs into 3-minute interactive challenges. Your customers learn your product. You see what they don't understand.",
+  keywords: [
+    "product knowledge",
+    "interactive challenges",
+    "B2B SaaS",
+    "customer education",
+    "product onboarding",
+    "micro-learning",
+    "product adoption",
+    "customer training",
+    "knowledge assessment",
+    "interactive quizzes",
+  ],
+  authors: [{ name: "How Well You Know" }],
+  creator: "How Well You Know",
+  publisher: "How Well You Know",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  icons: {
+    icon: "/logos/hwyk-logo.svg",
+    apple: "/logos/hwyk-logo.svg",
+  },
+  openGraph: {
+    title: "How Well You Know - Interactive Product Challenges for B2B SaaS",
+    description:
+      "Turn your product docs into 3-minute interactive challenges. Your customers learn your product. You see what they don't understand.",
+    url: "https://www.howwellyouknow.com",
+    siteName: "How Well You Know",
+    locale: "en_US",
+    type: "website",
+    images: [
+      {
+        url: "/api/og?type=default&title=Turn+your+product+docs+into+interactive+challenges",
+        width: 1200,
+        height: 630,
+        alt: "How Well You Know - Interactive Product Challenges for B2B SaaS",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "How Well You Know - Interactive Product Challenges for B2B SaaS",
+    description:
+      "Turn your product docs into 3-minute interactive challenges. Your customers learn your product. You see what they don't understand.",
+    images: ["/api/og?type=default&title=Turn+your+product+docs+into+interactive+challenges"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: "https://www.howwellyouknow.com",
+  },
 };
 
 export default function RootLayout({
@@ -23,8 +92,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head />
-      <body className={`${geistMono.variable} antialiased`}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+      </head>
+      <body className={`${inter.variable} ${geistMono.variable} antialiased`}>
         {children}
         <Analytics />
       </body>

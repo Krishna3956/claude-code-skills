@@ -25,7 +25,7 @@ export const claudeCodeConfig: QuizConfig = {
   scorecardGridColor: "#3a3532",
   logo: (
     <img
-      src="/claude-logo.png"
+      src="/logos/claude-ai-icon.webp"
       alt="Claude Code"
       width={44}
       height={44}
@@ -47,7 +47,7 @@ export const claudeCodeConfig: QuizConfig = {
       title: "Claude Whisperer",
       emoji: "M",
       description:
-        "You speak fluent Claude. Subagents, hooks, agent teams - you orchestrate AI like a symphony conductor.",
+        "You speak fluent Claude. Subagents, hooks, agent teams. You orchestrate AI like a symphony conductor.",
       minScore: 90,
       maxScore: 100,
     },
@@ -109,7 +109,7 @@ export const claudeCodeConfig: QuizConfig = {
         "CLAUDE.md is a file where you can save project instructions that Claude remembers across sessions",
       isTrue: true,
       explanation:
-        "CLAUDE.md is Claude's persistent memory - write your coding standards, project context, or preferences there and Claude reads it every time.",
+        "CLAUDE.md is Claude's persistent memory. Write your coding standards, project context, or preferences there and Claude reads it every time.",
     },
     {
       type: "truth_or_myth",
@@ -126,7 +126,7 @@ export const claudeCodeConfig: QuizConfig = {
       id: 3,
       dimension: "automation",
       statement:
-        "You can set up automatic actions that run every time Claude edits a file - like auto-formatting or running tests",
+        "You can set up automatic actions that run every time Claude edits a file, like auto-formatting or running tests",
       isTrue: true,
       explanation:
         "These are called Hooks! You can trigger scripts automatically before or after Claude uses any tool. Great for linting, testing, etc.",
@@ -139,7 +139,7 @@ export const claudeCodeConfig: QuizConfig = {
         "MCP lets you connect Claude Code to external tools like databases, APIs, or even Figma",
       isTrue: true,
       explanation:
-        "MCP (Model Context Protocol) servers are plugins that extend what Claude can do - connect to databases, search the web, read Figma designs, and more.",
+        "MCP (Model Context Protocol) servers are plugins that extend what Claude can do. Connect to databases, search the web, read Figma designs, and more.",
     },
     {
       type: "this_or_that",
@@ -151,7 +151,7 @@ export const claudeCodeConfig: QuizConfig = {
       optionB: "New chat session",
       correct: "A",
       explanation:
-        "Subagents handle side-tasks independently and report back - no need to start a whole new session. It's like delegating to an assistant.",
+        "Subagents handle side-tasks independently and report back. No need to start a whole new session. It's like delegating to an assistant.",
     },
     {
       type: "this_or_that",
@@ -163,7 +163,7 @@ export const claudeCodeConfig: QuizConfig = {
       optionB: "Tell Claude every time",
       correct: "A",
       explanation:
-        "CLAUDE.md saves your instructions permanently. No need to repeat yourself - Claude reads it at the start of every session.",
+        "CLAUDE.md saves your instructions permanently. No need to repeat yourself. Claude reads it at the start of every session.",
     },
     {
       type: "this_or_that",
@@ -216,7 +216,7 @@ export const claudeCodeConfig: QuizConfig = {
       blank: "Hooks",
       options: ["Hooks", "Bookmarks", "Alerts"],
       explanation:
-        "Hooks are automated triggers - set one up to run your linter after every file write. It just works, every time, no prompting needed.",
+        "Hooks are automated triggers. Set one up to run your linter after every file write. It just works, every time, no prompting needed.",
     },
     {
       type: "speed_pick",
@@ -275,17 +275,17 @@ export const claudeCodeConfig: QuizConfig = {
       ],
       oddItem: "API keys and passwords",
       explanation:
-        "Never put secrets in CLAUDE.md! It's for instructions, preferences, and context - not sensitive data. Use environment variables for secrets.",
+        "Never put secrets in CLAUDE.md! It's for instructions, preferences, and context, not sensitive data. Use environment variables for secrets.",
     },
     {
       type: "truth_or_myth",
       id: 15,
       dimension: "bestPractices",
       statement:
-        "Claude Code works right in your terminal - no browser or separate app needed",
+        "Claude Code works right in your terminal. No browser or separate app needed",
       isTrue: true,
       explanation:
-        "Claude Code runs entirely in your terminal. Just type 'claude' and start coding. It reads your files, runs commands, and writes code - all from the command line.",
+        "Claude Code runs entirely in your terminal. Just type 'claude' and start coding. It reads your files, runs commands, and writes code, all from the command line.",
     },
   ],
   rounds: [

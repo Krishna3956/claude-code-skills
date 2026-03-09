@@ -36,7 +36,7 @@ export const notionConfig: QuizConfig = {
     bestPractices: "Best Practices",
   },
   archetypes: [
-    { title: "Notion Ninja", emoji: "🥷", description: "You've mastered Notion at every level. Databases, relations, formulas, automations - your workspace is a work of art.", minScore: 90, maxScore: 100 },
+    { title: "Notion Ninja", emoji: "🥷", description: "You've mastered Notion at every level. Databases, relations, formulas, automations. Your workspace is a work of art.", minScore: 90, maxScore: 100 },
     { title: "System Architect", emoji: "🏗️", description: "Your Notion setup is sophisticated. Linked databases, rollups, and automations are second nature to you.", minScore: 80, maxScore: 89 },
     { title: "Power Organizer", emoji: "⚡", description: "You're well beyond basic pages. A few advanced database features to explore and you'll be elite.", minScore: 70, maxScore: 79 },
     { title: "Page Builder", emoji: "📄", description: "Notion is part of your daily life, but there's a whole layer of database and automation power you haven't explored.", minScore: 60, maxScore: 69 },

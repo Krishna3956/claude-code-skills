@@ -35,7 +35,7 @@ export const githubCopilotConfig: QuizConfig = {
     bestPractices: "Best Practices",
   },
   archetypes: [
-    { title: "Copilot Whisperer", emoji: "🧙", description: "You've mastered every corner of Copilot. Agents, multi-file edits, custom instructions - you're getting 10x output.", minScore: 90, maxScore: 100 },
+    { title: "Copilot Whisperer", emoji: "🧙", description: "You've mastered every corner of Copilot. Agents, multi-file edits, custom instructions. You're getting 10x output.", minScore: 90, maxScore: 100 },
     { title: "Pair Programmer", emoji: "👯", description: "You and Copilot are a real team. You know how to guide it, correct it, and get exactly what you need.", minScore: 80, maxScore: 89 },
     { title: "Power Completer", emoji: "⚡", description: "You're well past Tab-to-accept. A few advanced features and you'll be in the top tier.", minScore: 70, maxScore: 79 },
     { title: "Tab Enthusiast", emoji: "⌨️", description: "You love the autocomplete, but there's a whole world of Copilot features you haven't explored yet.", minScore: 60, maxScore: 69 },

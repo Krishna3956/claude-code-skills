@@ -35,7 +35,7 @@ export const hubspotConfig: QuizConfig = {
     bestPractices: "Best Practices",
   },
   archetypes: [
-    { title: "HubSpot Guru", emoji: "🧠", description: "You've mastered the entire HubSpot ecosystem. Workflows, custom objects, attribution reporting - you're running a revenue machine.", minScore: 90, maxScore: 100 },
+    { title: "HubSpot Guru", emoji: "🧠", description: "You've mastered the entire HubSpot ecosystem. Workflows, custom objects, attribution reporting. You're running a revenue machine.", minScore: 90, maxScore: 100 },
     { title: "Revenue Architect", emoji: "🏗️", description: "You use HubSpot as a strategic platform, not just a CRM. Automation and reporting are your superpowers.", minScore: 80, maxScore: 89 },
     { title: "Automation Pro", emoji: "⚡", description: "You're well beyond contact management. A few more advanced features and you'll be the HubSpot expert your team needs.", minScore: 70, maxScore: 79 },
     { title: "Pipeline Manager", emoji: "📊", description: "You manage deals and contacts well, but there's a whole automation layer you haven't tapped into.", minScore: 60, maxScore: 69 },

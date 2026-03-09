@@ -11,7 +11,7 @@ import type { QuizConfig } from "./types";
 import { decodeResult, getArchetype } from "./scoring";
 import { validateEmail } from "@/lib/validate-email";
 
-const LINKEDIN_URL = "https://www.linkedin.com/in/krishnaa-goyal/";
+const SITE_URL = "https://howwellyouknow.com";
 
 function InlineEmailForm({
   onSubmit,
@@ -151,15 +151,16 @@ function InlineEmailForm({
 
 function ResultContent({ config }: { config: QuizConfig }) {
   const searchParams = useSearchParams();
+  const isEmbed = searchParams.get("embed") === "true";
   const result = decodeResult(searchParams, config);
   const cardRef = useRef<HTMLDivElement>(null);
   const emailFormRef = useRef<HTMLDivElement>(null);
   const emailInputRef = useRef<HTMLInputElement>(null);
   const [downloading, setDownloading] = useState(false);
-  const [unlocked, setUnlocked] = useState(false);
+  const [unlocked, setUnlocked] = useState(isEmbed);
   const prefix = config.analyticsPrefix;
 
-  // Gate shown every time — no localStorage persistence.
+  // Gate shown every time - no localStorage persistence.
   // Each play = fresh email capture for per-session analytics.
 
   if (!result) {
@@ -192,10 +193,7 @@ function ResultContent({ config }: { config: QuizConfig }) {
     });
   }, [prefix, result.overallScore, archetype.title]);
 
-  const shareMessage = `I just took "How well do you know ${config.toolName}?" and scored ${result.overallScore}/100 - that makes me a ${archetype.title}!\n\nThink you can beat my score? 6 rounds, ~3 min, no signup required.\n\nTry it yourself`;
-  const twitterText = `I scored ${result.overallScore}/100 on "How well do you know ${config.toolName}?" - I'm a ${archetype.title}\n\nThink you can beat me?`;
-  const twitterUrl = `https://x.com/intent/post?text=${encodeURIComponent(twitterText)}&url=${encodeURIComponent(siteUrl)}`;
-  const linkedinUrl = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(shareMessage)}%0A${encodeURIComponent(siteUrl)}`;
+  const shareMessage = `I just took "How well do you know ${config.toolName}?" and scored ${result.overallScore}/100. That makes me a ${archetype.title}!\n\nThink you can beat my score? 6 rounds, ~3 min, no signup required.\n\nTry it yourself`;
 
   const saveBtnRef = useRef<HTMLButtonElement>(null);
 
@@ -216,22 +214,32 @@ function ResultContent({ config }: { config: QuizConfig }) {
   };
 
   const handleEmailSubmit = async (email: string) => {
-    try {
-      await fetch("/api/capture-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          quiz: config.slug,
-          score: result.overallScore,
-          archetype: archetype.title,
-          dimensions: result.dimensions
-            .map((d) => `${d.label}: ${d.score}`)
-            .join(", "),
-        }),
-      });
-    } catch {
-      // Fire-and-forget: don't block the user if Sheets API is down
+    let saved = false;
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        const res = await fetch("/api/capture-email", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email,
+            quiz: config.slug,
+            score: result.overallScore,
+            archetype: archetype.title,
+            dimensions: result.dimensions
+              .map((d) => `${d.label}: ${d.score}`)
+              .join(", "),
+          }),
+        });
+        if (res.ok) {
+          saved = true;
+          break;
+        }
+      } catch {
+        if (attempt === 0) await new Promise((r) => setTimeout(r, 1000));
+      }
+    }
+    if (!saved) {
+      console.warn("Failed to save email after retries — unlocking anyway");
     }
     track(`${prefix}_email_captured`, {
       score: result.overallScore,
@@ -250,10 +258,11 @@ function ResultContent({ config }: { config: QuizConfig }) {
     setDownloading(true);
     if (saveBtnRef.current) saveBtnRef.current.style.display = "none";
     try {
-      const dataUrl = await toPng(cardRef.current, {
-        pixelRatio: 3,
-        backgroundColor: config.scorecardBg,
-      });
+      const opts = { pixelRatio: 3, backgroundColor: config.scorecardBg };
+      // First pass warms the image cache inside html-to-image so all
+      // <img> elements (logos, etc.) are inlined as data-URIs.
+      await toPng(cardRef.current, opts);
+      const dataUrl = await toPng(cardRef.current, opts);
       const link = document.createElement("a");
       link.download = `${config.slug}-score-${result.overallScore}.png`;
       link.href = dataUrl;
@@ -266,7 +275,7 @@ function ResultContent({ config }: { config: QuizConfig }) {
   };
 
   return (
-    <div className="flex min-h-dvh flex-col items-center px-4 py-8">
+    <div className="flex min-h-dvh flex-col items-center px-4 py-8" style={isEmbed ? { zoom: 0.75 } : undefined}>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -306,45 +315,47 @@ function ResultContent({ config }: { config: QuizConfig }) {
 
           {/* --- ALWAYS VISIBLE: logo, score, archetype title --- */}
           <div className="px-6 pt-6 pb-3 text-center relative">
-            <a
-              href="/"
-              onClick={() =>
-                track("powered_by_clicked", {
-                  source: "results_scorecard",
-                  quiz: prefix,
-                })
-              }
-              className="absolute top-4 left-4 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-medium transition-all hover:opacity-80"
-              style={{
-                background: "rgba(255,255,255,0.06)",
-                color: config.scorecardLabelColor,
-                border: "1px solid rgba(255,255,255,0.1)",
-                textDecoration: "none",
-              }}
-            >
-              Powered by
-              <img
-                src="/logos/hwyk-logo-dark-transparent.svg"
-                alt="HWYK"
-                width="16"
-                height="16"
-                style={{ objectFit: "contain" }}
-              />
-              <svg
-                width="9"
-                height="9"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke={config.scorecardLabelColor}
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                style={{ opacity: 0.5 }}
+            {isEmbed ? null : (
+              <a
+                href="/"
+                onClick={() =>
+                  track("powered_by_clicked", {
+                    source: "results_scorecard",
+                    quiz: prefix,
+                  })
+                }
+                className="absolute top-4 left-4 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-medium transition-all hover:opacity-80"
+                style={{
+                  background: "rgba(255,255,255,0.06)",
+                  color: config.scorecardLabelColor,
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  textDecoration: "none",
+                }}
               >
-                <path d="M7 17L17 7" />
-                <path d="M7 7h10v10" />
-              </svg>
-            </a>
+                Powered by
+                <img
+                  src="/logos/hwyk-logo-dark-transparent.svg"
+                  alt="HWYK"
+                  width="16"
+                  height="16"
+                  style={{ objectFit: "contain" }}
+                />
+                <svg
+                  width="9"
+                  height="9"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke={config.scorecardLabelColor}
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{ opacity: 0.5 }}
+                >
+                  <path d="M7 17L17 7" />
+                  <path d="M7 7h10v10" />
+                </svg>
+              </a>
+            )}
             <button
               ref={saveBtnRef}
               onClick={handleSaveClick}
@@ -375,7 +386,7 @@ function ResultContent({ config }: { config: QuizConfig }) {
 
             <div className="flex justify-center mb-4">
               <div
-                className="inline-flex items-center justify-center rounded-2xl"
+                className="inline-flex items-center justify-center rounded-2xl scorecard-logo-wrap"
                 style={{ background: "#FFFFFF", padding: "10px" }}
               >
                 {config.scorecardLogo ?? config.logo}
@@ -502,7 +513,7 @@ function ResultContent({ config }: { config: QuizConfig }) {
               </div>
             </div>
 
-            {/* Blur overlay with email capture — centered in the blurred zone */}
+            {/* Blur overlay with email capture - centered in the blurred zone */}
             {!unlocked && (
               <div
                 ref={emailFormRef}
@@ -539,7 +550,7 @@ function ResultContent({ config }: { config: QuizConfig }) {
                     pointerEvents: "none",
                   }}
                 />
-                {/* Email form — sits on top of the blur */}
+                {/* Email form - sits on top of the blur */}
                 <div
                   style={{
                     position: "absolute",
@@ -591,52 +602,20 @@ function ResultContent({ config }: { config: QuizConfig }) {
         </div>
 
         <div className="w-full flex flex-col gap-3">
-          <div className="flex gap-3">
-            <a
-              href={twitterUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() =>
-                track(`${prefix}_share_x`, {
-                  score: result.overallScore,
-                })
-              }
-              className="flex-1 flex items-center justify-center gap-2.5 py-3 rounded-xl text-sm font-semibold transition-all active:scale-[0.98]"
-              style={{ background: "#1A1A1A", color: "#FFFFFF" }}
-            >
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-              </svg>
-              Post on X
-            </a>
-            <a
-              href={linkedinUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() =>
-                track(`${prefix}_share_li`, {
-                  score: result.overallScore,
-                })
-              }
-              className="flex-1 flex items-center justify-center gap-2.5 py-3 rounded-xl text-sm font-semibold transition-all active:scale-[0.98]"
-              style={{ background: "#0A66C2", color: "#FFFFFF" }}
-            >
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-              </svg>
-              Share on LinkedIn
-            </a>
-          </div>
+          <button
+            onClick={() => {
+              navigator.clipboard.writeText(`${shareMessage}\n\n${siteUrl}`);
+              track(`${prefix}_share_copy`, { score: result.overallScore });
+            }}
+            className="flex items-center justify-center gap-2.5 py-3 rounded-xl text-sm font-semibold transition-all active:scale-[0.98]"
+            style={{ background: "var(--v5-accent)", color: "#FFFFFF" }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+            </svg>
+            Copy &amp; Share
+          </button>
         </div>
 
         <Link
@@ -657,36 +636,36 @@ function ResultContent({ config }: { config: QuizConfig }) {
           &larr; Play Again
         </Link>
 
-        <a
-          href={LINKEDIN_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1.5 mt-6 mb-4 transition-opacity hover:opacity-80"
-          style={{ textDecoration: "none" }}
-        >
-          <span
-            style={{ color: "var(--v5-text-tertiary)", fontSize: "13px" }}
+        {!isEmbed && (
+          <a
+            href={SITE_URL}
+            className="flex items-center gap-1.5 mt-6 mb-4 transition-opacity hover:opacity-80"
+            style={{ textDecoration: "none" }}
           >
-            Made with
-          </span>
-          <span style={{ color: "var(--v5-accent)", fontSize: "14px" }}>
-            ♥
-          </span>
-          <span
-            style={{ color: "var(--v5-text-tertiary)", fontSize: "13px" }}
-          >
-            by
-          </span>
-          <span
-            style={{
-              color: "var(--v5-accent)",
-              fontSize: "13px",
-              fontWeight: 600,
-            }}
-          >
-            Krishna Goyal
-          </span>
-        </a>
+            <span
+              style={{ color: "var(--v5-text-tertiary)", fontSize: "13px" }}
+            >
+              Made with
+            </span>
+            <span style={{ color: "var(--v5-accent)", fontSize: "14px" }}>
+              ♥
+            </span>
+            <span
+              style={{ color: "var(--v5-text-tertiary)", fontSize: "13px" }}
+            >
+              by
+            </span>
+            <span
+              style={{
+                color: "var(--v5-accent)",
+                fontSize: "13px",
+                fontWeight: 600,
+              }}
+            >
+              How Well You Know
+            </span>
+          </a>
+        )}
       </motion.div>
     </div>
   );

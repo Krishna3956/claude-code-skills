@@ -11,7 +11,7 @@ function monoSVG(size: number, bgFill: string, textFill: string, hasBg: boolean)
   const bg = hasBg ? `<rect width="${size}" height="${size}" fill="${bgFill}"/>` : "";
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}">
   ${bg}
-  <rect x="${half}" y="${half}" width="${half * 0.85}" height="${half * 0.85}" rx="0" fill="#FACC15" opacity="0.55"/>
+  <rect x="${half}" y="${half}" width="${half * 0.85}" height="${half * 0.85}" rx="0" fill="#635BFF" opacity="0.55"/>
   <text x="${half * 0.5}" y="${half * 0.85 + yOff}" font-family="${FF}" font-weight="800" font-size="${fs}" fill="${textFill}" text-anchor="middle">h</text>
   <text x="${half * 1.42}" y="${half * 0.85 + yOff}" font-family="${FF}" font-weight="800" font-size="${fs}" fill="${textFill}" text-anchor="middle">w</text>
   <text x="${half * 0.5}" y="${half * 1.55 + yOff}" font-family="${FF}" font-weight="800" font-size="${fs}" fill="${textFill}" text-anchor="middle">y</text>
@@ -28,11 +28,10 @@ const monoVariants = [
 ];
 
 const lockupVariants = [
-  { name: "Light", bg: "#FFFFFF", text: "#0F172A", know: "#E5B800", hasBg: true, cardBg: "#fff", labelColor: "#0F172A" },
-  { name: "Dark (Slate)", bg: "#0F172A", text: "#F8FAFC", know: "#FACC15", hasBg: true, cardBg: "#0F172A", labelColor: "#F8FAFC" },
-  { name: "Pure Black", bg: "#000000", text: "#F8FAFC", know: "#FACC15", hasBg: true, cardBg: "#000000", labelColor: "#F8FAFC" },
-  { name: "Cream", bg: "#FFFBEB", text: "#292524", know: "#D97706", hasBg: true, cardBg: "#FFFBEB", labelColor: "#292524" },
-  { name: "Transparent", bg: "none", text: "#0F172A", know: "#E5B800", hasBg: false, cardBg: "checker", labelColor: "#0F172A" },
+  { name: "Light", bg: "#FFFFFF", text: "#0F172A", know: "#635BFF", hasBg: true, cardBg: "#fff", labelColor: "#0F172A" },
+  { name: "Dark (Slate)", bg: "#0F172A", text: "#F8FAFC", know: "#8B83FF", hasBg: true, cardBg: "#0F172A", labelColor: "#F8FAFC" },
+  { name: "Pure Black", bg: "#000000", text: "#F8FAFC", know: "#8B83FF", hasBg: true, cardBg: "#000000", labelColor: "#F8FAFC" },
+  { name: "Transparent", bg: "none", text: "#0F172A", know: "#635BFF", hasBg: false, cardBg: "checker", labelColor: "#0F172A" },
 ];
 
 function MonoCard({ v }: { v: (typeof monoVariants)[number] }) {
@@ -91,7 +90,7 @@ function LockupRow({ v, idx }: { v: (typeof lockupVariants)[number]; idx: number
 
   const monoHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" width="52" height="52">
     ${v.hasBg ? `<rect width="52" height="52" fill="${monoBg}"/>` : ""}
-    <rect x="26" y="26" width="22" height="22" rx="0" fill="#FACC15" opacity="0.55"/>
+    <rect x="26" y="26" width="22" height="22" rx="0" fill="#635BFF" opacity="0.55"/>
     <text x="15.5" y="23" font-family="${FF}" font-weight="800" font-size="21" fill="${v.text}" text-anchor="middle">h</text>
     <text x="37" y="23" font-family="${FF}" font-weight="800" font-size="21" fill="${v.text}" text-anchor="middle">w</text>
     <text x="15.5" y="40" font-family="${FF}" font-weight="800" font-size="21" fill="${v.text}" text-anchor="middle">y</text>
@@ -99,11 +98,11 @@ function LockupRow({ v, idx }: { v: (typeof lockupVariants)[number]; idx: number
   </svg>`;
 
   return (
-    <div style={{ ...bgStyle, borderRadius: 12, padding: "36px 28px 24px", boxShadow: "0 1px 3px rgba(0,0,0,0.08)", marginBottom: 20, display: "flex", alignItems: "flex-end", gap: 16, flexWrap: "wrap" }}>
+    <div style={{ ...bgStyle, borderRadius: 12, padding: "36px 20px 24px", boxShadow: "0 1px 3px rgba(0,0,0,0.08)", marginBottom: 20, display: "flex", alignItems: "flex-end", gap: 16, flexWrap: "wrap", overflow: "hidden" }}>
       <div dangerouslySetInnerHTML={{ __html: monoHTML }} style={{ flexShrink: 0 }} />
       <div
         ref={wmRef}
-        style={{ flex: 1, position: "relative", fontFamily: "'Caveat', cursive", fontWeight: 400, height: 56, color: v.text, minWidth: 280 }}
+        style={{ flex: 1, position: "relative", fontFamily: "'Caveat', cursive", fontWeight: 400, height: 56, color: v.text, minWidth: 220 }}
       >
         <span className="wm-howwell" style={{ position: "absolute", bottom: 0, left: 0, lineHeight: 1, fontSize: 32 }}>how well</span>
         <span className="wm-caret" style={{ position: "absolute", bottom: -2, lineHeight: 1, fontSize: 16 }}>^</span>
@@ -129,9 +128,9 @@ export default function BrandGuidelinesPage() {
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Red+Hat+Display:wght@800;900&display=swap');
       `}</style>
-      <div style={{ background: "#f0f0f0", fontFamily: "'Red Hat Display', sans-serif", padding: "40px 20px", minHeight: "100vh" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <h1 style={{ textAlign: "center", fontSize: 28, color: "#0F172A", marginBottom: 4 }}>HWYK — Brand Asset Kit</h1>
+      <div style={{ background: "#f0f0f0", fontFamily: "'Red Hat Display', sans-serif", padding: "24px 12px", minHeight: "100vh" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", overflow: "hidden" }}>
+          <h1 style={{ textAlign: "center", fontSize: 24, color: "#0F172A", marginBottom: 4 }}>HWYK Brand Asset Kit</h1>
           <p style={{ textAlign: "center", color: "#64748b", fontSize: 13, marginBottom: 40 }}>All approved brand assets in one place</p>
 
           {/* MONOGRAM */}
@@ -150,7 +149,8 @@ export default function BrandGuidelinesPage() {
 
           {/* SPECS */}
           <h2 style={{ fontSize: 18, color: "#0F172A", margin: "48px 0 16px", paddingBottom: 8, borderBottom: "2px solid #e2e8f0" }}>3. Brand Specs</h2>
-          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13, marginTop: 16, background: "#fff", borderRadius: 8, overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,0.08)" }}>
+          <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+          <table style={{ width: "100%", minWidth: 400, borderCollapse: "collapse", fontSize: 13, marginTop: 16, background: "#fff", borderRadius: 8, overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,0.08)" }}>
             <thead>
               <tr><th colSpan={2} style={{ background: "#f8fafc", textAlign: "left", padding: "10px 16px", fontWeight: 700, color: "#0F172A", borderBottom: "1px solid #e2e8f0" }}>Typography</th></tr>
             </thead>
@@ -166,11 +166,9 @@ export default function BrandGuidelinesPage() {
             <tbody>
               <tr><td style={{ padding: "8px 16px", borderBottom: "1px solid #f1f5f9", color: "#334155" }}>Primary text (light)</td><td style={{ padding: "8px 16px", borderBottom: "1px solid #f1f5f9", color: "#334155" }}><ColorSwatch color="#0F172A" />#0F172A</td></tr>
               <tr><td style={{ padding: "8px 16px", borderBottom: "1px solid #f1f5f9", color: "#334155" }}>Primary text (dark)</td><td style={{ padding: "8px 16px", borderBottom: "1px solid #f1f5f9", color: "#334155" }}><ColorSwatch color="#F8FAFC" />#F8FAFC</td></tr>
-              <tr><td style={{ padding: "8px 16px", borderBottom: "1px solid #f1f5f9", color: "#334155" }}>Brand yellow (k-box)</td><td style={{ padding: "8px 16px", borderBottom: "1px solid #f1f5f9", color: "#334155" }}><ColorSwatch color="#FACC15" />#FACC15 @ 55%</td></tr>
-              <tr><td style={{ padding: "8px 16px", borderBottom: "1px solid #f1f5f9", color: "#334155" }}>Yellow &quot;know&quot; (light)</td><td style={{ padding: "8px 16px", borderBottom: "1px solid #f1f5f9", color: "#334155" }}><ColorSwatch color="#E5B800" />#E5B800</td></tr>
-              <tr><td style={{ padding: "8px 16px", borderBottom: "1px solid #f1f5f9", color: "#334155" }}>Yellow &quot;know&quot; (dark)</td><td style={{ padding: "8px 16px", borderBottom: "1px solid #f1f5f9", color: "#334155" }}><ColorSwatch color="#FACC15" />#FACC15</td></tr>
-              <tr><td style={{ padding: "8px 16px", borderBottom: "1px solid #f1f5f9", color: "#334155" }}>Cream bg</td><td style={{ padding: "8px 16px", borderBottom: "1px solid #f1f5f9", color: "#334155" }}><ColorSwatch color="#FFFBEB" />#FFFBEB</td></tr>
-              <tr><td style={{ padding: "8px 16px", borderBottom: "1px solid #f1f5f9", color: "#334155" }}>Amber &quot;know&quot; (cream)</td><td style={{ padding: "8px 16px", borderBottom: "1px solid #f1f5f9", color: "#334155" }}><ColorSwatch color="#D97706" />#D97706</td></tr>
+              <tr><td style={{ padding: "8px 16px", borderBottom: "1px solid #f1f5f9", color: "#334155" }}>Brand purple (k-box)</td><td style={{ padding: "8px 16px", borderBottom: "1px solid #f1f5f9", color: "#334155" }}><ColorSwatch color="#635BFF" />#635BFF @ 55%</td></tr>
+              <tr><td style={{ padding: "8px 16px", borderBottom: "1px solid #f1f5f9", color: "#334155" }}>Purple &quot;know&quot; (light)</td><td style={{ padding: "8px 16px", borderBottom: "1px solid #f1f5f9", color: "#334155" }}><ColorSwatch color="#635BFF" />#635BFF</td></tr>
+              <tr><td style={{ padding: "8px 16px", borderBottom: "1px solid #f1f5f9", color: "#334155" }}>Purple &quot;know&quot; (dark)</td><td style={{ padding: "8px 16px", borderBottom: "1px solid #f1f5f9", color: "#334155" }}><ColorSwatch color="#8B83FF" />#8B83FF</td></tr>
             </tbody>
             <thead>
               <tr><th colSpan={2} style={{ background: "#f8fafc", textAlign: "left", padding: "10px 16px", fontWeight: 700, color: "#0F172A", borderBottom: "1px solid #e2e8f0" }}>Elements</th></tr>
@@ -181,6 +179,7 @@ export default function BrandGuidelinesPage() {
               <tr><td style={{ padding: "8px 16px", color: "#334155" }}>&quot;do&quot; offset</td><td style={{ padding: "8px 16px", color: "#334155" }}>+6px right, 30px above baseline</td></tr>
             </tbody>
           </table>
+          </div>
         </div>
       </div>
     </>

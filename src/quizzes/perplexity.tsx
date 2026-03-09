@@ -35,7 +35,7 @@ export const perplexityConfig: QuizConfig = {
     bestPractices: "Best Practices",
   },
   archetypes: [
-    { title: "Search Sage", emoji: "🔮", description: "You've mastered Perplexity completely. Focus modes, Spaces, Pro Search, API access - you're a research machine.", minScore: 90, maxScore: 100 },
+    { title: "Search Sage", emoji: "🔮", description: "You've mastered Perplexity completely. Focus modes, Spaces, Pro Search, API access. You're a research machine.", minScore: 90, maxScore: 100 },
     { title: "Research Architect", emoji: "🏗️", description: "You know how to extract exactly the right information. Your search game is elite and you use features most people miss.", minScore: 80, maxScore: 89 },
     { title: "Power Searcher", emoji: "⚡", description: "You're well beyond basic questions. A few advanced features to explore and you'll be in the top tier.", minScore: 70, maxScore: 79 },
     { title: "Daily Querier", emoji: "🔍", description: "Perplexity is your go-to for answers, but there's a whole layer of power features you haven't explored.", minScore: 60, maxScore: 69 },
@@ -44,7 +44,7 @@ export const perplexityConfig: QuizConfig = {
     { title: "First Query", emoji: "🌱", description: "Everyone starts somewhere. You just discovered that Perplexity can do way more than answer simple questions.", minScore: 0, maxScore: 39 },
   ],
   challenges: [
-    { type: "truth_or_myth", id: 1, dimension: "memory", statement: "Every answer Perplexity gives includes numbered citations linking to the exact sources it used, so you can verify any claim instantly", isTrue: true, explanation: "Inline citations are Perplexity's core differentiator. Every factual claim is backed by a numbered source you can click to verify. No more trusting AI blindly - you can check every statement." },
+    { type: "truth_or_myth", id: 1, dimension: "memory", statement: "Every answer Perplexity gives includes numbered citations linking to the exact sources it used, so you can verify any claim instantly", isTrue: true, explanation: "Inline citations are Perplexity's core differentiator. Every factual claim is backed by a numbered source you can click to verify. No more trusting AI blindly. You can check every statement." },
     { type: "truth_or_myth", id: 2, dimension: "orchestration", statement: "Perplexity Spaces let you create shared research projects where your team can collaborate on searches, save threads, and build a knowledge base together", isTrue: true, explanation: "Spaces are collaborative research hubs. Add team members, set custom AI instructions for the space, upload files for context, and keep all related searches organized in one place." },
     { type: "truth_or_myth", id: 3, dimension: "workflows", statement: "Perplexity can only search the open web. It cannot analyze uploaded files like PDFs, images, or spreadsheets", isTrue: false, explanation: "Perplexity can analyze uploaded files including PDFs, images, CSVs, and more. Upload a research paper and ask questions about it, or upload a screenshot and get analysis. It combines file analysis with web search." },
     { type: "truth_or_myth", id: 4, dimension: "automation", statement: "Perplexity has a feature called Pages that lets you turn any research thread into a polished, shareable article with sections, images, and citations", isTrue: true, explanation: "Pages transforms your research into a clean, structured article. It auto-generates sections, pulls in relevant images, and keeps all citations. Perfect for sharing research findings with others." },

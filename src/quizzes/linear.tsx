@@ -35,7 +35,7 @@ export const linearConfig: QuizConfig = {
     bestPractices: "Best Practices",
   },
   archetypes: [
-    { title: "Linear Legend", emoji: "💎", description: "You've mastered Linear at every level. Cycles, roadmaps, automations, triage - your team runs like a machine.", minScore: 90, maxScore: 100 },
+    { title: "Linear Legend", emoji: "💎", description: "You've mastered Linear at every level. Cycles, roadmaps, automations, triage. Your team runs like a machine.", minScore: 90, maxScore: 100 },
     { title: "Project Commander", emoji: "🏗️", description: "Your Linear setup is sophisticated. Custom workflows, automations, and integrations are second nature.", minScore: 80, maxScore: 89 },
     { title: "Sprint Master", emoji: "⚡", description: "You're well beyond basic issue tracking. A few advanced features to explore and you'll be elite.", minScore: 70, maxScore: 79 },
     { title: "Issue Tracker", emoji: "📋", description: "Linear is part of your daily workflow, but there's a whole layer of automation and planning you haven't explored.", minScore: 60, maxScore: 69 },
