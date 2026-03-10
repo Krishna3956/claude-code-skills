@@ -4,6 +4,7 @@ import { Suspense, useState, useCallback, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { track } from "@vercel/analytics";
+import Navbar from "@/components/marketing/Navbar";
 import {
   ShieldQuestion,
   ArrowLeftRight,
@@ -37,8 +38,6 @@ function RoundIcon({ name, size = 20, color }: { name: string; size?: number; co
   }
 }
 import { calculateResults, encodeResult } from "./scoring";
-
-const SITE_URL = "https://howwellyouknow.com";
 
 function FeedbackBox({ show, correct, text }: { show: boolean; correct: boolean | null; text: string }) {
   if (!show) return null;
@@ -345,43 +344,6 @@ function HomeScreen({ config, onStart, isEmbed }: { config: QuizConfig; onStart:
             style={{ fontFamily: "var(--font-v5-serif), ui-serif, Georgia, serif", color: "var(--v5-accent)" }}>
             know {config.toolName}?
           </h1>
-          {isEmbed ? null : (
-            <a
-              href="/"
-              onClick={() => track("powered_by_clicked", { source: "quiz_intro", quiz: config.analyticsPrefix })}
-              className="hidden sm:inline-flex items-center gap-2 mt-2 group cursor-pointer"
-              style={{
-                textDecoration: "none",
-                border: "1px solid var(--v5-border)",
-                borderRadius: 8,
-                padding: "4px 4px 4px 12px",
-                background: "var(--v5-bg-surface)",
-                transition: "all 0.2s ease",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "rgba(250,204,21,0.5)";
-                e.currentTarget.style.background = "rgba(250,204,21,0.08)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "var(--v5-border)";
-                e.currentTarget.style.background = "var(--v5-bg-surface)";
-              }}
-            >
-              <span style={{ fontSize: 12, fontWeight: 600, color: "var(--v5-text-tertiary)", letterSpacing: 0.2 }}>
-                Powered by
-              </span>
-              <img
-                src="/logos/hwyk-logo-transparent.svg"
-                alt="How Well You Know"
-                width="28"
-                height="28"
-                style={{ objectFit: "contain" }}
-              />
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--v5-text-tertiary)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.5 }}>
-                <path d="M7 17L17 7" /><path d="M7 7h10v10" />
-              </svg>
-            </a>
-          )}
         </div>
 
         <p style={{ color: "var(--v5-text-secondary)", fontSize: "14px", lineHeight: "1.6" }}>
@@ -409,72 +371,7 @@ function HomeScreen({ config, onStart, isEmbed }: { config: QuizConfig; onStart:
           ~3 min · no signup · shareable results
         </p>
 
-        {!isEmbed && (
-          <a href={SITE_URL}
-            className="flex sm:hidden items-center gap-1.5 mt-4 transition-opacity hover:opacity-80"
-            style={{ textDecoration: "none" }}>
-            <span style={{ color: "var(--v5-text-tertiary)", fontSize: "13px" }}>Made with</span>
-            <span style={{ color: "var(--v5-accent)", fontSize: "14px" }}>♥</span>
-            <span style={{ color: "var(--v5-text-tertiary)", fontSize: "13px" }}>by</span>
-            <span style={{ color: "var(--v5-accent)", fontSize: "13px", fontWeight: 600 }}>How Well You Know</span>
-          </a>
-        )}
       </motion.div>
-
-
-      {/* Powered-by: fixed top-left on mobile */}
-      {!isEmbed && (
-        <div className="flex sm:hidden fixed top-0 left-0 z-50 px-4 py-3">
-          <a
-            href="/"
-            onClick={() => track("powered_by_clicked", { source: "quiz_intro_mobile", quiz: config.analyticsPrefix })}
-            className="inline-flex items-center gap-2"
-            style={{
-              textDecoration: "none",
-              border: "1px solid var(--v5-border)",
-              borderRadius: 8,
-              padding: "5px 5px 5px 12px",
-              background: "var(--v5-bg-surface)",
-              transition: "all 0.2s ease",
-            }}
-            onTouchStart={(e) => {
-              e.currentTarget.style.borderColor = "rgba(250,204,21,0.5)";
-              e.currentTarget.style.background = "rgba(250,204,21,0.08)";
-            }}
-            onTouchEnd={(e) => {
-              e.currentTarget.style.borderColor = "var(--v5-border)";
-              e.currentTarget.style.background = "var(--v5-bg-surface)";
-            }}
-          >
-            <span style={{ fontSize: 11, fontWeight: 600, color: "var(--v5-text-tertiary)", letterSpacing: 0.2 }}>
-              Powered by
-            </span>
-            <img
-              src="/logos/hwyk-logo-transparent.svg"
-              alt="How Well You Know"
-              width="26"
-              height="26"
-              style={{ objectFit: "contain" }}
-            />
-            <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="var(--v5-text-tertiary)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.5, marginLeft: -4 }}>
-              <path d="M7 17L17 7" /><path d="M7 7h10v10" />
-            </svg>
-          </a>
-        </div>
-      )}
-
-      {/* Credit: fixed bottom-right on desktop */}
-      {!isEmbed && (
-        <div className="hidden sm:flex fixed bottom-0 right-0 z-50 px-4 py-3">
-          <a href={SITE_URL}
-            className="flex items-center gap-1.5 transition-opacity hover:opacity-80" style={{ textDecoration: "none" }}>
-            <span style={{ color: "var(--v5-text-tertiary)", fontSize: "13px" }}>Made with</span>
-            <span style={{ color: "var(--v5-accent)", fontSize: "14px" }}>♥</span>
-            <span style={{ color: "var(--v5-text-tertiary)", fontSize: "13px" }}>by</span>
-            <span style={{ color: "var(--v5-accent)", fontSize: "13px", fontWeight: 600 }}>How Well You Know</span>
-          </a>
-        </div>
-      )}
     </div>
   );
 }
@@ -540,21 +437,31 @@ function QuizPageInner({ config }: { config: QuizConfig }) {
     }
   }, [currentIndex, total, results, router, config]);
 
-  if (!started) return <HomeScreen config={config} onStart={() => setStarted(true)} isEmbed={isEmbed} />;
+  if (!started) {
+    return (
+      <>
+        {!isEmbed && <Navbar />}
+        <HomeScreen config={config} onStart={() => setStarted(true)} isEmbed={isEmbed} />
+      </>
+    );
+  }
 
   if (showingRoundIntro && currentRound) {
     return (
-      <div className="flex min-h-dvh items-center justify-center px-4" style={isEmbed ? { zoom: 0.75 } : undefined}>
-        <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
-          className="flex flex-col items-center gap-3 text-center">
-          <div><RoundIcon name={currentRound.name} size={40} /></div>
-          <h2 className="text-xl sm:text-2xl"
-            style={{ fontFamily: "var(--font-v5-serif), ui-serif, Georgia, serif", color: "var(--v5-text)" }}>
-            {currentRound.name}
-          </h2>
-          <p style={{ color: "var(--v5-text-secondary)", fontSize: "14px" }}>{currentRound.tagline}</p>
-        </motion.div>
-      </div>
+      <>
+        {!isEmbed && <Navbar />}
+        <div className="flex min-h-dvh items-center justify-center px-4" style={isEmbed ? { zoom: 0.75 } : undefined}>
+          <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
+            className="flex flex-col items-center gap-3 text-center">
+            <div><RoundIcon name={currentRound.name} size={40} /></div>
+            <h2 className="text-xl sm:text-2xl"
+              style={{ fontFamily: "var(--font-v5-serif), ui-serif, Georgia, serif", color: "var(--v5-text)" }}>
+              {currentRound.name}
+            </h2>
+            <p style={{ color: "var(--v5-text-secondary)", fontSize: "14px" }}>{currentRound.tagline}</p>
+          </motion.div>
+        </div>
+      </>
     );
   }
 
@@ -563,7 +470,9 @@ function QuizPageInner({ config }: { config: QuizConfig }) {
   const roundSize = currentRound ? currentRound.ids.length : 1;
 
   return (
-    <div className="flex min-h-dvh flex-col items-center px-4 py-6 sm:py-8" style={isEmbed ? { zoom: 0.75 } : undefined}>
+    <>
+      {!isEmbed && <Navbar />}
+      <div className="flex min-h-dvh flex-col items-center px-4 py-6 sm:py-8" style={isEmbed ? { zoom: 0.75 } : undefined}>
       <div className="w-full max-w-lg mb-6">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2" style={{ fontSize: "12px", color: "var(--v5-text-secondary)" }}>
@@ -605,17 +514,18 @@ function QuizPageInner({ config }: { config: QuizConfig }) {
         </motion.div>
       </AnimatePresence>
 
-      {answered && (
-        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="mt-6">
-          <button onClick={() => { track(currentIndex < total - 1 ? `${prefix}_next` : `${prefix}_see_results`, { questionId: challenge.id, questionIndex: currentIndex + 1 }); handleNext(); }}
-            className="inline-flex items-center gap-2 rounded-xl px-8 py-3 text-sm font-semibold transition-all active:scale-[0.97]"
-            style={{ background: "var(--v5-accent)", color: "#FFFFFF" }}>
-            {currentIndex < total - 1 ? "Next" : "See Results"}
-            <span style={{ opacity: 0.6 }}>&rarr;</span>
-          </button>
-        </motion.div>
-      )}
-    </div>
+        {answered && (
+          <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="mt-6">
+            <button onClick={() => { track(currentIndex < total - 1 ? `${prefix}_next` : `${prefix}_see_results`, { questionId: challenge.id, questionIndex: currentIndex + 1 }); handleNext(); }}
+              className="inline-flex items-center gap-2 rounded-xl px-8 py-3 text-sm font-semibold transition-all active:scale-[0.97]"
+              style={{ background: "var(--v5-accent)", color: "#FFFFFF" }}>
+              {currentIndex < total - 1 ? "Next" : "See Results"}
+              <span style={{ opacity: 0.6 }}>&rarr;</span>
+            </button>
+          </motion.div>
+        )}
+      </div>
+    </>
   );
 }
 

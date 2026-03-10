@@ -9,8 +9,7 @@ import { toPng } from "html-to-image";
 import { track } from "@vercel/analytics";
 import type { QuizConfig } from "./types";
 import { decodeResult, getArchetype } from "./scoring";
-
-const SITE_URL = "https://howwellyouknow.com";
+import Navbar from "@/components/marketing/Navbar";
 
 function PlayMorePopup({ accentColor, onClose }: { accentColor: string; onClose: () => void }) {
   return (
@@ -133,20 +132,23 @@ function ResultContent({ config }: { config: QuizConfig }) {
 
   if (!result) {
     return (
-      <div className="flex min-h-dvh items-center justify-center px-4">
-        <div className="text-center">
-          <p style={{ color: "var(--v5-text-secondary)" }} className="mb-4">
-            No results found.
-          </p>
-          <Link
-            href={`/play/${config.slug}`}
-            style={{ color: "var(--v5-accent)" }}
-            className="hover:underline text-sm"
-          >
-            Take the test &rarr;
-          </Link>
+      <>
+        {!isEmbed && <Navbar />}
+        <div className="flex min-h-dvh items-center justify-center px-4">
+          <div className="text-center">
+            <p style={{ color: "var(--v5-text-secondary)" }} className="mb-4">
+              No results found.
+            </p>
+            <Link
+              href={`/play/${config.slug}`}
+              style={{ color: "var(--v5-accent)" }}
+              className="hover:underline text-sm"
+            >
+              Take the test &rarr;
+            </Link>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
@@ -197,7 +199,9 @@ function ResultContent({ config }: { config: QuizConfig }) {
   };
 
   return (
-    <div className="flex min-h-dvh flex-col items-center px-4 py-8" style={isEmbed ? { zoom: 0.75 } : undefined}>
+    <>
+      {!isEmbed && <Navbar />}
+      <div className="flex min-h-dvh flex-col items-center px-4 py-8" style={isEmbed ? { zoom: 0.75 } : undefined}>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -236,47 +240,6 @@ function ResultContent({ config }: { config: QuizConfig }) {
           />
 
           <div className="px-6 pt-6 pb-3 text-center relative">
-            {isEmbed ? null : (
-              <a
-                href="/"
-                onClick={() =>
-                  track("powered_by_clicked", {
-                    source: "results_scorecard",
-                    quiz: prefix,
-                  })
-                }
-                className="absolute top-4 left-4 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-medium transition-all hover:opacity-80"
-                style={{
-                  background: "rgba(255,255,255,0.06)",
-                  color: config.scorecardLabelColor,
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  textDecoration: "none",
-                }}
-              >
-                Powered by
-                <img
-                  src="/logos/hwyk-logo-dark-transparent.svg"
-                  alt="HWYK"
-                  width="16"
-                  height="16"
-                  style={{ objectFit: "contain" }}
-                />
-                <svg
-                  width="9"
-                  height="9"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke={config.scorecardLabelColor}
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  style={{ opacity: 0.5 }}
-                >
-                  <path d="M7 17L17 7" />
-                  <path d="M7 7h10v10" />
-                </svg>
-              </a>
-            )}
             <button
               ref={saveBtnRef}
               onClick={downloadCard}
@@ -485,45 +448,16 @@ function ResultContent({ config }: { config: QuizConfig }) {
           &larr; Play Again
         </Link>
 
-        {!isEmbed && (
-          <a
-            href={SITE_URL}
-            className="flex items-center gap-1.5 mt-6 mb-4 transition-opacity hover:opacity-80"
-            style={{ textDecoration: "none" }}
-          >
-            <span
-              style={{ color: "var(--v5-text-tertiary)", fontSize: "13px" }}
-            >
-              Made with
-            </span>
-            <span style={{ color: "var(--v5-accent)", fontSize: "14px" }}>
-              ♥
-            </span>
-            <span
-              style={{ color: "var(--v5-text-tertiary)", fontSize: "13px" }}
-            >
-              by
-            </span>
-            <span
-              style={{
-                color: "var(--v5-accent)",
-                fontSize: "13px",
-                fontWeight: 600,
-              }}
-            >
-              How Well You Know
-            </span>
-          </a>
-        )}
       </motion.div>
 
-      {showPopup && (
-        <PlayMorePopup
-          accentColor={cardAccent}
-          onClose={() => setShowPopup(false)}
-        />
-      )}
-    </div>
+        {showPopup && (
+          <PlayMorePopup
+            accentColor={cardAccent}
+            onClose={() => setShowPopup(false)}
+          />
+        )}
+      </div>
+    </>
   );
 }
 
