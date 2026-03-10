@@ -78,7 +78,7 @@ export default function HomePage() {
               className="mb-4 text-[2rem] font-bold leading-[1.12] tracking-tight sm:text-4xl md:text-5xl md:leading-[1.1] lg:text-[3.25rem]"
               style={{ color: "var(--m-text)", maxWidth: "520px" }}
             >
-              Turn your product into <span style={{ color: "var(--m-accent)" }}>interactive learning experiences</span>
+              Turn your product documentation into <span style={{ color: "var(--m-accent)" }}>interactive learning experiences</span>
             </h1>
             <p
               className="mb-6 max-w-lg text-sm leading-relaxed md:text-base"
