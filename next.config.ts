@@ -36,6 +36,14 @@ const nextConfig: NextConfig = {
       { source: "/play/v0/results", destination: "/play/vercel/results", permanent: true },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: "/yctrends",
+        destination: "/yctrends/index.html",
+      },
+    ];
+  },
   async headers() {
     return [
       {
