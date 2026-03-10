@@ -86,13 +86,26 @@ export default function HomePage() {
             >
               Convert your product knowledge into 3-minute challenges that onboard users, communicate new features, engage communities, and reveal feature-level knowledge gaps.
             </p>
-            <Link
-              href="#early-access"
-              className="inline-block rounded-lg px-6 py-3.5 text-sm font-semibold text-white shadow-md transition-all hover:scale-[1.02]"
-              style={{ background: "var(--m-accent)" }}
-            >
-              Get Early Access
-            </Link>
+            <div className="flex flex-wrap items-center gap-3">
+              <Link
+                href="#early-access"
+                className="inline-block rounded-lg px-6 py-3.5 text-sm font-semibold text-white shadow-md transition-all hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--m-accent)] focus-visible:ring-offset-2"
+                style={{ background: "var(--m-accent)" }}
+              >
+                Get Early Access
+              </Link>
+              <Link
+                href="/play/openclaw"
+                className="inline-block rounded-lg px-6 py-3.5 text-sm font-semibold transition-colors hover:bg-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--m-accent)] focus-visible:ring-offset-2"
+                style={{
+                  color: "var(--m-accent)",
+                  background: "var(--m-bg-secondary)",
+                  border: "1px solid var(--m-border)",
+                }}
+              >
+                Try OpenClaw Live
+              </Link>
+            </div>
           </div>
 
           <div className="w-full flex-1" style={{ animation: "fadeInUp 0.8s ease-out 0.2s both" }}>

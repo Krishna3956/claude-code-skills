@@ -18,7 +18,6 @@ const TOOLS = [
   { slug: "lovable", name: "Lovable", logo: "lovable.png" },
 ] as const;
 
-const AUTO_CYCLE_MS = 3500;
 const SLIDE_DURATION_MS = 600;
 
 function getSlideOffset(index: number, selected: number): string {
@@ -29,8 +28,6 @@ function getSlideOffset(index: number, selected: number): string {
 
 export default function HeroQuiz() {
   const [selected, setSelected] = useState(0);
-  const [autoCycling, setAutoCycling] = useState(true);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const toolbarRef = useRef<HTMLDivElement>(null);
   const btnRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const [pill, setPill] = useState({ left: 0, width: 0 });
@@ -56,34 +53,13 @@ export default function HeroQuiz() {
     return () => window.removeEventListener("resize", measurePill);
   }, [measurePill]);
 
-  const stopAutoCycle = useCallback(() => {
-    setAutoCycling(false);
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!autoCycling) return;
-
-    timerRef.current = setInterval(() => {
-      setSelected((prev) => (prev + 1) % TOOLS.length);
-    }, AUTO_CYCLE_MS);
-
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, [autoCycling]);
-
   const handleTabClick = (i: number) => {
-    stopAutoCycle();
     setSelected(i);
   };
 
   return (
     <div
-      className="mx-auto overflow-hidden rounded-2xl shadow-2xl md:ml-auto md:mr-0"
+      className="group mx-auto overflow-hidden rounded-2xl shadow-2xl transition-shadow duration-300 md:ml-auto md:mr-0"
       style={{
         boxShadow:
           "0 25px 60px rgba(99, 91, 255, 0.12), 0 10px 30px rgba(0, 0, 0, 0.08)",
@@ -124,13 +100,16 @@ export default function HeroQuiz() {
               btnRefs.current[i] = el;
             }}
             onClick={() => handleTabClick(i)}
-            className="relative z-[1] flex shrink-0 items-center gap-1.5 rounded-lg px-2 py-1.5 text-[11px] font-medium sm:px-2.5"
+            className="relative z-[1] flex shrink-0 cursor-pointer items-center gap-1.5 rounded-lg px-2 py-1.5 text-[11px] font-medium transition-colors hover:bg-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--m-accent)] sm:px-2.5"
+            aria-pressed={i === selected}
             style={{
               color:
                 i === selected
                   ? "var(--m-accent)"
                   : "var(--m-text-tertiary)",
-              transition: "color 0.4s ease",
+              background:
+                i === selected ? "transparent" : "rgba(0, 0, 0, 0)",
+              transition: "color 0.35s ease, background 0.2s ease",
             }}
           >
             <Image
@@ -150,7 +129,7 @@ export default function HeroQuiz() {
 
       {/* Iframe area - horizontal slide */}
       <div
-        className="relative overflow-hidden"
+        className="relative overflow-hidden transition-shadow duration-300 hover:shadow-[inset_0_0_0_2px_var(--m-accent)]"
         style={{
           height: "min(calc(100vh - 220px), 480px)",
           minHeight: 280,
@@ -172,22 +151,13 @@ export default function HeroQuiz() {
               className="h-full w-full"
               style={{
                 border: "none",
-                pointerEvents:
-                  i === selected && !autoCycling ? "auto" : "none",
+                pointerEvents: i === selected ? "auto" : "none",
               }}
               title={`How well do you know ${tool.name}?`}
               loading={i === 0 ? "eager" : "lazy"}
             />
           </div>
         ))}
-
-        {autoCycling && (
-          <div
-            className="absolute inset-0 z-10 cursor-pointer"
-            onClick={stopAutoCycle}
-            onTouchStart={stopAutoCycle}
-          />
-        )}
       </div>
     </div>
   );
