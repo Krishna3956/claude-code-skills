@@ -139,14 +139,6 @@ export default function Navbar() {
             </div>
 
             <Link
-              href="/pricing"
-              className="text-sm font-medium transition-colors hover:opacity-70"
-              style={{ color: "var(--m-text)" }}
-            >
-              Pricing
-            </Link>
-
-            <Link
               href="/#early-access"
               className="rounded-lg px-6 py-2.5 text-sm font-semibold shadow-sm transition-all hover:scale-[1.02]"
               style={{ background: "var(--m-accent)", color: "#FFFFFF" }}
@@ -233,7 +225,6 @@ export default function Navbar() {
           </div>
 
           {[
-            { label: "Pricing", href: "/pricing" },
             { label: "About", href: "/about" },
             { label: "Contact", href: "/contact" },
           ].map((item) => (

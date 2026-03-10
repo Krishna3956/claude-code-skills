@@ -58,7 +58,7 @@ const COMPARISON_ROWS = [
   { label: "Teaches AND tests", docs: "No", videos: "No", webinars: "Sometimes", lms: "Yes", hwyk: "Yes" },
   { label: "Per-feature analytics", docs: "No", videos: "No", webinars: "No", lms: "Basic", hwyk: "Detailed" },
   { label: "Works in emails, docs, Slack", docs: "Partially", videos: "No", webinars: "No", lms: "No", hwyk: "Yes" },
-  { label: "Estimated cost", docs: "$2-5K/mo (writers + tools)", videos: "$3-8K/mo (production + hosting)", webinars: "$2-6K/mo (host time + platform)", lms: "$10K+/year + setup", hwyk: "$49-149/mo" },
+  { label: "Estimated cost", docs: "$2-5K/mo (writers + tools)", videos: "$3-8K/mo (production + hosting)", webinars: "$2-6K/mo (host time + platform)", lms: "$10K+/year + setup", hwyk: "Freemium" },
 ];
 
 export default function HomePage() {

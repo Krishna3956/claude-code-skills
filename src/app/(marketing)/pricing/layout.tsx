@@ -4,6 +4,10 @@ export const metadata: Metadata = {
   title: "Pricing",
   description:
     "Start free with unlimited challenges. Upgrade for analytics, custom branding, lead capture, and team features. Plans from $49/mo.",
+  robots: {
+    index: false,
+    follow: false,
+  },
   alternates: {
     canonical: "https://www.howwellyouknow.com/pricing",
   },
