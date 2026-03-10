@@ -1016,12 +1016,6 @@ new Chart(document.getElementById('wrapperStackChart'),{type:'bar',data:{labels:
   <p style="margin-top:24px;text-align:center;font-size:0.85rem;color:#6b7280">Built by <a href="https://www.linkedin.com/in/krishnaa-goyal/" target="_blank" rel="noopener" style="color:#fff;background:#ff6600;padding:4px 14px;border-radius:20px;text-decoration:none;font-weight:700;font-size:0.82rem;margin:0 4px;display:inline-block;box-shadow:0 2px 8px rgba(255,102,0,0.25);transition:all 0.2s" onmouseover="this.style.background='#e65c00';this.style.transform='scale(1.05)'" onmouseout="this.style.background='#ff6600';this.style.transform='scale(1)'">Krishna Goyal</a> · February 2026</p>
 </footer>
 
-<!-- Sticky Bottom Bar -->
-<div class="cta-bar" id="ctaBar">
-  <span class="cta-bar-text"><strong>Love data-driven tools?</strong> Try our interactive challenges for Claude Code, Vercel, Copilot &amp; more.</span>
-  <a class="cta-bar-btn" href="/play" >Play Now &rarr;</a>
-  <button class="cta-bar-close" id="ctaBarClose" title="Dismiss">&times;</button>
-</div>
 
 <!-- HWYK Popup Modal -->
 <div class="roast-overlay" id="roastOverlay">
@@ -1044,19 +1038,6 @@ new Chart(document.getElementById('wrapperStackChart'),{type:'bar',data:{labels:
 
 <script>
 (function(){
-  // Sticky bar — always visible on load
-  var bar=document.getElementById('ctaBar');
-  var barClose=document.getElementById('ctaBarClose');
-  var barDismissed=sessionStorage.getItem('cta_bar_dismissed');
-  if(!barDismissed){
-    bar.classList.add('show');
-  }
-  barClose.addEventListener('click',function(){
-    bar.classList.remove('show');
-    bar.classList.add('dismissed');
-    sessionStorage.setItem('cta_bar_dismissed','1');
-  });
-
   // Popup modal logic — shows once at 40% scroll
   var overlay=document.getElementById('roastOverlay');
   var modalClose=document.getElementById('roastModalClose');
