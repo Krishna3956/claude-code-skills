@@ -116,30 +116,30 @@ export const hevoConfig: QuizConfig = {
       id: 1,
       dimension: "memory",
       statement:
-        "Hevo is positioned as an automated unified data platform for moving and preparing analytics data",
+        "You can use Hevo for both data ingestion and post-load data preparation workflows in one platform",
       isTrue: true,
       explanation:
-        "Hevo's product pages frame the platform around unified ingestion, loading, and post-load data preparation workflows.",
+        "Hevo's product flow combines source ingestion, warehouse loading, and transformation-oriented preparation in the same stack.",
     },
     {
       type: "truth_or_myth",
       id: 2,
       dimension: "extensibility",
       statement:
-        "Hevo's connector coverage is described as 150+ pre-built connectors across databases, SaaS apps, files, and APIs",
+        "Hevo offers 150+ pre-built connectors across databases, SaaS apps, files, and APIs",
       isTrue: true,
       explanation:
-        "The integrations and pipeline pages consistently describe 150+ connectors and multiple source categories.",
+        "The integrations catalog and pipeline pages show broad connector coverage across those source categories.",
     },
     {
       type: "truth_or_myth",
       id: 3,
       dimension: "workflows",
       statement:
-        "Hevo only supports overnight batch-style movement and does not support near real-time ingestion",
+        "If you need near real-time data movement, Hevo forces batch-only overnight syncs",
       isTrue: false,
       explanation:
-        "Pipeline messaging explicitly references near real-time data movement and CDC-oriented replication.",
+        "Hevo supports near real-time and CDC-oriented replication, so you are not limited to nightly batches.",
     },
     {
       type: "truth_or_myth",
