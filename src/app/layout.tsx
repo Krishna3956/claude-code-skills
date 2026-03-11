@@ -63,19 +63,19 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/api/og?type=default&title=Turn+your+product+docs+into+interactive+challenges",
-        width: 1200,
-        height: 630,
+        url: "/apple-touch-icon.png",
+        width: 180,
+        height: 180,
         alt: "How Well You Know - Interactive Product Challenges for B2B SaaS",
       },
     ],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "How Well You Know - Interactive Product Challenges for B2B SaaS",
     description:
       "Turn your product docs into 3-minute interactive challenges. Your customers learn your product. You see what they don't understand.",
-    images: ["/api/og?type=default&title=Turn+your+product+docs+into+interactive+challenges"],
+    images: ["/apple-touch-icon.png"],
   },
   robots: {
     index: true,

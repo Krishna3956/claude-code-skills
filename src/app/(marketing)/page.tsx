@@ -25,20 +25,20 @@ export const metadata: Metadata = {
     url: "https://www.howwellyouknow.com",
     images: [
       {
-        url: "https://www.howwellyouknow.com/api/og?type=default&title=Turn+your+product+docs+into+interactive+challenges",
-        width: 1200,
-        height: 630,
+        url: "https://www.howwellyouknow.com/apple-touch-icon.png",
+        width: 180,
+        height: 180,
         alt: "How Well You Know - Interactive Product Challenges for B2B SaaS",
       },
     ],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "How Well You Know - Interactive Product Challenges for B2B SaaS",
     description:
       "Turn your product docs into 3-minute interactive challenges that onboard users, test product knowledge, and reveal feature-level gaps.",
     images: [
-      "https://www.howwellyouknow.com/api/og?type=default&title=Turn+your+product+docs+into+interactive+challenges",
+      "https://www.howwellyouknow.com/apple-touch-icon.png",
     ],
   },
 };
