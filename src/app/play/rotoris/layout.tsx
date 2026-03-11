@@ -4,7 +4,7 @@ import { rotorisConfig } from "@/quizzes/rotoris";
 
 const canonicalUrl = "https://www.howwellyouknow.com/play/rotoris";
 const description =
-  "Think you know Rotoris? Test your knowledge on collections, complications, movements, and model specs in 6 rounds.";
+  "Think you know Rotoris? Test your luxury watch knowledge on craftsmanship, complications, movements, and model precision in 6 rounds.";
 const ogImageUrl = "/api/og?title=How+Rotoris+Are+You%3F&tool=Rotoris&slug=rotoris";
 
 export const metadata: Metadata = {

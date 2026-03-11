@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import {
   ChevronDown,
   Menu,
@@ -24,25 +24,39 @@ const USE_CASE_ITEMS: { label: string; desc: string; href: string; icon: LucideI
   { label: "Product Teams", desc: "Feature launches & adoption", href: "/use-cases/product-teams", icon: Rocket },
 ];
 
-export default function Navbar() {
+export default function Navbar({ theme = "light" }: { theme?: "light" | "dark" }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [useCaseOpen, setUseCaseOpen] = useState(false);
+  const dark = theme === "dark";
+  const themeVars = dark
+    ? ({
+        "--m-text": "#F6F0E5",
+        "--m-text-tertiary": "#B9AB92",
+        "--m-border": "#3A3328",
+        "--m-bg": "#13110F",
+        "--m-bg-secondary": "#1D1915",
+        "--m-accent": "#C9A45D",
+        "--m-accent-hover": "#B78E43",
+        "--m-accent-light": "rgba(201,164,93,0.18)",
+      } as CSSProperties)
+    : undefined;
 
   return (
     <>
       <header
         className="sticky top-0 z-50 border-b"
         style={{
-          background: "rgba(255,255,255,0.95)",
+          background: dark ? "rgba(8,7,6,0.90)" : "rgba(255,255,255,0.95)",
           backdropFilter: "blur(8px)",
           WebkitBackdropFilter: "blur(8px)",
           borderColor: "var(--m-border)",
+          ...themeVars,
         }}
       >
         <nav aria-label="Main navigation" className="mx-auto flex h-16 max-w-[1200px] items-center justify-between px-4 sm:px-6">
           <Link href="/" className="flex shrink-0 items-center gap-2">
             <Image
-              src="/logos/hwyk-lockup-transparent.png"
+              src={dark ? "/logos/hwyk-lockup-cream.png" : "/logos/hwyk-lockup-transparent.png"}
               alt="How Well You Know"
               width={168}
               height={29}
@@ -169,7 +183,7 @@ export default function Navbar() {
       {mobileOpen && (
         <div
           className="fixed inset-0 top-16 z-[60] flex flex-col gap-1 overflow-y-auto p-4 sm:p-6 md:hidden"
-          style={{ background: "#FFFFFF" }}
+          style={{ background: dark ? "#0C0A08" : "#FFFFFF", ...themeVars }}
         >
           {[
             { label: "Play", href: "/play" },

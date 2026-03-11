@@ -440,7 +440,7 @@ function QuizPageInner({ config }: { config: QuizConfig }) {
   if (!started) {
     return (
       <>
-        {!isEmbed && <Navbar />}
+        {!isEmbed && <Navbar theme={config.navbarTheme} />}
         <HomeScreen config={config} onStart={() => setStarted(true)} isEmbed={isEmbed} />
       </>
     );
@@ -449,7 +449,7 @@ function QuizPageInner({ config }: { config: QuizConfig }) {
   if (showingRoundIntro && currentRound) {
     return (
       <>
-        {!isEmbed && <Navbar />}
+        {!isEmbed && <Navbar theme={config.navbarTheme} />}
         <div className="flex min-h-dvh items-center justify-center px-4" style={isEmbed ? { zoom: 0.75 } : undefined}>
           <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
             className="flex flex-col items-center gap-3 text-center">
@@ -471,7 +471,7 @@ function QuizPageInner({ config }: { config: QuizConfig }) {
 
   return (
     <>
-      {!isEmbed && <Navbar />}
+      {!isEmbed && <Navbar theme={config.navbarTheme} />}
       <div className="flex min-h-dvh flex-col items-center px-4 py-6 sm:py-8" style={isEmbed ? { zoom: 0.75 } : undefined}>
       <div className="w-full max-w-lg mb-6">
         <div className="flex items-center justify-between mb-3">

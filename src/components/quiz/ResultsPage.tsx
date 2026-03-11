@@ -133,7 +133,7 @@ function ResultContent({ config }: { config: QuizConfig }) {
   if (!result) {
     return (
       <>
-        {!isEmbed && <Navbar />}
+        {!isEmbed && <Navbar theme={config.navbarTheme} />}
         <div className="flex min-h-dvh items-center justify-center px-4">
           <div className="text-center">
             <p style={{ color: "var(--v5-text-secondary)" }} className="mb-4">
@@ -200,7 +200,7 @@ function ResultContent({ config }: { config: QuizConfig }) {
 
   return (
     <>
-      {!isEmbed && <Navbar />}
+      {!isEmbed && <Navbar theme={config.navbarTheme} />}
       <div className="flex min-h-dvh flex-col items-center px-4 py-8" style={isEmbed ? { zoom: 0.75 } : undefined}>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
