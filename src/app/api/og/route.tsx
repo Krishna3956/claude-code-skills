@@ -31,6 +31,7 @@ const QUIZ_COLORS: Record<string, { accent: string; bg: string }> = {
   lovable: { accent: "#E11D48", bg: "#FFF0F3" },
   openclaw: { accent: "#FF173D", bg: "#F7F8FA" },
   rotoris: { accent: "#C9A45D", bg: "#F6F1E8" },
+  hevo: { accent: "#2F6BFF", bg: "#F4F8FF" },
 };
 
 export async function GET(request: NextRequest) {
