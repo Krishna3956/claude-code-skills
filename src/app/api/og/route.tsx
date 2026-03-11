@@ -33,6 +33,7 @@ const QUIZ_COLORS: Record<string, { accent: string; bg: string }> = {
   rotoris: { accent: "#C9A45D", bg: "#F6F1E8" },
   hevo: { accent: "#2F6BFF", bg: "#F4F8FF" },
   raycast: { accent: "#FF6363", bg: "#FFEFEF" },
+  resend: { accent: "#111111", bg: "#F3F4F6" },
 };
 
 export async function GET(request: NextRequest) {
