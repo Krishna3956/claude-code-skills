@@ -30,6 +30,7 @@ const QUIZ_COLORS: Record<string, { accent: string; bg: string }> = {
   emergent: { accent: "#2563EB", bg: "#F0F5FF" },
   lovable: { accent: "#E11D48", bg: "#FFF0F3" },
   openclaw: { accent: "#FF173D", bg: "#F7F8FA" },
+  rotoris: { accent: "#C9A45D", bg: "#F6F1E8" },
 };
 
 export async function GET(request: NextRequest) {
