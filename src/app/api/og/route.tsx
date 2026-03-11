@@ -32,6 +32,7 @@ const QUIZ_COLORS: Record<string, { accent: string; bg: string }> = {
   openclaw: { accent: "#FF173D", bg: "#F7F8FA" },
   rotoris: { accent: "#C9A45D", bg: "#F6F1E8" },
   hevo: { accent: "#2F6BFF", bg: "#F4F8FF" },
+  raycast: { accent: "#FF6363", bg: "#FFEFEF" },
 };
 
 export async function GET(request: NextRequest) {

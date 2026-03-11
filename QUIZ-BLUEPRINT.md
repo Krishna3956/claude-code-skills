@@ -331,6 +331,12 @@ The quiz is NOT just a test. It's a teaching tool. Each question should:
 - "What year was ChatGPT released?" (trivia, not educational)
 - "What's the keyboard shortcut for X?" (too granular)
 - "Is ChatGPT made by OpenAI?" (too obvious)
+- "Tool X describes itself as..." (third-person marketing copy, vague, not operator-level)
+
+### Opening Question Rule (Mandatory)
+- Questions 1-3 must test practical product knowledge, not brand slogans or generic positioning lines.
+- Do not write third-person framing like "Tool X claims..." or "Tool X describes itself...".
+- Write questions as direct capability checks a real user/operator would recognize from actual usage.
 
 ### Formatting Rules
 - **No em dashes** - use regular dashes with spaces, commas, or periods instead
