@@ -7,6 +7,14 @@ export const metadata: Metadata = {
   title: "How Well You Know - Interactive Product Challenges for B2B SaaS",
   description:
     "Turn your product docs into 3-minute interactive challenges that onboard users, test product knowledge, and reveal feature-level gaps. 73% completion rate.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
   alternates: {
     canonical: "https://www.howwellyouknow.com",
   },
@@ -15,11 +23,23 @@ export const metadata: Metadata = {
     description:
       "Turn your product docs into 3-minute interactive challenges that onboard users, test product knowledge, and reveal feature-level gaps. 73% completion rate.",
     url: "https://www.howwellyouknow.com",
+    images: [
+      {
+        url: "https://www.howwellyouknow.com/api/og?type=default&title=Turn+your+product+docs+into+interactive+challenges",
+        width: 1200,
+        height: 630,
+        alt: "How Well You Know - Interactive Product Challenges for B2B SaaS",
+      },
+    ],
   },
   twitter: {
+    card: "summary_large_image",
     title: "How Well You Know - Interactive Product Challenges for B2B SaaS",
     description:
       "Turn your product docs into 3-minute interactive challenges that onboard users, test product knowledge, and reveal feature-level gaps.",
+    images: [
+      "https://www.howwellyouknow.com/api/og?type=default&title=Turn+your+product+docs+into+interactive+challenges",
+    ],
   },
 };
 import LogoMarquee from "@/components/marketing/LogoMarquee";
