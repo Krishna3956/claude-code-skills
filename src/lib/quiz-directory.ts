@@ -2,7 +2,7 @@ import type { QuizCardData } from "@/components/marketing/QuizCard";
 
 export const QUIZ_LIST: QuizCardData[] = [
   { slug: "openclaw", toolName: "OpenClaw", logoFile: "openclaw-mascot.png", category: "AI Tools" },
-  { slug: "clueso", toolName: "Clueso", logoFile: "clueso.png", category: "Productivity" },
+  { slug: "snowflake", toolName: "Snowflake", logoFile: "snowflake.png", category: "Dev Tools" },
   { slug: "chatgpt", toolName: "ChatGPT", logoFile: "chatgpt.svg", category: "AI Tools" },
   { slug: "figma", toolName: "Figma", logoFile: "figma.svg", category: "Design" },
   { slug: "cursor", toolName: "Cursor", logoFile: "cursor.png", category: "Dev Tools" },
