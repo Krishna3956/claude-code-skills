@@ -34,6 +34,17 @@ const QUIZ_COLORS: Record<string, { accent: string; bg: string }> = {
   hevo: { accent: "#2F6BFF", bg: "#F4F8FF" },
   raycast: { accent: "#FF6363", bg: "#FFEFEF" },
   resend: { accent: "#111111", bg: "#F3F4F6" },
+  e2b: { accent: "#FF8800", bg: "#FFF6ED" },
+  browserbase: { accent: "#111111", bg: "#F3F4F6" },
+  langsmith: { accent: "#0EA5E9", bg: "#EFF9FF" },
+  langchain: { accent: "#16A34A", bg: "#F0FDF4" },
+  wandb: { accent: "#FFBE00", bg: "#FFFBE8" },
+  framer: { accent: "#0055FF", bg: "#F2F6FF" },
+  spline: { accent: "#F97316", bg: "#FFF6F0" },
+  rive: { accent: "#6D28D9", bg: "#F5F0FF" },
+  calcom: { accent: "#111827", bg: "#F5F7FA" },
+  mintlify: { accent: "#2563EB", bg: "#EFF6FF" },
+  attio: { accent: "#0F172A", bg: "#F8FAFC" },
 };
 
 export async function GET(request: NextRequest) {

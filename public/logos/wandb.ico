@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!--
+  We disable Google Translate because it does not play well with React 16
+  See https://github.com/facebook/react/issues/11538
+-->
+<html lang="en" class="notranslate">
+  <head><!— SERVED BY NEW HOST —>
+    <style>
+      html {
+        background-color: #f9f9f9;
+      }
+      html[data-mode='dark'] {
+        background-color: #232323;
+      }
+      /* anti-flicker snippet for Google Optimize */
+      .async-hide {
+        opacity: 0 !important;
+      }
+    </style>
+    <script>
+      const theme = localStorage.getItem('__wb_theme') || 'light';
+      if (theme === 'dark') {
+        document.documentElement.classList.add('night-mode');
+        // Used for tailwind dark mode
+        document.documentElement.setAttribute('data-mode', 'dark');
+
+        // The data attribute used by @wandb/components to toggle dark mode
+        document.documentElement.setAttribute('data-dark-mode', 'true');
+      } else {
+        document.documentElement.classList.remove('night-mode');
+        document.documentElement.removeAttribute('data-mode');
+
+        document.documentElement.removeAttribute('data-dark-mode');
+      }
+    </script>
+
+    <meta name="robots" content="max-image-preview:large" />
+    
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta property="fb:app_id" content="420039241995197"><meta property="og:type" content="website"><meta property="og:site_name" content="W&B"><meta property="og:title" content="favicon.ico"><meta property="og:description" content="Weights & Biases, developer tools for machine learning"><meta property="og:image" content="https://wandb.ai/logo.png"><meta property="og:url" content="httpss://wandb.ai/favicon.ico">
+    <meta name="twitter:card" content="summary"><meta name="twitter:site" content="@weights_biases"><meta name="twitter:creator" content="@favicon.ico"><meta name="description" content="Weights & Biases, developer tools for machine learning"><script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfilePage","mainEntity":{"@type":"Person","url":"httpss://wandb.ai/favicon.ico","name":"W&B","image":"https://wandb.ai/logo.png","description":"Weights & Biases, developer tools for machine learning"}}</script><link rel="canonical" href="httpss://wandb.ai/favicon.ico"><meta name="robots" content="index, nofollow">
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+
+    <link rel="manifest" href="https://cdn.wandb.ai/production/f53e35ed3/manifest.json" />
+    <!-- Sentry --->
+    <script src="https://cdn.wandb.ai/production/f53e35ed3/raven.min.js" crossorigin="anonymous"></script>
+    <!-- Prism syntax highlighting, TODO: just use what's in the bundle -->
+    <script src="https://cdn.wandb.ai/production/f53e35ed3/prism.js" crossorigin="anonymous"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.wandb.ai/production/f53e35ed3/prism.css" crossorigin="anonymous" />
+    <link rel="shortcut icon" type="image/png" href="https://cdn.wandb.ai/production/f53e35ed3/favicon.png" />
+    <link rel="apple-touch-icon" href="https://cdn.wandb.ai/production/f53e35ed3/favicon.png" />
+    <title>favicon.ico</title>
+    <script type="module" crossorigin src="https://cdn.wandb.ai/production/f53e35ed3/assets/index-CeXMnZ3R.js"></script>
+    <link rel="stylesheet" crossorigin href="https://cdn.wandb.ai/production/f53e35ed3/assets/index-B5wYvjCJ.css">
+  
+        <script>
+          window.__WB_BOT_MODE = true;
+        </script>
+      
+        <style>
+          #root {
+            overflow-x: auto;
+          }
+        </style>
+      </head>
+
+    <script src="https://cdn.wandb.ai/production/f53e35ed3/env.js" crossorigin="anonymous"></script>
+  <body>
+    <div id="root" style="height: 100%"></div>
+    <script>
+      window.Prism = window.Prism || {
+        highlightAll: function () {},
+      };
+    </script>
+    <script src="https://cdn.wandb.ai/production/f53e35ed3/consentAwareAnalyticsInjector.js" crossorigin="anonymous"></script>
+  </body>
+</html>
