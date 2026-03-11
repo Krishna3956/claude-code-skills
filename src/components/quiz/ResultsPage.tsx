@@ -6,7 +6,7 @@ import Link from "next/link";
 import RadarChart from "@/components/RadarChart";
 import { motion } from "framer-motion";
 import { toPng } from "html-to-image";
-import { track } from "@vercel/analytics";
+import { track } from "@/lib/analytics";
 import type { QuizConfig } from "./types";
 import { decodeResult, getArchetype } from "./scoring";
 import Navbar from "@/components/marketing/Navbar";

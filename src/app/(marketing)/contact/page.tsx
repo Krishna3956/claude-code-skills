@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Mail, MessageSquare, Handshake, Clock } from "lucide-react";
 import { validateEmail } from "@/lib/validate-email";
-import { track } from "@vercel/analytics";
+import { track } from "@/lib/analytics";
 
 export default function ContactPage() {
   const [form, setForm] = useState({

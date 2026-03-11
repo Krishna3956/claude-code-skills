@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { validateEmail } from "@/lib/validate-email";
-import { track } from "@vercel/analytics";
+import { track } from "@/lib/analytics";
 
 export default function CTASection({
   id,

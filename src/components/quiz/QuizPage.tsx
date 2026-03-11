@@ -3,7 +3,7 @@
 import { Suspense, useState, useCallback, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { track } from "@vercel/analytics";
+import { track } from "@/lib/analytics";
 import Navbar from "@/components/marketing/Navbar";
 import {
   ShieldQuestion,
