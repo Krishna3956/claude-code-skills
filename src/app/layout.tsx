@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import Script from "next/script";
 import "./globals.css";
 
 const inter = Inter({
@@ -105,10 +105,18 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-M7HJBZVBNK" strategy="afterInteractive" />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-M7HJBZVBNK');
+          `}
+        </Script>
       </head>
       <body className={`${inter.variable} ${geistMono.variable} antialiased`}>
         {children}
-        <GoogleAnalytics gaId="G-M7HJBZVBNK" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
