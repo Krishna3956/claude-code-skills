@@ -6,6 +6,7 @@ export interface QuizCardData {
   toolName: string;
   logoFile: string;
   category: string;
+  paused?: boolean;
 }
 
 export default function QuizCard({ quiz }: { quiz: QuizCardData }) {

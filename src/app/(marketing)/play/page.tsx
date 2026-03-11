@@ -3,14 +3,16 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ExternalLink, Copy, Check } from "lucide-react";
+import { ExternalLink, Copy, Check, X } from "lucide-react";
 import { QUIZ_LIST, CATEGORIES } from "@/lib/quiz-directory";
 import CTASection from "@/components/marketing/CTASection";
+import PausedChallengeCard from "@/components/marketing/PausedChallengeCard";
 
 export default function PlayDirectoryPage() {
   const [active, setActive] = useState("All");
   const [selectedQuiz, setSelectedQuiz] = useState(QUIZ_LIST[0]);
   const [copied, setCopied] = useState(false);
+  const [pausedModalQuiz, setPausedModalQuiz] = useState<null | (typeof QUIZ_LIST)[number]>(null);
 
   const filtered =
     active === "All"
@@ -23,6 +25,13 @@ export default function PlayDirectoryPage() {
     navigator.clipboard.writeText(quizUrl);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleSelectQuiz = (quiz: (typeof QUIZ_LIST)[number]) => {
+    setSelectedQuiz(quiz);
+    if (quiz.paused) {
+      setPausedModalQuiz(quiz);
+    }
   };
 
   return (
@@ -68,7 +77,7 @@ export default function PlayDirectoryPage() {
               {filtered.map((quiz) => (
                 <button
                   key={quiz.slug}
-                  onClick={() => setSelectedQuiz(quiz)}
+                  onClick={() => handleSelectQuiz(quiz)}
                   className="flex items-center gap-3 rounded-xl border p-3 text-left transition-all"
                   style={{
                     background:
@@ -79,6 +88,8 @@ export default function PlayDirectoryPage() {
                       selectedQuiz.slug === quiz.slug
                         ? "var(--m-accent)"
                         : "var(--m-border)",
+                    opacity: quiz.paused ? 0.66 : 1,
+                    filter: quiz.paused ? "grayscale(0.45)" : "none",
                   }}
                 >
                   <div
@@ -95,17 +106,31 @@ export default function PlayDirectoryPage() {
                     />
                   </div>
                   <div>
-                    <p
-                      className="text-sm font-semibold"
-                      style={{
-                        color:
-                          selectedQuiz.slug === quiz.slug
-                            ? "var(--m-accent)"
-                            : "var(--m-text)",
-                      }}
-                    >
-                      {quiz.toolName}
-                    </p>
+                    <div className="flex items-center gap-2">
+                      <p
+                        className="text-sm font-semibold"
+                        style={{
+                          color:
+                            selectedQuiz.slug === quiz.slug
+                              ? "var(--m-accent)"
+                              : "var(--m-text)",
+                        }}
+                      >
+                        {quiz.toolName}
+                      </p>
+                      {quiz.paused ? (
+                        <span
+                          className="rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide"
+                          style={{
+                            background: "var(--m-bg-secondary)",
+                            border: "1px solid var(--m-border)",
+                            color: "var(--m-text-tertiary)",
+                          }}
+                        >
+                          Paused
+                        </span>
+                      ) : null}
+                    </div>
                     <p className="text-xs" style={{ color: "var(--m-text-tertiary)" }}>
                       15 questions &middot; ~3 min
                     </p>
@@ -148,16 +173,27 @@ export default function PlayDirectoryPage() {
                     {copied ? <Check size={12} /> : <Copy size={12} />}
                     <span className="hidden sm:inline">{copied ? "Copied" : "Copy link"}</span>
                   </button>
-                  <Link
-                    href={`/play/${selectedQuiz.slug}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-white transition-all hover:opacity-90"
-                    style={{ background: "var(--m-accent)" }}
-                  >
-                    <ExternalLink size={12} />
-                    <span className="hidden sm:inline">Open full</span>
-                  </Link>
+                  {selectedQuiz.paused ? (
+                    <button
+                      onClick={() => setPausedModalQuiz(selectedQuiz)}
+                      className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-white transition-all hover:opacity-90"
+                      style={{ background: "var(--m-accent)" }}
+                    >
+                      <ExternalLink size={12} />
+                      <span className="hidden sm:inline">Request unlock</span>
+                    </button>
+                  ) : (
+                    <Link
+                      href={`/play/${selectedQuiz.slug}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-white transition-all hover:opacity-90"
+                      style={{ background: "var(--m-accent)" }}
+                    >
+                      <ExternalLink size={12} />
+                      <span className="hidden sm:inline">Open full</span>
+                    </Link>
+                  )}
                 </div>
               </div>
 
@@ -177,6 +213,28 @@ export default function PlayDirectoryPage() {
     </section>
 
     <CTASection id="early-access" source="play" />
+
+    {pausedModalQuiz ? (
+      <div
+        className="fixed inset-0 z-[90] flex items-center justify-center p-4"
+        style={{ background: "rgba(8, 12, 22, 0.56)", backdropFilter: "blur(2px)" }}
+      >
+        <div className="relative w-full max-w-md">
+          <button
+            onClick={() => setPausedModalQuiz(null)}
+            className="absolute -top-10 right-0 rounded-md p-1.5 text-white/90 transition-colors hover:text-white"
+            aria-label="Close paused challenge modal"
+          >
+            <X size={18} />
+          </button>
+          <PausedChallengeCard
+            toolName={pausedModalQuiz.toolName}
+            slug={pausedModalQuiz.slug}
+            logoFile={pausedModalQuiz.logoFile}
+          />
+        </div>
+      </div>
+    ) : null}
     </>
   );
 }

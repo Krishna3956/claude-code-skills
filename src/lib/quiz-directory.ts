@@ -26,6 +26,7 @@ export const QUIZ_LIST: QuizCardData[] = [
   { slug: "obsidian", toolName: "Obsidian", logoFile: "obsidian.png", category: "Productivity" },
   { slug: "postman", toolName: "Postman", logoFile: "postman.png", category: "Dev Tools" },
   { slug: "emergent", toolName: "Emergent", logoFile: "emergent.jpg", category: "Marketing" },
+  { slug: "clueso", toolName: "Clueso", logoFile: "clueso.png", category: "Marketing", paused: true },
   { slug: "lovable", toolName: "Lovable", logoFile: "lovable.png", category: "Dev Tools" },
 ];
 
