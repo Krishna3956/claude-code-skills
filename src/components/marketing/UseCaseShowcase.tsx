@@ -31,7 +31,7 @@ const USE_CASES: UseCase[] = [
     visual: {
       headline: "Welcome! Learn Acme in 3 min",
       subline: "Hey Sarah, take this quick challenge before your first login.",
-      detail: "Day 1 email \u2192 73% complete the challenge",
+      detail: "Day 1 email \u2192 54% complete the challenge",
     },
     href: "/use-cases/onboarding",
   },
@@ -235,7 +235,7 @@ export default function UseCaseShowcase() {
                   >
                     <div
                       className="h-full rounded-full"
-                      style={{ width: "73%", background: "var(--m-accent)" }}
+                      style={{ width: "54%", background: "var(--m-accent)" }}
                     />
                   </div>
                 </div>

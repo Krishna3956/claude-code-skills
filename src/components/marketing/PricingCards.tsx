@@ -17,28 +17,12 @@ interface Tier {
 
 const TIERS: Tier[] = [
   {
-    name: "Free",
-    monthly: 0,
-    yearly: 0,
-    tagline: "For individuals exploring",
-    features: [
-      "1 challenge",
-      "10 cards per challenge",
-      "All 5 challenge types",
-      "Scoring and scorecard",
-      "Shareable results",
-      "Play count analytics",
-    ],
-    cta: "Start Free",
-    ctaHref: "#early-access",
-  },
-  {
     name: "Growth",
-    monthly: 49,
-    yearly: 39,
+    monthly: 99,
+    yearly: 79,
     tagline: "For growing teams",
     features: [
-      "5 challenges",
+      "7 challenges",
       "25 cards per challenge",
       "Custom branding (logo + color)",
       "Removable 'Powered by' badge",
@@ -142,7 +126,7 @@ export default function PricingCards({ compact }: { compact?: boolean }) {
         className="mx-auto max-w-[1100px] overflow-hidden rounded-2xl border"
         style={{ borderColor: "var(--m-border)", background: "var(--m-bg)" }}
       >
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {TIERS.map((tier, idx) => {
             const price = yearly ? tier.yearly : tier.monthly;
             const isEnterprise = price === null;
@@ -151,7 +135,7 @@ export default function PricingCards({ compact }: { compact?: boolean }) {
             return (
               <div
                 key={tier.name}
-                className={`relative flex flex-col ${!isLast ? "border-b sm:border-b lg:border-b-0 lg:border-r" : ""} ${idx === 1 ? "sm:border-r" : ""} ${idx < 2 ? "sm:border-b lg:border-b-0" : ""}`}
+                className={`relative flex flex-col ${!isLast ? "border-b lg:border-b-0 lg:border-r" : ""} ${idx === 0 ? "sm:border-r sm:border-b" : ""} ${idx === 1 ? "sm:border-b" : ""}`}
                 style={{ borderColor: "var(--m-border)" }}
               >
                 <div className="flex flex-1 flex-col p-6">
@@ -198,11 +182,7 @@ export default function PricingCards({ compact }: { compact?: boolean }) {
                           )}
                         </div>
                         <p className="mt-0.5 text-xs" style={{ color: "var(--m-text-tertiary)" }}>
-                          {price === 0
-                            ? "Free forever"
-                            : yearly && !compact
-                              ? "billed yearly"
-                              : "\u00A0"}
+                          {yearly && !compact ? "billed yearly" : "\u00A0"}
                         </p>
                       </>
                     )}

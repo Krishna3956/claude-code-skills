@@ -8,7 +8,7 @@ import CTASection from "@/components/marketing/CTASection";
 const FAQS = [
   {
     q: "Can I try it before I pay?",
-    a: "Yes. The Free plan gives you 1 challenge with 10 cards. Play any of our 25 live quizzes to see the full experience. No signup required.",
+    a: "Yes. Play any of our 25 live quizzes to see the full experience. No signup required.",
   },
   {
     q: "What happens when I sign up?",
@@ -44,7 +44,6 @@ type CellValue = boolean | string;
 
 interface ComparisonRow {
   feature: string;
-  free: CellValue;
   growth: CellValue;
   scale: CellValue;
   enterprise: CellValue;
@@ -59,52 +58,51 @@ const COMPARISON: ComparisonSection[] = [
   {
     title: "Challenges",
     rows: [
-      { feature: "Number of challenges", free: "1", growth: "5", scale: "Unlimited", enterprise: "Unlimited" },
-      { feature: "Cards per challenge", free: "10", growth: "25", scale: "25", enterprise: "Custom" },
-      { feature: "Challenge types (all 5)", free: true, growth: true, scale: true, enterprise: true },
-      { feature: "Auto-generated content", free: false, growth: true, scale: true, enterprise: true },
+      { feature: "Number of challenges", growth: "7", scale: "Unlimited", enterprise: "Unlimited" },
+      { feature: "Cards per challenge", growth: "25", scale: "25", enterprise: "Custom" },
+      { feature: "Challenge types (all 5)", growth: true, scale: true, enterprise: true },
+      { feature: "Auto-generated content", growth: true, scale: true, enterprise: true },
     ],
   },
   {
     title: "Branding & Distribution",
     rows: [
-      { feature: "Hosted challenge page", free: true, growth: true, scale: true, enterprise: true },
-      { feature: "Shareable scorecard", free: true, growth: true, scale: true, enterprise: true },
-      { feature: "Custom branding (logo + color)", free: false, growth: true, scale: true, enterprise: true },
-      { feature: "Full brand kit (colors, fonts, logo)", free: false, growth: false, scale: true, enterprise: true },
-      { feature: "Remove 'Powered by' badge", free: false, growth: true, scale: true, enterprise: true },
-      { feature: "Embed code (iframe)", free: false, growth: false, scale: true, enterprise: true },
-      { feature: "Custom domain (CNAME)", free: false, growth: false, scale: false, enterprise: true },
+      { feature: "Hosted challenge page", growth: true, scale: true, enterprise: true },
+      { feature: "Shareable scorecard", growth: true, scale: true, enterprise: true },
+      { feature: "Custom branding (logo + color)", growth: true, scale: true, enterprise: true },
+      { feature: "Full brand kit (colors, fonts, logo)", growth: false, scale: true, enterprise: true },
+      { feature: "Remove 'Powered by' badge", growth: true, scale: true, enterprise: true },
+      { feature: "Embed code (iframe)", growth: false, scale: true, enterprise: true },
+      { feature: "Custom domain (CNAME)", growth: false, scale: false, enterprise: true },
     ],
   },
   {
     title: "Analytics",
     rows: [
-      { feature: "Play count", free: true, growth: true, scale: true, enterprise: true },
-      { feature: "Completion rate & avg score", free: false, growth: true, scale: true, enterprise: true },
-      { feature: "Score distribution", free: false, growth: true, scale: true, enterprise: true },
-      { feature: "Per-question breakdown", free: false, growth: false, scale: true, enterprise: true },
-      { feature: "Knowledge gap reports", free: false, growth: false, scale: true, enterprise: true },
-      { feature: "Player-level data", free: false, growth: false, scale: true, enterprise: true },
-      { feature: "Lead capture (player emails)", free: false, growth: false, scale: true, enterprise: true },
+      { feature: "Play count", growth: true, scale: true, enterprise: true },
+      { feature: "Completion rate & avg score", growth: true, scale: true, enterprise: true },
+      { feature: "Score distribution", growth: true, scale: true, enterprise: true },
+      { feature: "Per-question breakdown", growth: false, scale: true, enterprise: true },
+      { feature: "Knowledge gap reports", growth: false, scale: true, enterprise: true },
+      { feature: "Player-level data", growth: false, scale: true, enterprise: true },
+      { feature: "Lead capture (player emails)", growth: false, scale: true, enterprise: true },
     ],
   },
   {
     title: "Team & Support",
     rows: [
-      { feature: "Team seats", free: "1", growth: "3", scale: "10", enterprise: "Unlimited" },
-      { feature: "CSV export", free: false, growth: true, scale: true, enterprise: true },
-      { feature: "API access", free: false, growth: false, scale: false, enterprise: true },
-      { feature: "SSO / SAML", free: false, growth: false, scale: false, enterprise: true },
-      { feature: "Dedicated account manager", free: false, growth: false, scale: false, enterprise: true },
-      { feature: "SLA + uptime guarantee", free: false, growth: false, scale: false, enterprise: true },
-      { feature: "Email support", free: "Best effort", growth: "48hr", scale: "24hr", enterprise: "Priority" },
+      { feature: "Team seats", growth: "3", scale: "10", enterprise: "Unlimited" },
+      { feature: "CSV export", growth: true, scale: true, enterprise: true },
+      { feature: "API access", growth: false, scale: false, enterprise: true },
+      { feature: "SSO / SAML", growth: false, scale: false, enterprise: true },
+      { feature: "Dedicated account manager", growth: false, scale: false, enterprise: true },
+      { feature: "SLA + uptime guarantee", growth: false, scale: false, enterprise: true },
+      { feature: "Email support", growth: "48hr", scale: "24hr", enterprise: "Priority" },
     ],
   },
 ];
 
 const PLAN_NAMES = [
-  { key: "free" as const, label: "Free" },
   { key: "growth" as const, label: "Growth", highlighted: true },
   { key: "scale" as const, label: "Scale" },
   { key: "enterprise" as const, label: "Enterprise" },
@@ -166,7 +164,7 @@ export default function PricingPage() {
               className="mx-auto max-w-lg text-base"
               style={{ color: "var(--m-text-secondary)" }}
             >
-              Start free. Upgrade when your team needs analytics, branding, and lead capture. Cancel anytime.
+              Start with Growth. Upgrade when your team needs analytics, branding, and lead capture. Cancel anytime.
             </p>
           </div>
 
@@ -194,9 +192,9 @@ export default function PricingPage() {
                 {/* Sticky header */}
                 <thead>
                   <tr style={{ borderBottom: "1px solid var(--m-border)" }}>
-                    <th className="w-[36%] px-5 py-4 text-left" />
+                    <th className="w-[40%] px-5 py-4 text-left" />
                     {PLAN_NAMES.map((plan) => (
-                      <th key={plan.key} className="w-[16%] px-3 py-4 text-center">
+                      <th key={plan.key} className="w-[20%] px-3 py-4 text-center">
                         <span
                           className="text-sm font-semibold"
                           style={{ color: plan.highlighted ? "var(--m-accent)" : "var(--m-text)" }}
@@ -256,7 +254,7 @@ function SectionBlock({ section }: { section: ComparisonSection }) {
     <>
       <tr>
         <td
-          colSpan={5}
+          colSpan={4}
           className="px-5 pb-2 pt-5 text-xs font-semibold uppercase tracking-wider"
           style={{ color: "var(--m-text-tertiary)", background: "var(--m-bg-secondary)" }}
         >
@@ -271,7 +269,6 @@ function SectionBlock({ section }: { section: ComparisonSection }) {
           <td className="px-5 py-3 text-[13px]" style={{ color: "var(--m-text)" }}>
             {row.feature}
           </td>
-          <td className="px-3 py-3"><div className="flex items-center justify-center"><CellContent value={row.free} /></div></td>
           <td className="px-3 py-3"><div className="flex items-center justify-center"><CellContent value={row.growth} /></div></td>
           <td className="px-3 py-3"><div className="flex items-center justify-center"><CellContent value={row.scale} /></div></td>
           <td className="px-3 py-3"><div className="flex items-center justify-center"><CellContent value={row.enterprise} /></div></td>

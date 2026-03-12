@@ -6,7 +6,7 @@ import { Link2, Sparkles, Share2, BarChart3 } from "lucide-react";
 export const metadata: Metadata = {
   title: "How Well You Know - Interactive Product Challenges for B2B SaaS",
   description:
-    "Turn your product docs into 3-minute interactive challenges that onboard users, test product knowledge, and reveal feature-level gaps. 73% completion rate.",
+    "Turn your product docs into 3-minute interactive challenges that onboard users, test product knowledge, and reveal feature-level gaps. 54% completion rate.",
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "How Well You Know - Interactive Product Challenges for B2B SaaS",
     description:
-      "Turn your product docs into 3-minute interactive challenges that onboard users, test product knowledge, and reveal feature-level gaps. 73% completion rate.",
+      "Turn your product docs into 3-minute interactive challenges that onboard users, test product knowledge, and reveal feature-level gaps. 54% completion rate.",
     url: "https://www.howwellyouknow.com",
     images: [
       {
@@ -74,7 +74,7 @@ const STEPS = [
 
 const COMPARISON_ROWS = [
   { label: "Setup time", docs: "Weeks", videos: "Days", webinars: "Hours (recurring)", lms: "Months", hwyk: "Minutes" },
-  { label: "Completion rate", docs: "~12%", videos: "~30%", webinars: "~15%", lms: "~40%", hwyk: "73%+" },
+  { label: "Completion rate", docs: "~12%", videos: "~30%", webinars: "~15%", lms: "~40%", hwyk: "54%+" },
   { label: "Teaches AND tests", docs: "No", videos: "No", webinars: "Sometimes", lms: "Yes", hwyk: "Yes" },
   { label: "Per-feature analytics", docs: "No", videos: "No", webinars: "No", lms: "Basic", hwyk: "Detailed" },
   { label: "Works in emails, docs, Slack", docs: "Partially", videos: "No", webinars: "No", lms: "No", hwyk: "Yes" },
@@ -162,7 +162,7 @@ export default function HomePage() {
                 />
                 <div className="relative flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
                   <span className="text-5xl font-bold text-white sm:text-6xl" style={{ lineHeight: 1 }}>
-                    73%
+                    54%
                   </span>
                   <div>
                     <p className="mb-1 text-base font-semibold text-white">

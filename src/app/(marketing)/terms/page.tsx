@@ -48,10 +48,9 @@ export default function TermsPage() {
           <h2 className="text-lg font-semibold" style={{ color: "var(--m-text)" }}>3. Accounts and Registration</h2>
           <p>When you create an account or sign up, you agree to: provide accurate, current, and complete information; maintain the security of your account credentials; accept responsibility for all activities under your account; and notify us immediately of any unauthorized use.</p>
 
-          <h2 className="text-lg font-semibold" style={{ color: "var(--m-text)" }}>4. Free and Paid Plans</h2>
-          <p><strong>4.1 Free Plan:</strong> Our Free plan provides limited access to challenge creation. Free challenges display a &quot;Powered by How Well You Know&quot; badge that cannot be removed.</p>
-          <p><strong>4.2 Paid Plans:</strong> Paid plans (Growth, Scale, Enterprise) are billed monthly. Prices are listed on our pricing page and may change with 30 days notice. You may cancel at any time, effective at the end of your current billing period.</p>
-          <p><strong>4.3 Refunds:</strong> We offer a full refund within 14 days of your first payment if you&apos;re not satisfied. After 14 days, no refunds are provided for partial billing periods.</p>
+          <h2 className="text-lg font-semibold" style={{ color: "var(--m-text)" }}>4. Paid Plans</h2>
+          <p><strong>4.1 Plans:</strong> Paid plans (Growth, Scale, Enterprise) are billed monthly. Prices are listed on our pricing page and may change with 30 days notice. You may cancel at any time, effective at the end of your current billing period.</p>
+          <p><strong>4.2 Refunds:</strong> We offer a full refund within 14 days of your first payment if you&apos;re not satisfied. After 14 days, no refunds are provided for partial billing periods.</p>
 
           <h2 className="text-lg font-semibold" style={{ color: "var(--m-text)" }}>5. User Content</h2>
           <p><strong>5.1 Your Content:</strong> You retain ownership of all content you create using our Service, including challenge questions, branding materials, and documentation you provide.</p>

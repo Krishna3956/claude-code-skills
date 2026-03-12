@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "Start free with unlimited challenges. Upgrade for analytics, custom branding, lead capture, and team features. Plans from $49/mo.",
+    "Start with Growth and upgrade for analytics, custom branding, lead capture, and team features. Plans from $99/mo.",
   robots: {
     index: false,
     follow: false,
@@ -14,13 +14,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Pricing - How Well You Know",
     description:
-      "Start free with unlimited challenges. Upgrade for analytics, custom branding, lead capture, and team features. Plans from $49/mo.",
+      "Start with Growth and upgrade for analytics, custom branding, lead capture, and team features. Plans from $99/mo.",
     url: "https://www.howwellyouknow.com/pricing",
   },
   twitter: {
     title: "Pricing - How Well You Know",
     description:
-      "Start free with unlimited challenges. Upgrade for analytics, custom branding, and lead capture. Plans from $49/mo.",
+      "Start with Growth and upgrade for analytics, custom branding, and lead capture. Plans from $99/mo.",
   },
 };
 
@@ -33,7 +33,7 @@ const FAQ_SCHEMA = {
       name: "Can I try it before I pay?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. The Free plan gives you 1 challenge with 10 cards. Play any of our 25 live quizzes to see the full experience. No signup required.",
+        text: "Yes. Play any of our 25 live quizzes to see the full experience. No signup required.",
       },
     },
     {
