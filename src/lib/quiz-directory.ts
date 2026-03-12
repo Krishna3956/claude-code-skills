@@ -28,6 +28,15 @@ export const QUIZ_LIST: QuizCardData[] = [
   { slug: "emergent", toolName: "Emergent", logoFile: "emergent.jpg", category: "Marketing" },
   { slug: "clueso", toolName: "Clueso", logoFile: "clueso.png", category: "Marketing", paused: true },
   { slug: "lovable", toolName: "Lovable", logoFile: "lovable.png", category: "Dev Tools" },
+  { slug: "expo", toolName: "Expo", logoFile: "expo.svg", category: "Dev Tools" },
+  { slug: "sanity", toolName: "Sanity", logoFile: "sanity.svg", category: "Dev Tools" },
+  { slug: "statsig", toolName: "Statsig", logoFile: "statsig.svg", category: "Dev Tools" },
+  { slug: "wealthsimple", toolName: "Wealthsimple", logoFile: "wealthsimple.svg", category: "Productivity" },
+  { slug: "voiceflow", toolName: "Voiceflow", logoFile: "voiceflow.svg", category: "AI Tools" },
+  { slug: "apryse", toolName: "Apryse", logoFile: "apryse.svg", category: "Dev Tools" },
+  { slug: "onepassword", toolName: "1Password", logoFile: "onepassword.svg", category: "Dev Tools" },
+  { slug: "safetyculture", toolName: "SafetyCulture", logoFile: "safetyculture.svg", category: "Productivity" },
+  { slug: "buildkite", toolName: "Buildkite", logoFile: "buildkite.svg", category: "Dev Tools" },
 ];
 
 export const CATEGORIES = ["All", "AI Tools", "Dev Tools", "Design", "Productivity", "Marketing"];
