@@ -25,8 +25,8 @@ export const prismaConfig: QuizConfig = {
   scorecardLabelColor: "#A0B0C0",
   scorecardGridColor: "#2D3B4A",
   navbarTheme: "dark",
-  logo: (<img src="/logos/prisma.svg" alt="Prisma" width={44} height={44} style={{ objectFit: "contain", borderRadius: 12, padding: 6, backgroundColor: "#FFFFFF", border: "1px solid #2D3B4A" }} />),
-  scorecardLogo: (<img src="/logos/prisma.svg" alt="Prisma" width={42} height={42} style={{ borderRadius: 12, objectFit: "contain", padding: 6, backgroundColor: "#FFFFFF", border: "1px solid #2D3B4A" }} />),
+  logo: (<img src="/logos/prisma.ico" alt="Prisma" width={44} height={44} style={{ objectFit: "contain", borderRadius: 12, padding: 6, backgroundColor: "#FFFFFF", border: "1px solid #2D3B4A" }} />),
+  scorecardLogo: (<img src="/logos/prisma.ico" alt="Prisma" width={42} height={42} style={{ borderRadius: 12, objectFit: "contain", padding: 6, backgroundColor: "#FFFFFF", border: "1px solid #2D3B4A" }} />),
   analyticsPrefix: "prisma",
   dimensionLabels: {
     memory: "Core Concepts", orchestration: "Workflow Design", automation: "Execution Patterns", extensibility: "Platform Surface", workflows: "Operational Use", prompting: "Command Recall", bestPractices: "Production Discipline",
