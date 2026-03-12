@@ -2,14 +2,14 @@ import type { QuizConfig } from "@/components/quiz/types";
 
 export const birdConfig: QuizConfig = {
   slug: "bird", toolName: "Bird", tagline: "6 rounds. ~3 min. No signup required.", subtitle: "Just you vs. Bird challenge trivia.",
-  sansFont: "inter", serifFont: "source-serif-4",
-  accentColor: "#7B61FF", accentColorDim: "#6A52E6", accentColorSubtle: "rgba(123,97,255,0.14)",
-  bgColor: "linear-gradient(145deg, #F6F5FF 0%, #F1F0FF 55%, #EAE8FF 100%)", bgElevated: "#FFFFFF", bgSurface: "#FFFFFF", bgSurfaceLight: "#EEEBFF",
-  textColor: "#221E40", textSecondary: "#4D4A74", textTertiary: "#6E6B92", borderColor: "#DBD8F6", borderSubtle: "#EAE8FF",
-  scorecardBg: "#171334", scorecardAccentColor: "#B9A8FF", scorecardDivider: "#433D74", scorecardLabelColor: "#CAC6EE", scorecardGridColor: "#433D74",
+  sansFont: "inter", serifFont: "instrument-serif",
+  accentColor: "#0066FF", accentColorDim: "#0052D8", accentColorSubtle: "rgba(0,102,255,0.10)",
+  bgColor: "linear-gradient(145deg, #F5F8FF 0%, #EFF4FF 55%, #E8EEFF 100%)", bgElevated: "#FFFFFF", bgSurface: "#FFFFFF", bgSurfaceLight: "#EBF0FF",
+  textColor: "#0A1A3A", textSecondary: "#2A4068", textTertiary: "#5A7098", borderColor: "#D0DCFA", borderSubtle: "#E2EAFF",
+  scorecardBg: "#081430", scorecardAccentColor: "#80AAFF", scorecardDivider: "#1A3060", scorecardLabelColor: "#A0B8E0", scorecardGridColor: "#1A3060",
   navbarTheme: "light",
-  logo: (<img src="/logos/bird.svg" alt="Bird" width={44} height={44} style={{ objectFit: "contain", borderRadius: 10, padding: 6, backgroundColor: "#FFFFFF", border: "1px solid #E0DDF8" }} />),
-  scorecardLogo: (<img src="/logos/bird.svg" alt="Bird" width={42} height={42} style={{ objectFit: "contain", borderRadius: 10, padding: 6, backgroundColor: "#FFFFFF", border: "1px solid #E0DDF8" }} />),
+  logo: (<img src="/logos/bird.svg" alt="Bird" width={44} height={44} style={{ objectFit: "contain", borderRadius: 10 }} />),
+  scorecardLogo: (<img src="/logos/bird.svg" alt="Bird" width={42} height={42} style={{ objectFit: "contain", borderRadius: 10 }} />),
   analyticsPrefix: "bird",
   dimensionLabels: { memory: "Messaging Core", orchestration: "Channel Routing", automation: "Delivery Ops", extensibility: "Comms Surface", workflows: "Conversation Lifecycle", prompting: "API Recall", bestPractices: "Deliverability Discipline" },
   archetypes: [

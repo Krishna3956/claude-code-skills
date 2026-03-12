@@ -426,7 +426,7 @@ function ResultContent({ config }: { config: QuizConfig }) {
               track(`${prefix}_share_copy`, { score: result.overallScore });
             }}
             className="flex items-center justify-center gap-2.5 py-3 rounded-xl text-sm font-semibold transition-all active:scale-[0.98]"
-            style={{ background: "var(--v5-accent)", color: "#FFFFFF" }}
+            style={{ background: "var(--v5-accent)", color: config.ctaTextColor ?? "#FFFFFF" }}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />

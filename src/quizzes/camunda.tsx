@@ -2,11 +2,11 @@ import type { QuizConfig } from "@/components/quiz/types";
 
 export const camundaConfig: QuizConfig = {
   slug: "camunda", toolName: "Camunda", tagline: "6 rounds. ~3 min. No signup required.", subtitle: "Just you vs. Camunda challenge trivia.",
-  sansFont: "inter", serifFont: "source-serif-4",
-  accentColor: "#FC5D0D", accentColorDim: "#E14E08", accentColorSubtle: "rgba(252,93,13,0.16)",
-  bgColor: "linear-gradient(145deg, #FFF7F2 0%, #FFF1EA 55%, #FFE8DC 100%)", bgElevated: "#FFFFFF", bgSurface: "#FFFFFF", bgSurfaceLight: "#FFF0E6",
-  textColor: "#2E2118", textSecondary: "#604638", textTertiary: "#7E6352", borderColor: "#F0D8CA", borderSubtle: "#F9E9DF",
-  scorecardBg: "#3B1D0C", scorecardAccentColor: "#FFB88D", scorecardDivider: "#6C3620", scorecardLabelColor: "#E8C4AE", scorecardGridColor: "#6C3620",
+  sansFont: "inter", serifFont: "instrument-serif",
+  accentColor: "#FC5D0D", accentColorDim: "#E05008", accentColorSubtle: "rgba(252,93,13,0.10)",
+  bgColor: "linear-gradient(145deg, #FFFAF5 0%, #FFF5ED 55%, #FFEDE0 100%)", bgElevated: "#FFFFFF", bgSurface: "#FFFFFF", bgSurfaceLight: "#FFF0E5",
+  textColor: "#1A1005", textSecondary: "#5C3D1A", textTertiary: "#8A6A45", borderColor: "#F0D8C0", borderSubtle: "#F8E8D8",
+  scorecardBg: "#2A1508", scorecardAccentColor: "#FFB088", scorecardDivider: "#5A3018", scorecardLabelColor: "#D8A880", scorecardGridColor: "#5A3018",
   navbarTheme: "light",
   logo: (<img src="/logos/camunda.png" alt="Camunda" width={44} height={44} style={{ objectFit: "contain", borderRadius: 10 }} />),
   scorecardLogo: (<img src="/logos/camunda.png" alt="Camunda" width={42} height={42} style={{ objectFit: "contain", borderRadius: 10 }} />),

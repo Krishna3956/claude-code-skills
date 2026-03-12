@@ -317,7 +317,7 @@ function HomeScreen({ config, onStart, isEmbed }: { config: QuizConfig; onStart:
     <button
       onClick={() => { track(`${config.analyticsPrefix}_started`); onStart(); }}
       className={`${isEmbed ? "px-12" : "w-full"} py-4 rounded-xl text-base font-semibold transition-all active:scale-[0.98]`}
-      style={{ background: "var(--v5-accent)", color: "#FFFFFF" }}>
+      style={{ background: "var(--v5-accent)", color: config.ctaTextColor ?? "#FFFFFF" }}>
       Let&apos;s Go
     </button>
   );
@@ -519,7 +519,7 @@ function QuizPageInner({ config }: { config: QuizConfig }) {
           <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="mt-6">
             <button onClick={() => { track(currentIndex < total - 1 ? `${prefix}_next` : `${prefix}_see_results`, { questionId: challenge.id, questionIndex: currentIndex + 1 }); handleNext(); }}
               className="inline-flex items-center gap-2 rounded-xl px-8 py-3 text-sm font-semibold transition-all active:scale-[0.97]"
-              style={{ background: "var(--v5-accent)", color: "#FFFFFF" }}>
+              style={{ background: "var(--v5-accent)", color: config.ctaTextColor ?? "#FFFFFF" }}>
               {currentIndex < total - 1 ? "Next" : "See Results"}
               <span style={{ opacity: 0.6 }}>&rarr;</span>
             </button>

@@ -25,8 +25,8 @@ export const tiptapConfig: QuizConfig = {
   scorecardLabelColor: "#CFBFF0",
   scorecardGridColor: "#48346D",
   navbarTheme: "light",
-  logo: (<img src="/logos/tiptap.png" alt="Tiptap" width={44} height={44} style={{ objectFit: "contain", borderRadius: 10 }} />),
-  scorecardLogo: (<img src="/logos/tiptap.png" alt="Tiptap" width={42} height={42} style={{ objectFit: "contain", borderRadius: 10 }} />),
+  logo: (<img src="/logos/tiptap.png" alt="Tiptap" width={44} height={44} style={{ objectFit: "contain", borderRadius: 12 }} />),
+  scorecardLogo: (<img src="/logos/tiptap.png" alt="Tiptap" width={42} height={42} style={{ objectFit: "contain", borderRadius: 12 }} />),
   analyticsPrefix: "tiptap",
   dimensionLabels: {
     memory: "Editor Core",

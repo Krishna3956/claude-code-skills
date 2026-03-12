@@ -2,14 +2,14 @@ import type { QuizConfig } from "@/components/quiz/types";
 
 export const gitpodConfig: QuizConfig = {
   slug: "gitpod", toolName: "Gitpod", tagline: "6 rounds. ~3 min. No signup required.", subtitle: "Just you vs. Gitpod challenge trivia.",
-  sansFont: "inter", serifFont: "source-serif-4",
-  accentColor: "#FF8A00", accentColorDim: "#E57600", accentColorSubtle: "rgba(255,138,0,0.14)",
-  bgColor: "linear-gradient(145deg, #FFF8F0 0%, #FFF3E8 55%, #FFEBD9 100%)", bgElevated: "#FFFFFF", bgSurface: "#FFFFFF", bgSurfaceLight: "#FFF1E2",
-  textColor: "#2E2419", textSecondary: "#5F4B3A", textTertiary: "#7E6753", borderColor: "#F1DDC9", borderSubtle: "#F9EBDC",
-  scorecardBg: "#322114", scorecardAccentColor: "#FFBC75", scorecardDivider: "#70462A", scorecardLabelColor: "#E8C8A8", scorecardGridColor: "#70462A",
+  sansFont: "inter", serifFont: "instrument-serif",
+  accentColor: "#FF8A00", accentColorDim: "#E07800", accentColorSubtle: "rgba(255,138,0,0.10)",
+  bgColor: "linear-gradient(145deg, #FFFAF2 0%, #FFF5E5 55%, #FFEDD5 100%)", bgElevated: "#FFFFFF", bgSurface: "#FFFFFF", bgSurfaceLight: "#FFF0DA",
+  textColor: "#1A1208", textSecondary: "#5C4018", textTertiary: "#8A6A40", borderColor: "#F0D8B8", borderSubtle: "#F8E8D0",
+  scorecardBg: "#2A1808", scorecardAccentColor: "#FFB860", scorecardDivider: "#5A3518", scorecardLabelColor: "#D8A870", scorecardGridColor: "#5A3518",
   navbarTheme: "light",
-  logo: (<img src="/logos/gitpod.png" alt="Gitpod" width={44} height={44} style={{ objectFit: "contain", borderRadius: 10, padding: 6, backgroundColor: "#FFFFFF", border: "1px solid #ECD9C3" }} />),
-  scorecardLogo: (<img src="/logos/gitpod.png" alt="Gitpod" width={42} height={42} style={{ objectFit: "contain", borderRadius: 10, padding: 6, backgroundColor: "#FFFFFF", border: "1px solid #ECD9C3" }} />),
+  logo: (<img src="/logos/gitpod.png" alt="Gitpod" width={44} height={44} style={{ objectFit: "contain", borderRadius: 10 }} />),
+  scorecardLogo: (<img src="/logos/gitpod.png" alt="Gitpod" width={42} height={42} style={{ objectFit: "contain", borderRadius: 10 }} />),
   analyticsPrefix: "gitpod",
   dimensionLabels: { memory: "Dev Env Core", orchestration: "Workspace Config", automation: "Prebuild Ops", extensibility: "Integration Surface", workflows: "Team Productivity", prompting: "Config Recall", bestPractices: "Repro Discipline" },
   archetypes: [

@@ -151,6 +151,7 @@ export interface QuizConfig {
   scorecardLabelColor: string;
   scorecardGridColor: string;
   navbarTheme?: "light" | "dark";
+  ctaTextColor?: string;
   logo: React.ReactNode;
   scorecardLogo?: React.ReactNode;
   challenges: Challenge[];

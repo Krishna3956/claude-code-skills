@@ -6,7 +6,7 @@ export const posthogConfig: QuizConfig = {
   tagline: "6 rounds. ~3 min. No signup required.",
   subtitle: "Just you vs. PostHog challenge trivia.",
   sansFont: "inter",
-  serifFont: "source-serif-4",
+  serifFont: "instrument-serif",
   accentColor: "#F54E00",
   accentColorDim: "#DD4705",
   accentColorSubtle: "rgba(245,78,0,0.14)",
