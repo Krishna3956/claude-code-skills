@@ -66,10 +66,14 @@ Before writing any code, research the tool's brand identity:
    - Note the primary accent color hex code
    - Note whether their UI feels warm, cool, neutral, dark, or light
    - IMPORTANT: Visit the actual website and match the vibe. Don't guess.
+   - HARD RULE: Never default to dark mode styling because it's convenient.
+   - HARD RULE: Pick light vs dark based on the actual live site theme cues (`theme-color`, hero background, nav/background contrast).
+   - HARD RULE: If the site is light-first, the quiz must be light-first. If the site is dark-first, the quiz must be dark-first.
 2. **Font**: Find what typeface the tool uses on their website
    - Check fontofweb.com or inspect their site
    - Map to the closest Google Font (see font table below)
    - When in doubt, use Inter - it's the most common UI font
+   - HARD RULE: Don't blindly use `inter` for all quizzes. Match the closest supported font when the brand is clearly distinct (e.g., Poppins, Open Sans, Space Grotesk, Geist).
 3. **Logo**: Get the tool's actual brand logo
    - Check their /brand or /press page for downloadable assets
    - Accept any format: SVG, PNG, JPG
