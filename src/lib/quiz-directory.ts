@@ -30,7 +30,7 @@ export const QUIZ_LIST: QuizCardData[] = [
   { slug: "emergent", toolName: "Emergent", logoFile: "emergent.jpg", category: "Marketing" },
   { slug: "clueso", toolName: "Clueso", logoFile: "clueso.png", category: "Marketing", paused: true },
   { slug: "stilta", toolName: "Stilta", logoFile: "stilta.png", category: "Marketing" },
-  { slug: "surface", toolName: "Surface", logoFile: "surface.svg", category: "Marketing" },
+  { slug: "surface", toolName: "Surface", logoFile: "surface-labs.png", category: "Marketing" },
   { slug: "lovable", toolName: "Lovable", logoFile: "lovable.png", category: "Dev Tools" },
   { slug: "expo", toolName: "Expo", logoFile: "expo.svg", category: "Dev Tools" },
   { slug: "sanity", toolName: "Sanity", logoFile: "sanity.svg", category: "Dev Tools" },

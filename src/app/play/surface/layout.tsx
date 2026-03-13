@@ -11,7 +11,7 @@ const ogImageUrl =
 export const metadata: Metadata = {
   title: "How Surface Are You?",
   description,
-  icons: { icon: "/logos/surface.svg" },
+  icons: { icon: "/logos/surface-labs.png" },
   alternates: { canonical: canonicalUrl },
   openGraph: {
     title: "How Surface Are You?",
