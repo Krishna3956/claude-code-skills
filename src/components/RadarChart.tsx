@@ -61,9 +61,11 @@ function CustomTick({ x, y, payload, fill }: { x: number; y: number; payload: { 
 export default function RadarChart({ dimensions, accentColor = "#6366F1", gridColor = "#2a2a4a", labelColor = "#646687", bgColor = "#1a1a2e" }: Props) {
   if (dimensions.length < 3) return null;
 
+  const minimumVisibleScore = 4;
   const data = dimensions.map((d) => ({
     subject: d.label,
-    score: d.score,
+    score: d.score > 0 ? d.score : minimumVisibleScore,
+    actualScore: d.score,
     fullMark: 100,
   }));
 
