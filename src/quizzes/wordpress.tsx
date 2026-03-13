@@ -4,8 +4,8 @@ const wordpressLogo = (
   <img
     src="/logos/wordpress.png"
     alt="WordPress"
-    width={31}
-    height={31}
+    width={62}
+    height={62}
     style={{ objectFit: "contain" }}
   />
 );
@@ -42,8 +42,8 @@ export const wordpressConfig: QuizConfig = {
     <img
       src="/logos/wordpress.png"
       alt="WordPress"
-      width={28}
-      height={28}
+      width={56}
+      height={56}
       style={{ objectFit: "contain" }}
     />
   ),
