@@ -6,6 +6,7 @@ export const QUIZ_LIST: QuizCardData[] = [
   { slug: "figma", toolName: "Figma", logoFile: "figma.svg", category: "Design" },
   { slug: "cursor", toolName: "Cursor", logoFile: "cursor.png", category: "Dev Tools" },
   { slug: "notion", toolName: "Notion", logoFile: "notion.png", category: "Productivity" },
+  { slug: "excel", toolName: "Microsoft Excel", logoFile: "excel-mark.svg", category: "Productivity" },
   { slug: "claude-code", toolName: "Claude Code", logoFile: "claude-ai-icon.webp", category: "AI Tools" },
   { slug: "hubspot", toolName: "HubSpot", logoFile: "hubspot.png", category: "Marketing" },
   { slug: "windsurf", toolName: "Windsurf", logoFile: "windsurf.svg", category: "Dev Tools" },

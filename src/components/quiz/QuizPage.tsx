@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState, useCallback, useEffect, useRef } from "react";
+import { Suspense, useState, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { track } from "@/lib/analytics";
@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import type {
   QuizConfig,
+  QuizDifficultyKey,
   TruthOrMythChallenge,
   ThisOrThatChallenge,
   QuickPickChallenge,
@@ -22,6 +23,17 @@ import type {
   OddOneOutChallenge,
   ChallengeResult,
 } from "./types";
+
+function shuffleDeterministically<T>(items: T[], seed: number): T[] {
+  const copy = [...items];
+  let state = seed || 1;
+  for (let i = copy.length - 1; i > 0; i -= 1) {
+    state = (state * 1664525 + 1013904223) >>> 0;
+    const j = state % (i + 1);
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
 
 function RoundIcon({ name, size = 20, color }: { name: string; size?: number; color?: string }) {
   const c = color ?? "var(--v5-accent)";
@@ -38,6 +50,27 @@ function RoundIcon({ name, size = 20, color }: { name: string; size?: number; co
   }
 }
 import { calculateResults, encodeResult } from "./scoring";
+
+function getDifficultyKey(config: QuizConfig, raw: string | null): QuizDifficultyKey {
+  const available = config.difficultyOptions?.map((option) => option.key) ?? [];
+  if (raw === "easy" || raw === "medium" || raw === "hard") {
+    if (available.length === 0 || available.includes(raw)) return raw;
+  }
+  return config.defaultDifficulty ?? "hard";
+}
+
+function getActiveConfig(config: QuizConfig, difficultyKey: QuizDifficultyKey): QuizConfig {
+  const variant = config.difficultyOptions?.find((option) => option.key === difficultyKey);
+  if (!variant) return config;
+  return {
+    ...config,
+    tagline: variant.tagline ?? config.tagline,
+    subtitle: variant.subtitle ?? config.subtitle,
+    challenges: variant.challenges,
+    rounds: variant.rounds,
+    archetypes: variant.archetypes ?? config.archetypes,
+  };
+}
 
 function FeedbackBox({ show, correct, text }: { show: boolean; correct: boolean | null; text: string }) {
   if (!show) return null;
@@ -189,11 +222,12 @@ function QuickPickCard({ challenge, onAnswer, prefix }: { challenge: QuickPickCh
 }
 
 function SpeedPickCard({ challenge, onAnswer, prefix }: { challenge: SpeedPickChallenge; onAnswer: (c: boolean) => void; prefix: string }) {
-  const allItems = useRef([...challenge.correctItems, ...challenge.wrongItems].sort(() => Math.random() - 0.5));
+  const allItems = shuffleDeterministically([...challenge.correctItems, ...challenge.wrongItems], challenge.id);
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [timeLeft, setTimeLeft] = useState(challenge.timeLimit);
   const [done, setDone] = useState(false);
   const finishedRef = useRef(false);
+  const submittedRef = useRef(false);
 
   const finishRound = useCallback(() => {
     if (finishedRef.current) return;
@@ -202,13 +236,20 @@ function SpeedPickCard({ challenge, onAnswer, prefix }: { challenge: SpeedPickCh
   }, []);
 
   useEffect(() => {
-    if (done || timeLeft <= 0) { if (timeLeft <= 0) finishRound(); return; }
+    if (done || timeLeft <= 0) return;
     const timer = setTimeout(() => setTimeLeft((t) => t - 1), 1000);
     return () => clearTimeout(timer);
   }, [timeLeft, done, finishRound]);
 
   useEffect(() => {
-    if (!done) return;
+    if (done || timeLeft > 0) return;
+    const timer = setTimeout(() => finishRound(), 0);
+    return () => clearTimeout(timer);
+  }, [done, finishRound, timeLeft]);
+
+  useEffect(() => {
+    if (!done || submittedRef.current) return;
+    submittedRef.current = true;
     const correctPicks = [...selected].filter((s) => challenge.correctItems.includes(s)).length;
     const wrongPicks = [...selected].filter((s) => challenge.wrongItems.includes(s)).length;
     onAnswer(Math.max(0, correctPicks - wrongPicks) >= challenge.correctItems.length * 0.5);
@@ -247,7 +288,7 @@ function SpeedPickCard({ challenge, onAnswer, prefix }: { challenge: SpeedPickCh
       </div>
       <p className="text-base text-center" style={{ color: "var(--v5-text-secondary)" }}>{challenge.prompt}</p>
       <div className="flex flex-wrap gap-2.5 justify-center w-full">
-        {allItems.current.map((item) => (
+        {allItems.map((item) => (
           <button key={item} onClick={() => { track(`${prefix}_answer`, { round: "speed_pick", questionId: challenge.id, item }); toggleItem(item); }} disabled={done}
             className="px-4 py-3 rounded-xl text-sm font-medium transition-all active:scale-95" style={chipStyle(item)}>
             {item}
@@ -273,7 +314,7 @@ function SpeedPickCard({ challenge, onAnswer, prefix }: { challenge: SpeedPickCh
 }
 
 function OddOneOutCard({ challenge, onAnswer, prefix }: { challenge: OddOneOutChallenge; onAnswer: (c: boolean) => void; prefix: string }) {
-  const shuffled = useRef([...challenge.items].sort(() => Math.random() - 0.5));
+  const shuffled = shuffleDeterministically(challenge.items, challenge.id);
   const [picked, setPicked] = useState<string | null>(null);
   const isCorrect = picked !== null ? picked === challenge.oddItem : null;
 
@@ -297,7 +338,7 @@ function OddOneOutCard({ challenge, onAnswer, prefix }: { challenge: OddOneOutCh
         <p className="text-base sm:text-lg leading-relaxed" style={{ color: "var(--v5-text)" }}>{challenge.prompt}</p>
       </div>
       <div className="grid grid-cols-2 gap-3 w-full">
-        {shuffled.current.map((item) => (
+        {shuffled.map((item) => (
           <button key={item} onClick={() => { track(`${prefix}_answer`, { round: "odd_one_out", questionId: challenge.id, choice: item }); handlePick(item); }} disabled={picked !== null}
             className="py-5 px-4 rounded-xl text-sm font-medium text-center transition-all active:scale-[0.97]" style={itemStyle(item)}>
             {item}
@@ -312,7 +353,20 @@ function OddOneOutCard({ challenge, onAnswer, prefix }: { challenge: OddOneOutCh
 // ────────────────────────────────────────────────────────────
 // HOMESCREEN
 // ────────────────────────────────────────────────────────────
-function HomeScreen({ config, onStart, isEmbed }: { config: QuizConfig; onStart: () => void; isEmbed: boolean }) {
+function HomeScreen({
+  config,
+  onStart,
+  isEmbed,
+  difficultyKey,
+  onDifficultyChange,
+}: {
+  config: QuizConfig;
+  onStart: () => void;
+  isEmbed: boolean;
+  difficultyKey: QuizDifficultyKey;
+  onDifficultyChange: (key: QuizDifficultyKey) => void;
+}) {
+  const difficultyOptions = config.difficultyOptions ?? [];
   const startButton = (
     <button
       onClick={() => { track(`${config.analyticsPrefix}_started`); onStart(); }}
@@ -352,6 +406,39 @@ function HomeScreen({ config, onStart, isEmbed }: { config: QuizConfig; onStart:
           {config.subtitle}
         </p>
 
+        {difficultyOptions.length > 0 && !isEmbed && (
+          <div className="w-full max-w-sm">
+            <div
+              className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em]"
+              style={{ color: "var(--v5-text-tertiary)" }}
+            >
+              Difficulty
+            </div>
+            <div
+              className="grid grid-cols-3 rounded-xl p-1"
+              style={{ background: "var(--v5-bg-surface-light)", border: "1px solid var(--v5-border)" }}
+            >
+              {difficultyOptions.map((option) => {
+                const active = option.key === difficultyKey;
+                return (
+                  <button
+                    key={option.key}
+                    onClick={() => onDifficultyChange(option.key)}
+                    className="rounded-lg px-3 py-2.5 text-sm font-semibold transition-all"
+                    style={{
+                      background: active ? "var(--v5-bg-elevated)" : "transparent",
+                      color: active ? "var(--v5-accent)" : "var(--v5-text-secondary)",
+                      boxShadow: active ? "0 1px 3px rgba(0,0,0,0.08)" : "none",
+                    }}
+                  >
+                    {option.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         {isEmbed && startButton}
 
         <div className="w-full rounded-xl overflow-hidden" style={{ border: "1px solid var(--v5-border)" }}>
@@ -383,66 +470,100 @@ function QuizPageInner({ config }: { config: QuizConfig }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const isEmbed = searchParams.get("embed") === "true";
-  const navTheme = config.navbarTheme === "dark" ? "light" : config.navbarTheme;
+  const difficultyKey = getDifficultyKey(config, searchParams.get("difficulty"));
+  const activeConfig = getActiveConfig(config, difficultyKey);
+  const navTheme = activeConfig.navbarTheme === "dark" ? "light" : activeConfig.navbarTheme;
   const [started, setStarted] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [results, setResults] = useState<ChallengeResult[]>([]);
-  const [showingRoundIntro, setShowingRoundIntro] = useState(true);
+  const [, setResults] = useState<ChallengeResult[]>([]);
+  const resultsRef = useRef<ChallengeResult[]>([]);
+  const [dismissedRoundIntroIndex, setDismissedRoundIntroIndex] = useState<number | null>(null);
   const [answered, setAnswered] = useState(false);
 
-  const total = config.challenges.length;
-  const challenge = config.challenges[currentIndex];
-  if (!challenge) return null;
-  const currentRound = config.rounds.find((r) => r.ids.includes(challenge.id));
-  const isFirstOfRound = currentRound ? currentRound.ids[0] === challenge.id : false;
-  const prefix = config.analyticsPrefix;
+  const total = activeConfig.challenges.length;
+  const challenge = activeConfig.challenges[currentIndex] ?? null;
+  const currentRound = challenge
+    ? activeConfig.rounds.find((r) => r.ids.includes(challenge.id)) ?? null
+    : null;
+  const isFirstOfRound = Boolean(challenge && currentRound && currentRound.ids[0] === challenge.id);
+  const showingRoundIntro =
+    started && challenge !== null && isFirstOfRound && dismissedRoundIntroIndex !== currentIndex;
+  const prefix = activeConfig.analyticsPrefix;
 
   useEffect(() => {
-    if (!started) return;
-    if (isFirstOfRound) {
-      setShowingRoundIntro(true);
-      const timer = setTimeout(() => setShowingRoundIntro(false), 1200);
-      return () => clearTimeout(timer);
-    } else {
-      setShowingRoundIntro(false);
-    }
-  }, [currentIndex, isFirstOfRound, started]);
+    if (!showingRoundIntro) return;
+    const timer = setTimeout(() => setDismissedRoundIntroIndex(currentIndex), 1200);
+    return () => clearTimeout(timer);
+  }, [currentIndex, showingRoundIntro]);
 
-  const handleAnswer = useCallback(
-    (correct: boolean) => {
-      setAnswered(true);
-      track(`${prefix}_question_result`, {
-        questionId: challenge.id,
-        correct,
-        questionIndex: currentIndex + 1,
-        totalQuestions: total,
-      });
-      setResults((prev) => [...prev, { challengeId: challenge.id, earned: correct ? 1 : 0, possible: 1, dimension: challenge.dimension }]);
-    },
-    [challenge, currentIndex, total, prefix]
-  );
+  function handleAnswer(correct: boolean) {
+    if (!challenge) return;
+    const nextResult = {
+      challengeId: challenge.id,
+      earned: correct ? 1 : 0,
+      possible: 1,
+      dimension: challenge.dimension,
+    };
+    const existingIndex = resultsRef.current.findIndex((result) => result.challengeId === challenge.id);
+    const nextResults =
+      existingIndex === -1
+        ? [...resultsRef.current, nextResult]
+        : resultsRef.current.map((result, index) => (index === existingIndex ? nextResult : result));
+    resultsRef.current = nextResults;
+    setAnswered(true);
+    track(`${prefix}_question_result`, {
+      questionId: challenge.id,
+      correct,
+      questionIndex: currentIndex + 1,
+      totalQuestions: total,
+    });
+    setResults(nextResults);
+  }
 
-  const handleNext = useCallback(() => {
+  function handleNext() {
     if (currentIndex < total - 1) {
       setCurrentIndex((i) => i + 1);
       setAnswered(false);
     } else {
-      const finalResult = calculateResults(results, config);
+      const finalResults = resultsRef.current;
+      const finalResult = calculateResults(finalResults, activeConfig);
+      if (typeof window !== "undefined") {
+        window.sessionStorage.setItem(
+          `quiz-result:${activeConfig.slug}:${difficultyKey}`,
+          JSON.stringify(finalResult)
+        );
+      }
       const encoded = encodeResult(finalResult);
-      track(`${config.analyticsPrefix}_completed`, {
+      track(`${activeConfig.analyticsPrefix}_completed`, {
         score: finalResult.overallScore,
-        correctCount: results.filter((r) => r.earned > 0).length,
+        correctCount: finalResults.filter((r) => r.earned > 0).length,
         totalQuestions: total,
+        difficulty: difficultyKey,
       });
-      router.push(`/play/${config.slug}/results?${encoded}${isEmbed ? "&embed=true" : ""}`);
+      router.push(`/play/${activeConfig.slug}/results?difficulty=${difficultyKey}&${encoded}${isEmbed ? "&embed=true" : ""}`);
     }
-  }, [currentIndex, total, results, router, config]);
+  }
+
+  function handleDifficultyChange(nextDifficulty: QuizDifficultyKey) {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("difficulty", nextDifficulty);
+    if (isEmbed) params.set("embed", "true");
+    router.replace(`/play/${config.slug}?${params.toString()}`);
+  }
+
+  if (!challenge) return null;
 
   if (!started) {
     return (
       <>
         {!isEmbed && <Navbar theme={navTheme} />}
-        <HomeScreen config={config} onStart={() => setStarted(true)} isEmbed={isEmbed} />
+        <HomeScreen
+          config={activeConfig}
+          onStart={() => setStarted(true)}
+          isEmbed={isEmbed}
+          difficultyKey={difficultyKey}
+          onDifficultyChange={handleDifficultyChange}
+        />
       </>
     );
   }
@@ -466,7 +587,7 @@ function QuizPageInner({ config }: { config: QuizConfig }) {
     );
   }
 
-  const roundIndex = config.rounds.findIndex((r) => r.ids.includes(challenge.id));
+  const roundIndex = activeConfig.rounds.findIndex((r) => r.ids.includes(challenge.id));
   const posInRound = currentRound ? currentRound.ids.indexOf(challenge.id) : 0;
   const roundSize = currentRound ? currentRound.ids.length : 1;
 
@@ -478,7 +599,13 @@ function QuizPageInner({ config }: { config: QuizConfig }) {
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2" style={{ fontSize: "12px", color: "var(--v5-text-secondary)" }}>
             <button
-              onClick={() => { setStarted(false); setCurrentIndex(0); setResults([]); setAnswered(false); }}
+              onClick={() => {
+                resultsRef.current = [];
+                setStarted(false);
+                setCurrentIndex(0);
+                setResults([]);
+                setAnswered(false);
+              }}
               className="flex items-center transition-opacity hover:opacity-70"
               title="Back to start"
               style={{ background: "none", border: "none", cursor: "pointer", padding: 0, marginRight: 2, color: "var(--v5-text-tertiary)" }}
@@ -496,9 +623,9 @@ function QuizPageInner({ config }: { config: QuizConfig }) {
           </div>
         </div>
         <div className="flex gap-1 w-full">
-          {config.rounds.map((_, i) => (
+          {activeConfig.rounds.map((_, i) => (
             <div key={i} className="flex-1 h-1 rounded-full transition-colors"
-              style={{ background: i < roundIndex ? "var(--v5-accent)" : i === roundIndex ? `${config.accentColor}66` : "var(--v5-border-subtle)" }} />
+              style={{ background: i < roundIndex ? "var(--v5-accent)" : i === roundIndex ? `${activeConfig.accentColor}66` : "var(--v5-border-subtle)" }} />
           ))}
         </div>
       </div>
@@ -519,7 +646,7 @@ function QuizPageInner({ config }: { config: QuizConfig }) {
           <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="mt-6">
             <button onClick={() => { track(currentIndex < total - 1 ? `${prefix}_next` : `${prefix}_see_results`, { questionId: challenge.id, questionIndex: currentIndex + 1 }); handleNext(); }}
               className="inline-flex items-center gap-2 rounded-xl px-8 py-3 text-sm font-semibold transition-all active:scale-[0.97]"
-              style={{ background: "var(--v5-accent)", color: config.ctaTextColor ?? "#FFFFFF" }}>
+              style={{ background: "var(--v5-accent)", color: activeConfig.ctaTextColor ?? "#FFFFFF" }}>
               {currentIndex < total - 1 ? "Next" : "See Results"}
               <span style={{ opacity: 0.6 }}>&rarr;</span>
             </button>

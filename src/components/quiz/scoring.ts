@@ -88,6 +88,8 @@ export function encodeResult(result: QuizResult): string {
     s: result.overallScore,
     k: result.dimensions.map((d) => d.dimension),
     d: result.dimensions.map((d) => d.score),
+    e: result.dimensions.map((d) => d.earned),
+    m: result.dimensions.map((d) => d.possible),
     p: result.percentile,
   });
   const encoded = toBase64Url(payload);
@@ -107,21 +109,27 @@ export function decodeResult(params: URLSearchParams, config: QuizConfig): QuizR
       const overallScore = data.s as number;
       const percentile = data.p as number;
       const scores = data.d as number[];
+      const earned = data.e as number[] | undefined;
+      const possible = data.m as number[] | undefined;
 
       if (typeof overallScore !== "number" || Number.isNaN(overallScore)) return null;
       if (typeof percentile !== "number" || Number.isNaN(percentile)) return null;
       if (!Array.isArray(scores) || scores.some((v) => typeof v !== "number" || Number.isNaN(v))) return null;
+      if (earned && (!Array.isArray(earned) || earned.some((v) => typeof v !== "number" || Number.isNaN(v)))) return null;
+      if (possible && (!Array.isArray(possible) || possible.some((v) => typeof v !== "number" || Number.isNaN(v)))) return null;
 
       const keys: Dimension[] | undefined = data.k;
       if (keys && Array.isArray(keys)) {
         if (keys.length !== scores.length) return null;
+        if (earned && earned.length !== scores.length) return null;
+        if (possible && possible.length !== scores.length) return null;
         if (keys.some((k) => !ALL_DIMS.includes(k))) return null;
         const dimensions: DimensionScore[] = keys.map((dim, i) => ({
           dimension: dim,
           label: config.dimensionLabels[dim],
           score: scores[i],
-          earned: 0,
-          possible: 0,
+          earned: earned?.[i] ?? 0,
+          possible: possible?.[i] ?? 0,
         }));
         return { overallScore, dimensions, percentile };
       }

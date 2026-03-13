@@ -7,9 +7,48 @@ import RadarChart from "@/components/RadarChart";
 import { motion } from "framer-motion";
 import { toPng } from "html-to-image";
 import { track } from "@/lib/analytics";
-import type { QuizConfig } from "./types";
+import type { QuizConfig, QuizDifficultyKey, QuizResult } from "./types";
 import { decodeResult, getArchetype } from "./scoring";
 import Navbar from "@/components/marketing/Navbar";
+
+function getDifficultyKey(config: QuizConfig, raw: string | null): QuizDifficultyKey {
+  const available = config.difficultyOptions?.map((option) => option.key) ?? [];
+  if (raw === "easy" || raw === "medium" || raw === "hard") {
+    if (available.length === 0 || available.includes(raw)) return raw;
+  }
+  return config.defaultDifficulty ?? "hard";
+}
+
+function getActiveConfig(config: QuizConfig, difficultyKey: QuizDifficultyKey): QuizConfig {
+  const variant = config.difficultyOptions?.find((option) => option.key === difficultyKey);
+  if (!variant) return config;
+  return {
+    ...config,
+    tagline: variant.tagline ?? config.tagline,
+    subtitle: variant.subtitle ?? config.subtitle,
+    challenges: variant.challenges,
+    rounds: variant.rounds,
+    archetypes: variant.archetypes ?? config.archetypes,
+  };
+}
+
+function describeDimension(dim: { label: string; earned: number; possible: number; score: number }) {
+  if (dim.possible <= 0) return `${dim.label} was not evaluated in this run.`;
+  return `${dim.label}: ${dim.earned}/${dim.possible} correct (${dim.score}%).`;
+}
+
+function getStoredResult(slug: string, difficultyKey: QuizDifficultyKey): QuizResult | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = window.sessionStorage.getItem(`quiz-result:${slug}:${difficultyKey}`);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as QuizResult;
+    if (typeof parsed?.overallScore !== "number" || !Array.isArray(parsed?.dimensions)) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
 
 function PlayMorePopup({ accentColor, onClose }: { accentColor: string; onClose: () => void }) {
   return (
@@ -124,14 +163,61 @@ function PlayMorePopup({ accentColor, onClose }: { accentColor: string; onClose:
 function ResultContent({ config }: { config: QuizConfig }) {
   const searchParams = useSearchParams();
   const isEmbed = searchParams.get("embed") === "true";
-  const navTheme = config.navbarTheme === "dark" ? "light" : config.navbarTheme;
-  const result = decodeResult(searchParams, config);
+  const difficultyKey = getDifficultyKey(config, searchParams.get("difficulty"));
+  const activeConfig = getActiveConfig(config, difficultyKey);
+  const navTheme = activeConfig.navbarTheme === "dark" ? "light" : activeConfig.navbarTheme;
+  const decodedResult = decodeResult(searchParams, activeConfig);
+  const storedResult = getStoredResult(activeConfig.slug, difficultyKey);
+  const result = storedResult ?? decodedResult;
   const cardRef = useRef<HTMLDivElement>(null);
+  const saveBtnRef = useRef<HTMLButtonElement>(null);
   const [downloading, setDownloading] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
-  const prefix = config.analyticsPrefix;
+  const prefix = activeConfig.analyticsPrefix;
+  const cardAccent = activeConfig.scorecardAccentColor ?? activeConfig.accentColor;
+  const archetype = result ? getArchetype(result.overallScore, activeConfig) : null;
+  const siteUrl = `https://www.howwellyouknow.com/play/${activeConfig.slug}?difficulty=${difficultyKey}`;
 
-  if (!result) {
+  useEffect(() => {
+    if (!result || !archetype) return;
+    track(`${prefix}_results_viewed`, {
+      score: result.overallScore,
+      archetype: archetype.title,
+      difficulty: difficultyKey,
+    });
+  }, [archetype, difficultyKey, prefix, result]);
+
+  useEffect(() => {
+    if (isEmbed || !result) return;
+    const timer = setTimeout(() => setShowPopup(true), 5000);
+    return () => clearTimeout(timer);
+  }, [isEmbed, result]);
+
+  const downloadCard = async () => {
+    if (!cardRef.current || !result || !archetype || downloading) return;
+    track(`${prefix}_scorecard_dl`, {
+      score: result.overallScore,
+      archetype: archetype.title,
+      difficulty: difficultyKey,
+    });
+    setDownloading(true);
+    if (saveBtnRef.current) saveBtnRef.current.style.display = "none";
+    try {
+      const opts = { pixelRatio: 3, backgroundColor: activeConfig.scorecardBg };
+      await toPng(cardRef.current, opts);
+      const dataUrl = await toPng(cardRef.current, opts);
+      const link = document.createElement("a");
+      link.download = `${activeConfig.slug}-${difficultyKey}-score-${result.overallScore}.png`;
+      link.href = dataUrl;
+      link.click();
+    } catch {
+      // silent
+    }
+    if (saveBtnRef.current) saveBtnRef.current.style.display = "";
+    setDownloading(false);
+  };
+
+  if (!result || !archetype) {
     return (
       <>
         {!isEmbed && <Navbar theme={navTheme} />}
@@ -141,7 +227,7 @@ function ResultContent({ config }: { config: QuizConfig }) {
               No results found.
             </p>
             <Link
-              href={`/play/${config.slug}`}
+              href={`/play/${activeConfig.slug}?difficulty=${difficultyKey}`}
               style={{ color: "var(--v5-accent)" }}
               className="hover:underline text-sm"
             >
@@ -153,51 +239,10 @@ function ResultContent({ config }: { config: QuizConfig }) {
     );
   }
 
-  const archetype = getArchetype(result.overallScore, config);
-  const siteUrl = `https://www.howwellyouknow.com/play/${config.slug}`;
-  const cardAccent = config.scorecardAccentColor ?? config.accentColor;
-
-  useEffect(() => {
-    track(`${prefix}_results_viewed`, {
-      score: result.overallScore,
-      archetype: archetype.title,
-    });
-  }, [prefix, result.overallScore, archetype.title]);
-
-  useEffect(() => {
-    if (isEmbed) return;
-    const timer = setTimeout(() => setShowPopup(true), 5000);
-    return () => clearTimeout(timer);
-  }, [isEmbed]);
-
-  const shareMessage = `I just took "How well do you know ${config.toolName}?" and scored ${result.overallScore}/100. That makes me a ${archetype.title}!\n\nThink you can beat my score? 6 rounds, ~3 min, no signup required.\n\nTry it yourself`;
-
-  const saveBtnRef = useRef<HTMLButtonElement>(null);
-
-  const downloadCard = async () => {
-    if (!cardRef.current || downloading) return;
-    track(`${prefix}_scorecard_dl`, {
-      score: result.overallScore,
-      archetype: archetype.title,
-    });
-    setDownloading(true);
-    if (saveBtnRef.current) saveBtnRef.current.style.display = "none";
-    try {
-      const opts = { pixelRatio: 3, backgroundColor: config.scorecardBg };
-      // First pass warms the image cache inside html-to-image so all
-      // <img> elements (logos, etc.) are inlined as data-URIs.
-      await toPng(cardRef.current, opts);
-      const dataUrl = await toPng(cardRef.current, opts);
-      const link = document.createElement("a");
-      link.download = `${config.slug}-score-${result.overallScore}.png`;
-      link.href = dataUrl;
-      link.click();
-    } catch {
-      // silent
-    }
-    if (saveBtnRef.current) saveBtnRef.current.style.display = "";
-    setDownloading(false);
-  };
+  const shareMessage = `I just took "How well do you know ${activeConfig.toolName}?" and scored ${result.overallScore}/100 on ${difficultyKey} mode. That makes me a ${archetype.title}!\n\nThink you can beat my score? 6 rounds, ~3 min, no signup required.\n\nTry it yourself`;
+  const rankedDimensions = [...result.dimensions].sort((a, b) => b.score - a.score || b.earned - a.earned);
+  const strongestDimension = rankedDimensions[0] ?? null;
+  const weakestDimension = rankedDimensions[rankedDimensions.length - 1] ?? null;
 
   return (
     <>
@@ -213,8 +258,8 @@ function ResultContent({ config }: { config: QuizConfig }) {
           ref={cardRef}
           className="w-full rounded-2xl overflow-hidden relative"
           style={{
-            background: config.scorecardBg,
-            border: `1px solid ${config.scorecardDivider}`,
+            background: activeConfig.scorecardBg,
+            border: `1px solid ${activeConfig.scorecardDivider}`,
           }}
         >
           <div
@@ -224,7 +269,7 @@ function ResultContent({ config }: { config: QuizConfig }) {
               left: 0,
               right: 0,
               height: "120px",
-              background: `linear-gradient(180deg, ${cardAccent}18 0%, transparent 100%)`,
+            background: `linear-gradient(180deg, ${cardAccent}18 0%, transparent 100%)`,
               pointerEvents: "none",
             }}
           />
@@ -236,7 +281,7 @@ function ResultContent({ config }: { config: QuizConfig }) {
               left: 0,
               right: 0,
               height: "3px",
-              background: cardAccent,
+            background: cardAccent,
             }}
           />
 
@@ -248,7 +293,7 @@ function ResultContent({ config }: { config: QuizConfig }) {
               className="absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-medium transition-all hover:opacity-80 active:scale-95 disabled:opacity-40"
               style={{
                 background: "rgba(255,255,255,0.06)",
-                color: config.scorecardLabelColor,
+                color: activeConfig.scorecardLabelColor,
                 border: "1px solid rgba(255,255,255,0.1)",
               }}
             >
@@ -274,13 +319,13 @@ function ResultContent({ config }: { config: QuizConfig }) {
                 className="inline-flex items-center justify-center rounded-2xl scorecard-logo-wrap"
                 style={{ background: "#FFFFFF", padding: "10px" }}
               >
-                {config.scorecardLogo ?? config.logo}
+                {activeConfig.scorecardLogo ?? activeConfig.logo}
               </div>
             </div>
 
             <p
               style={{
-                color: config.scorecardLabelColor,
+                color: activeConfig.scorecardLabelColor,
                 fontSize: "11px",
                 letterSpacing: "0.12em",
                 textTransform: "uppercase" as const,
@@ -302,10 +347,10 @@ function ResultContent({ config }: { config: QuizConfig }) {
               }}
             >
               {result.overallScore}
-              <span
+                <span
                 style={{
                   fontSize: "18px",
-                  color: config.scorecardLabelColor,
+                  color: activeConfig.scorecardLabelColor,
                   fontWeight: 400,
                   marginLeft: "4px",
                 }}
@@ -332,12 +377,12 @@ function ResultContent({ config }: { config: QuizConfig }) {
               <p
                 className="mx-auto max-w-[280px]"
                 style={{
-                  color: config.scorecardLabelColor,
+                  color: activeConfig.scorecardLabelColor,
                   fontSize: "12px",
                   lineHeight: 1.6,
                 }}
               >
-                {archetype.description}
+              {archetype.description}
               </p>
             </div>
 
@@ -345,9 +390,9 @@ function ResultContent({ config }: { config: QuizConfig }) {
               <RadarChart
                 dimensions={result.dimensions}
                 accentColor={cardAccent}
-                gridColor={config.scorecardGridColor}
-                labelColor={config.scorecardLabelColor}
-                bgColor={config.scorecardBg}
+                gridColor={activeConfig.scorecardGridColor}
+                labelColor={activeConfig.scorecardLabelColor}
+                bgColor={activeConfig.scorecardBg}
               />
             </div>
 
@@ -359,7 +404,7 @@ function ResultContent({ config }: { config: QuizConfig }) {
                 >
                   <span
                     style={{
-                      color: config.scorecardLabelColor,
+                      color: activeConfig.scorecardLabelColor,
                       fontSize: "11px",
                     }}
                     className="w-24 truncate"
@@ -369,7 +414,7 @@ function ResultContent({ config }: { config: QuizConfig }) {
                   <div className="flex items-center gap-2 flex-1 ml-3">
                     <div
                       className="flex-1 h-1 rounded-full overflow-hidden"
-                      style={{ background: config.scorecardDivider }}
+                      style={{ background: activeConfig.scorecardDivider }}
                     >
                       <div
                         className="h-full rounded-full"
@@ -380,14 +425,14 @@ function ResultContent({ config }: { config: QuizConfig }) {
                       />
                     </div>
                     <span
-                      className="font-mono w-6 text-right"
+                      className="font-mono w-14 text-right"
                       style={{
                         color: cardAccent,
                         fontSize: "11px",
                         opacity: 0.7,
                       }}
                     >
-                      {dim.score}
+                      {dim.earned}/{dim.possible}
                     </span>
                   </div>
                 </div>
@@ -398,7 +443,7 @@ function ResultContent({ config }: { config: QuizConfig }) {
           <div
             className="px-5 py-3 flex items-center justify-center gap-2"
             style={{
-              borderTop: `1px solid ${config.scorecardDivider}`,
+              borderTop: `1px solid ${activeConfig.scorecardDivider}`,
             }}
           >
             <img
@@ -410,7 +455,7 @@ function ResultContent({ config }: { config: QuizConfig }) {
             />
             <span
               style={{
-                color: config.scorecardLabelColor,
+                color: activeConfig.scorecardLabelColor,
                 fontSize: "9px",
               }}
             >
@@ -419,6 +464,30 @@ function ResultContent({ config }: { config: QuizConfig }) {
           </div>
         </div>
 
+        {(strongestDimension || weakestDimension) && (
+          <div
+            className="w-full rounded-2xl px-5 py-4"
+            style={{ background: "var(--v5-bg-surface)", border: "1px solid var(--v5-border)" }}
+          >
+            <p
+              className="text-[11px] font-semibold uppercase tracking-[0.14em]"
+              style={{ color: "var(--v5-text-tertiary)" }}
+            >
+              Based On Your Answers
+            </p>
+            {strongestDimension && (
+              <p className="mt-2 text-sm leading-6" style={{ color: "var(--v5-text)" }}>
+                Strongest: {describeDimension(strongestDimension)}
+              </p>
+            )}
+            {weakestDimension && strongestDimension?.dimension !== weakestDimension.dimension && (
+              <p className="mt-1 text-sm leading-6" style={{ color: "var(--v5-text)" }}>
+                Weakest: {describeDimension(weakestDimension)}
+              </p>
+            )}
+          </div>
+        )}
+
         <div className="w-full flex flex-col gap-3">
           <button
             onClick={() => {
@@ -426,7 +495,7 @@ function ResultContent({ config }: { config: QuizConfig }) {
               track(`${prefix}_share_copy`, { score: result.overallScore });
             }}
             className="flex items-center justify-center gap-2.5 py-3 rounded-xl text-sm font-semibold transition-all active:scale-[0.98]"
-            style={{ background: "var(--v5-accent)", color: config.ctaTextColor ?? "#FFFFFF" }}
+            style={{ background: "var(--v5-accent)", color: activeConfig.ctaTextColor ?? "#FFFFFF" }}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
@@ -437,7 +506,7 @@ function ResultContent({ config }: { config: QuizConfig }) {
         </div>
 
         <Link
-          href={`/play/${config.slug}`}
+          href={`/play/${activeConfig.slug}?difficulty=${difficultyKey}`}
           onClick={() => {
             track(`${prefix}_play_again`, {
               score: result.overallScore,

@@ -87,6 +87,18 @@ export interface Archetype {
   maxScore: number;
 }
 
+export type QuizDifficultyKey = "easy" | "medium" | "hard";
+
+export interface QuizDifficultyOption {
+  key: QuizDifficultyKey;
+  label: string;
+  tagline?: string;
+  subtitle?: string;
+  challenges: Challenge[];
+  rounds: RoundConfig[];
+  archetypes?: Archetype[];
+}
+
 export interface DimensionScore {
   dimension: Dimension;
   label: string;
@@ -157,6 +169,8 @@ export interface QuizConfig {
   challenges: Challenge[];
   rounds: RoundConfig[];
   archetypes: Archetype[];
+  difficultyOptions?: QuizDifficultyOption[];
+  defaultDifficulty?: QuizDifficultyKey;
   dimensionLabels: Record<Dimension, string>;
   analyticsPrefix: string;
 }
