@@ -8,16 +8,31 @@ import { QUIZ_LIST, CATEGORIES } from "@/lib/quiz-directory";
 import CTASection from "@/components/marketing/CTASection";
 import PausedChallengeCard from "@/components/marketing/PausedChallengeCard";
 
+const HIDDEN_PLAY_SLUGS = new Set([
+  "clueso",
+  "stilta",
+  "expo",
+  "sanity",
+  "statsig",
+  "wealthsimple",
+  "voiceflow",
+  "apryse",
+  "onepassword",
+  "safetyculture",
+  "buildkite",
+]);
+
 export default function PlayDirectoryPage() {
   const [active, setActive] = useState("All");
-  const [selectedQuiz, setSelectedQuiz] = useState(QUIZ_LIST[0]);
+  const visibleQuizzes = QUIZ_LIST.filter((quiz) => !HIDDEN_PLAY_SLUGS.has(quiz.slug));
+  const [selectedQuiz, setSelectedQuiz] = useState(visibleQuizzes[0]);
   const [copied, setCopied] = useState(false);
-  const [pausedModalQuiz, setPausedModalQuiz] = useState<null | (typeof QUIZ_LIST)[number]>(null);
+  const [pausedModalQuiz, setPausedModalQuiz] = useState<null | (typeof visibleQuizzes)[number]>(null);
 
   const filtered =
     active === "All"
-      ? QUIZ_LIST
-      : QUIZ_LIST.filter((q) => q.category === active);
+      ? visibleQuizzes
+      : visibleQuizzes.filter((q) => q.category === active);
 
   const quizUrl = `https://howwellyouknow.com/play/${selectedQuiz.slug}`;
 
@@ -27,7 +42,7 @@ export default function PlayDirectoryPage() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleSelectQuiz = (quiz: (typeof QUIZ_LIST)[number]) => {
+  const handleSelectQuiz = (quiz: (typeof visibleQuizzes)[number]) => {
     setSelectedQuiz(quiz);
     if (quiz.paused) {
       setPausedModalQuiz(quiz);
