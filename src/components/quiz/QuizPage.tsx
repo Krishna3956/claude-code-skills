@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState, useEffect, useRef } from "react";
+import { Suspense, useState, useEffect, useRef, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { track } from "@/lib/analytics";
@@ -221,7 +221,19 @@ function QuickPickCard({ challenge, onAnswer, prefix }: { challenge: QuickPickCh
   );
 }
 
-function SpeedPickCard({ challenge, onAnswer, prefix }: { challenge: SpeedPickChallenge; onAnswer: (c: boolean) => void; prefix: string }) {
+function SpeedPickCard({
+  challenge,
+  onAnswer,
+  prefix,
+  accentColor,
+  ctaTextColor,
+}: {
+  challenge: SpeedPickChallenge;
+  onAnswer: (c: boolean) => void;
+  prefix: string;
+  accentColor: string;
+  ctaTextColor: string;
+}) {
   const allItems = shuffleDeterministically([...challenge.correctItems, ...challenge.wrongItems], challenge.id);
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [timeLeft, setTimeLeft] = useState(challenge.timeLimit);
@@ -298,7 +310,7 @@ function SpeedPickCard({ challenge, onAnswer, prefix }: { challenge: SpeedPickCh
       {!done && (
         <button onClick={() => { track(`${prefix}_lock_in`, { questionId: challenge.id }); finishRound(); }}
           className="mt-1 px-8 py-2.5 rounded-xl text-sm font-bold transition-all active:scale-95"
-          style={{ background: "var(--v5-text)", color: "var(--v5-bg)" }}>
+          style={{ background: accentColor, color: ctaTextColor, border: "none" }}>
           Lock In
         </button>
       )}
@@ -637,7 +649,15 @@ function QuizPageInner({ config }: { config: QuizConfig }) {
           {challenge.type === "truth_or_myth" && <TruthOrMythCard challenge={challenge} onAnswer={handleAnswer} prefix={prefix} />}
           {challenge.type === "this_or_that" && <ThisOrThatCard challenge={challenge} onAnswer={handleAnswer} prefix={prefix} />}
           {challenge.type === "quick_pick" && <QuickPickCard challenge={challenge} onAnswer={handleAnswer} prefix={prefix} />}
-          {challenge.type === "speed_pick" && <SpeedPickCard challenge={challenge} onAnswer={handleAnswer} prefix={prefix} />}
+          {challenge.type === "speed_pick" && (
+            <SpeedPickCard
+              challenge={challenge}
+              onAnswer={handleAnswer}
+              prefix={prefix}
+              accentColor={activeConfig.accentColor}
+              ctaTextColor={activeConfig.ctaTextColor ?? "#FFFFFF"}
+            />
+          )}
           {challenge.type === "odd_one_out" && <OddOneOutCard challenge={challenge} onAnswer={handleAnswer} prefix={prefix} />}
         </motion.div>
       </AnimatePresence>

@@ -317,7 +317,13 @@ function ResultContent({ config }: { config: QuizConfig }) {
             <div className="flex justify-center mb-4">
               <div
                 className="inline-flex items-center justify-center rounded-2xl scorecard-logo-wrap"
-                style={{ background: "#FFFFFF", padding: "10px" }}
+                style={{
+                  background: activeConfig.scorecardLogoBg ?? "#FFFFFF",
+                  border: activeConfig.scorecardLogoBorder
+                    ? `1px solid ${activeConfig.scorecardLogoBorder}`
+                    : undefined,
+                  padding: "10px",
+                }}
               >
                 {activeConfig.scorecardLogo ?? activeConfig.logo}
               </div>

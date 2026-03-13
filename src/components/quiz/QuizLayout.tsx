@@ -72,6 +72,7 @@ export default function QuizLayout({ config, children }: { config: QuizConfig; c
           --v5-text-tertiary: ${config.textTertiary};
           --v5-border: ${config.borderColor};
           --v5-border-subtle: ${config.borderSubtle};
+          --v5-cta-text: ${config.ctaTextColor ?? "#FFFFFF"};
           --v5-correct: #16A34A;
           --v5-wrong: #DC2626;
           background: var(--v5-bg);
