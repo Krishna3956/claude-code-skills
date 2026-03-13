@@ -2,10 +2,10 @@ import type { QuizConfig } from "@/components/quiz/types";
 
 const surfaceLogo = (
   <img
-    src="/logos/surface.svg"
+    src="/logos/surface-labs.png"
     alt="Surface"
-    width={116}
-    height={34}
+    width={151}
+    height={44}
     style={{ objectFit: "contain" }}
   />
 );
@@ -40,10 +40,10 @@ export const surfaceConfig: QuizConfig = {
   logo: surfaceLogo,
   scorecardLogo: (
     <img
-      src="/logos/surface.svg"
+      src="/logos/surface-labs.png"
       alt="Surface"
-      width={104}
-      height={30}
+      width={135}
+      height={39}
       style={{ objectFit: "contain" }}
     />
   ),
