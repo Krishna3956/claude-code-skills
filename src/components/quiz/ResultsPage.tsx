@@ -50,6 +50,10 @@ function getStoredResult(slug: string, difficultyKey: QuizDifficultyKey): QuizRe
   }
 }
 
+function getPopupDismissKey(slug: string, difficultyKey: QuizDifficultyKey, score: number) {
+  return `quiz-results-popup-dismissed:${slug}:${difficultyKey}:${score}`;
+}
+
 function PlayMorePopup({ accentColor, onClose }: { accentColor: string; onClose: () => void }) {
   return (
     <motion.div
@@ -177,6 +181,13 @@ function ResultContent({ config }: { config: QuizConfig }) {
   const cardAccent = activeConfig.scorecardAccentColor ?? activeConfig.accentColor;
   const archetype = result ? getArchetype(result.overallScore, activeConfig) : null;
   const siteUrl = `https://www.howwellyouknow.com/play/${activeConfig.slug}?difficulty=${difficultyKey}`;
+  const popupDismissKey = result
+    ? getPopupDismissKey(activeConfig.slug, difficultyKey, result.overallScore)
+    : null;
+  const popupDismissed =
+    popupDismissKey && typeof window !== "undefined"
+      ? window.localStorage.getItem(popupDismissKey) === "1"
+      : false;
 
   useEffect(() => {
     if (!result || !archetype) return;
@@ -188,10 +199,17 @@ function ResultContent({ config }: { config: QuizConfig }) {
   }, [archetype, difficultyKey, prefix, result]);
 
   useEffect(() => {
-    if (isEmbed || !result) return;
+    if (isEmbed || !popupDismissKey || popupDismissed || showPopup) return;
     const timer = setTimeout(() => setShowPopup(true), 5000);
     return () => clearTimeout(timer);
-  }, [isEmbed, result]);
+  }, [isEmbed, popupDismissKey, popupDismissed, showPopup]);
+
+  const closePopup = () => {
+    if (popupDismissKey && typeof window !== "undefined") {
+      window.localStorage.setItem(popupDismissKey, "1");
+    }
+    setShowPopup(false);
+  };
 
   const downloadCard = async () => {
     if (!cardRef.current || !result || !archetype || downloading) return;
@@ -529,7 +547,7 @@ function ResultContent({ config }: { config: QuizConfig }) {
         {showPopup && (
           <PlayMorePopup
             accentColor={cardAccent}
-            onClose={() => setShowPopup(false)}
+            onClose={closePopup}
           />
         )}
       </div>
