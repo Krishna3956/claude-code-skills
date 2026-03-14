@@ -26,6 +26,7 @@ export const QUIZ_LIST: QuizCardData[] = [
   { slug: "zapier", toolName: "Zapier", logoFile: "zapier.png", category: "Productivity" },
   { slug: "bolt", toolName: "Bolt.new", logoFile: "bolt.png", category: "Dev Tools" },
   { slug: "linear", toolName: "Linear", logoFile: "linear.jpg", category: "Productivity" },
+  { slug: "memories", toolName: "Memories.ai", logoFile: "memories.svg", category: "AI Tools" },
   { slug: "github-copilot", toolName: "GitHub Copilot", logoFile: "github-copilot.jpg", category: "Dev Tools" },
   { slug: "obsidian", toolName: "Obsidian", logoFile: "obsidian.png", category: "Productivity" },
   { slug: "postman", toolName: "Postman", logoFile: "postman.png", category: "Dev Tools" },
