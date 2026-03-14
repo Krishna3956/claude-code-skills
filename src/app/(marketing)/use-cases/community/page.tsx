@@ -7,6 +7,7 @@ import {
   Trophy,
   Share2,
   Users,
+  UserRound,
   Zap,
   TrendingUp,
   Sparkles,
@@ -285,9 +286,11 @@ export default function CommunityPage() {
                   <div className="space-y-3">
                     <div className="flex gap-2.5">
                       <div
-                        className="h-8 w-8 shrink-0 rounded"
-                        style={{ background: "var(--m-accent)" }}
-                      />
+                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full shadow-sm"
+                        style={{ background: "var(--m-accent)", color: "#FFFFFF" }}
+                      >
+                        <Users className="h-4 w-4" />
+                      </div>
                       <div>
                         <p className="text-xs">
                           <span
@@ -323,9 +326,11 @@ export default function CommunityPage() {
                     </div>
                     <div className="flex gap-2.5">
                       <div
-                        className="h-8 w-8 shrink-0 rounded"
-                        style={{ background: "#22C55E" }}
-                      />
+                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full shadow-sm"
+                        style={{ background: "#22C55E", color: "#FFFFFF" }}
+                      >
+                        <UserRound className="h-4 w-4" />
+                      </div>
                       <div>
                         <p className="text-xs">
                           <span
@@ -352,9 +357,11 @@ export default function CommunityPage() {
                     </div>
                     <div className="flex gap-2.5">
                       <div
-                        className="h-8 w-8 shrink-0 rounded"
-                        style={{ background: "#F59E0B" }}
-                      />
+                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full shadow-sm"
+                        style={{ background: "#F59E0B", color: "#FFFFFF" }}
+                      >
+                        <UserRound className="h-4 w-4" />
+                      </div>
                       <div>
                         <p className="text-xs">
                           <span
