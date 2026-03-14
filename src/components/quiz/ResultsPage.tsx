@@ -32,10 +32,6 @@ function getActiveConfig(config: QuizConfig, difficultyKey: QuizDifficultyKey): 
   };
 }
 
-function describeDimension(dim: { label: string; earned: number; possible: number; score: number }) {
-  if (dim.possible <= 0) return `${dim.label} was not evaluated in this run.`;
-  return `${dim.label}: ${dim.earned}/${dim.possible} correct (${dim.score}%).`;
-}
 
 function getStoredResult(slug: string, difficultyKey: QuizDifficultyKey): QuizResult | null {
   if (typeof window === "undefined") return null;
@@ -258,9 +254,6 @@ function ResultContent({ config }: { config: QuizConfig }) {
   }
 
   const shareMessage = `I just took "How well do you know ${activeConfig.toolName}?" and scored ${result.overallScore}/100 on ${difficultyKey} mode. That makes me a ${archetype.title}!\n\nThink you can beat my score? 6 rounds, ~3 min, no signup required.\n\nTry it yourself`;
-  const rankedDimensions = [...result.dimensions].sort((a, b) => b.score - a.score || b.earned - a.earned);
-  const strongestDimension = rankedDimensions[0] ?? null;
-  const weakestDimension = rankedDimensions[rankedDimensions.length - 1] ?? null;
 
   return (
     <>
@@ -487,30 +480,6 @@ function ResultContent({ config }: { config: QuizConfig }) {
             </span>
           </div>
         </div>
-
-        {(strongestDimension || weakestDimension) && (
-          <div
-            className="w-full rounded-2xl px-5 py-4"
-            style={{ background: "var(--v5-bg-surface)", border: "1px solid var(--v5-border)" }}
-          >
-            <p
-              className="text-[11px] font-semibold uppercase tracking-[0.14em]"
-              style={{ color: "var(--v5-text-tertiary)" }}
-            >
-              Based On Your Answers
-            </p>
-            {strongestDimension && (
-              <p className="mt-2 text-sm leading-6" style={{ color: "var(--v5-text)" }}>
-                Strongest: {describeDimension(strongestDimension)}
-              </p>
-            )}
-            {weakestDimension && strongestDimension?.dimension !== weakestDimension.dimension && (
-              <p className="mt-1 text-sm leading-6" style={{ color: "var(--v5-text)" }}>
-                Weakest: {describeDimension(weakestDimension)}
-              </p>
-            )}
-          </div>
-        )}
 
         <div className="w-full flex flex-col gap-3">
           <button

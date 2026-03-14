@@ -8,6 +8,7 @@ export const QUIZ_LIST: QuizCardData[] = [
   { slug: "notion", toolName: "Notion", logoFile: "notion.png", category: "Productivity" },
   { slug: "excel", toolName: "Microsoft Excel", logoFile: "excel-mark.svg", category: "Productivity" },
   { slug: "shopify", toolName: "Shopify", logoFile: "shopify.svg", category: "Marketing" },
+  { slug: "reducto", toolName: "Reducto", logoFile: "reducto.svg", category: "AI Tools" },
   { slug: "wordpress", toolName: "WordPress", logoFile: "wordpress.png", category: "Dev Tools" },
   { slug: "claude-code", toolName: "Claude Code", logoFile: "claude-ai-icon.webp", category: "AI Tools" },
   { slug: "hubspot", toolName: "HubSpot", logoFile: "hubspot.png", category: "Marketing" },
