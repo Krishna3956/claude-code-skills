@@ -14,7 +14,7 @@ export const memoriesConfig: QuizConfig = {
   slug: "memories",
   toolName: "Memories.ai",
   tagline: "5 rounds. ~2 min. No manual timeline scrubbing required.",
-  subtitle: "Medium difficulty. Real video-understanding product fluency, not generic AI video copy.",
+  subtitle: "Real video-understanding product fluency, not generic AI video copy.",
   sansFont: "inter",
   serifFont: "source-serif-4",
   accentColor: "#785DE0",
