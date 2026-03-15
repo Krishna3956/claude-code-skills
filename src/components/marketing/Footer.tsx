@@ -103,6 +103,18 @@ export default function Footer() {
                 <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
               </svg>
             </a>
+            <a
+              href="https://www.linkedin.com/company/how-well-you-know"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="How Well You Know on LinkedIn"
+              className="transition-opacity hover:opacity-70"
+              style={{ color: "var(--m-text-tertiary)" }}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3C4.17 3 3.5 3.72 3.5 4.67c0 .93.65 1.67 1.71 1.67h.02c1.1 0 1.77-.74 1.77-1.67C6.98 3.72 6.35 3 5.25 3ZM20.5 12.64c0-3.53-1.88-5.17-4.39-5.17-2.03 0-2.94 1.12-3.45 1.9V8.5H9.28c.04.57 0 11.5 0 11.5h3.38v-6.42c0-.34.02-.68.13-.92.27-.68.88-1.38 1.9-1.38 1.34 0 1.88 1.03 1.88 2.55V20h3.38v-7.36Z" />
+              </svg>
+            </a>
           </div>
         </div>
 
