@@ -13,6 +13,7 @@ import {
   ScanEye,
   Crown,
 } from "lucide-react";
+import { normalizePlayDirectoryQuizConfig } from "./config-utils";
 import type {
   QuizConfig,
   QuizDifficultyKey,
@@ -482,8 +483,9 @@ function QuizPageInner({ config }: { config: QuizConfig }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const isEmbed = searchParams.get("embed") === "true";
-  const difficultyKey = getDifficultyKey(config, searchParams.get("difficulty"));
-  const activeConfig = getActiveConfig(config, difficultyKey);
+  const normalizedConfig = normalizePlayDirectoryQuizConfig(config);
+  const difficultyKey = getDifficultyKey(normalizedConfig, searchParams.get("difficulty"));
+  const activeConfig = getActiveConfig(normalizedConfig, difficultyKey);
   const navTheme = activeConfig.navbarTheme === "dark" ? "light" : activeConfig.navbarTheme;
   const [started, setStarted] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -560,7 +562,7 @@ function QuizPageInner({ config }: { config: QuizConfig }) {
     const params = new URLSearchParams(searchParams.toString());
     params.set("difficulty", nextDifficulty);
     if (isEmbed) params.set("embed", "true");
-    router.replace(`/play/${config.slug}?${params.toString()}`);
+    router.replace(`/play/${normalizedConfig.slug}?${params.toString()}`);
   }
 
   if (!challenge) return null;

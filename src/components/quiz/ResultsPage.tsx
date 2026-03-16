@@ -8,8 +8,19 @@ import { motion } from "framer-motion";
 import { toPng } from "html-to-image";
 import { track } from "@/lib/analytics";
 import type { QuizConfig, QuizDifficultyKey, QuizResult } from "./types";
+import { normalizePlayDirectoryQuizConfig } from "./config-utils";
 import { decodeResult, getArchetype } from "./scoring";
 import Navbar from "@/components/marketing/Navbar";
+
+const RESULT_GATE_EMAIL_KEY = "quiz-results-gate-email";
+
+function getResultUnlockKey(slug: string, difficultyKey: QuizDifficultyKey, score: number) {
+  return `quiz-results-unlocked:${slug}:${difficultyKey}:${score}`;
+}
+
+function getResultSubmittedKey(slug: string, difficultyKey: QuizDifficultyKey, score: number) {
+  return `quiz-results-submitted:${slug}:${difficultyKey}:${score}`;
+}
 
 function getDifficultyKey(config: QuizConfig, raw: string | null): QuizDifficultyKey {
   const available = config.difficultyOptions?.map((option) => option.key) ?? [];
@@ -48,6 +59,97 @@ function getStoredResult(slug: string, difficultyKey: QuizDifficultyKey): QuizRe
 
 function getPopupDismissKey(slug: string, difficultyKey: QuizDifficultyKey, score: number) {
   return `quiz-results-popup-dismissed:${slug}:${difficultyKey}:${score}`;
+}
+
+function ResultGate({
+  toolName,
+  accentColor,
+  textColor,
+  textSecondary,
+  borderColor,
+  bgColor,
+  email,
+  setEmail,
+  onSubmit,
+  loading,
+  error,
+}: {
+  toolName: string;
+  accentColor: string;
+  textColor: string;
+  textSecondary: string;
+  borderColor: string;
+  bgColor: string;
+  email: string;
+  setEmail: (value: string) => void;
+  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  loading: boolean;
+  error: string | null;
+}) {
+  return (
+    <div
+      className="absolute inset-0 z-10 flex items-center justify-center px-4"
+      style={{ background: "rgba(8,12,22,0.38)", backdropFilter: "blur(8px)" }}
+    >
+      <div
+        className="w-full max-w-sm rounded-2xl p-5 shadow-xl"
+        style={{ background: bgColor, border: `1px solid ${borderColor}` }}
+      >
+        <div className="mb-4 text-center">
+          <p
+            className="mb-2 text-[11px] font-semibold uppercase tracking-[0.18em]"
+            style={{ color: accentColor }}
+          >
+            Unlock Results
+          </p>
+          <h2
+            className="mb-2 text-xl"
+            style={{
+              color: textColor,
+              fontFamily: "var(--font-v5-serif), ui-serif, Georgia, serif",
+            }}
+          >
+            See your full {toolName} scorecard
+          </h2>
+          <p className="text-sm leading-6" style={{ color: textSecondary }}>
+            Drop your email and we&apos;ll reveal the result right here.
+          </p>
+        </div>
+
+        <form onSubmit={onSubmit} className="flex flex-col gap-3">
+          <input
+            type="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            placeholder="you@company.com"
+            autoComplete="email"
+            className="w-full rounded-xl px-4 py-3 text-sm outline-none"
+            style={{
+              background: "#FFFFFF",
+              border: `1px solid ${borderColor}`,
+              color: textColor,
+            }}
+          />
+          <button
+            type="submit"
+            disabled={loading}
+            className="rounded-xl px-4 py-3 text-sm font-semibold transition-opacity hover:opacity-90 disabled:opacity-50"
+            style={{ background: accentColor, color: "#FFFFFF" }}
+          >
+            {loading ? "Unlocking..." : "Unlock My Results"}
+          </button>
+          {error ? (
+            <p className="text-xs text-center" style={{ color: "#dc2626" }}>
+              {error}
+            </p>
+          ) : null}
+          <p className="text-[11px] text-center leading-5" style={{ color: textSecondary }}>
+            We only use this to unlock and log quiz results.
+          </p>
+        </form>
+      </div>
+    </div>
+  );
 }
 
 function PlayMorePopup({ accentColor, onClose }: { accentColor: string; onClose: () => void }) {
@@ -163,16 +265,22 @@ function PlayMorePopup({ accentColor, onClose }: { accentColor: string; onClose:
 function ResultContent({ config }: { config: QuizConfig }) {
   const searchParams = useSearchParams();
   const isEmbed = searchParams.get("embed") === "true";
-  const difficultyKey = getDifficultyKey(config, searchParams.get("difficulty"));
-  const activeConfig = getActiveConfig(config, difficultyKey);
+  const normalizedConfig = normalizePlayDirectoryQuizConfig(config);
+  const difficultyKey = getDifficultyKey(normalizedConfig, searchParams.get("difficulty"));
+  const activeConfig = getActiveConfig(normalizedConfig, difficultyKey);
   const navTheme = activeConfig.navbarTheme === "dark" ? "light" : activeConfig.navbarTheme;
   const decodedResult = decodeResult(searchParams, activeConfig);
   const storedResult = getStoredResult(activeConfig.slug, difficultyKey);
   const result = storedResult ?? decodedResult;
   const cardRef = useRef<HTMLDivElement>(null);
   const saveBtnRef = useRef<HTMLButtonElement>(null);
+  const autoUnlockAttemptedRef = useRef(false);
   const [downloading, setDownloading] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [gateEmail, setGateEmail] = useState("");
+  const [gateUnlocked, setGateUnlocked] = useState(false);
+  const [gateLoading, setGateLoading] = useState(false);
+  const [gateError, setGateError] = useState<string | null>(null);
   const prefix = activeConfig.analyticsPrefix;
   const cardAccent = activeConfig.scorecardAccentColor ?? activeConfig.accentColor;
   const archetype = result ? getArchetype(result.overallScore, activeConfig) : null;
@@ -184,6 +292,21 @@ function ResultContent({ config }: { config: QuizConfig }) {
     popupDismissKey && typeof window !== "undefined"
       ? window.localStorage.getItem(popupDismissKey) === "1"
       : false;
+  const unlockKey = result ? getResultUnlockKey(activeConfig.slug, difficultyKey, result.overallScore) : null;
+  const submittedKey = result ? getResultSubmittedKey(activeConfig.slug, difficultyKey, result.overallScore) : null;
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const storedEmail = window.localStorage.getItem(RESULT_GATE_EMAIL_KEY);
+    if (storedEmail) {
+      setGateEmail(storedEmail);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!unlockKey || typeof window === "undefined") return;
+    setGateUnlocked(window.localStorage.getItem(unlockKey) === "1");
+  }, [unlockKey]);
 
   useEffect(() => {
     if (!result || !archetype) return;
@@ -195,10 +318,63 @@ function ResultContent({ config }: { config: QuizConfig }) {
   }, [archetype, difficultyKey, prefix, result]);
 
   useEffect(() => {
-    if (isEmbed || !popupDismissKey || popupDismissed || showPopup) return;
+    if (isEmbed || !gateUnlocked || !popupDismissKey || popupDismissed || showPopup) return;
     const timer = setTimeout(() => setShowPopup(true), 5000);
     return () => clearTimeout(timer);
-  }, [isEmbed, popupDismissKey, popupDismissed, showPopup]);
+  }, [gateUnlocked, isEmbed, popupDismissKey, popupDismissed, showPopup]);
+
+  useEffect(() => {
+    if (!result || !archetype || !submittedKey || !unlockKey || gateUnlocked || gateLoading) return;
+    if (typeof window === "undefined") return;
+    if (autoUnlockAttemptedRef.current) return;
+
+    const savedEmail = window.localStorage.getItem(RESULT_GATE_EMAIL_KEY);
+    const alreadySubmitted = window.localStorage.getItem(submittedKey) === "1";
+    if (!savedEmail || alreadySubmitted) return;
+    autoUnlockAttemptedRef.current = true;
+
+    const submitStoredEmail = async () => {
+      setGateLoading(true);
+      setGateError(null);
+      try {
+        const response = await fetch("/api/capture-email", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: savedEmail,
+            quiz: `${activeConfig.slug}:${difficultyKey}`,
+            score: result.overallScore,
+            archetype: archetype.title,
+            dimensions: JSON.stringify(
+              result.dimensions.map((dimension) => ({
+                key: dimension.dimension,
+                label: dimension.label,
+                score: dimension.score,
+                earned: dimension.earned,
+                possible: dimension.possible,
+              }))
+            ),
+          }),
+        });
+
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok) {
+          throw new Error(typeof payload?.error === "string" ? payload.error : "Unable to unlock results.");
+        }
+
+        window.localStorage.setItem(unlockKey, "1");
+        window.localStorage.setItem(submittedKey, "1");
+        window.localStorage.setItem(RESULT_GATE_EMAIL_KEY, savedEmail);
+        setGateUnlocked(true);
+      } catch (error) {
+        setGateError(error instanceof Error ? error.message : "Unable to unlock results.");
+      } finally {
+        setGateLoading(false);
+      }
+    };
+
+    void submitStoredEmail();
+  }, [activeConfig.slug, archetype, difficultyKey, gateLoading, gateUnlocked, result, submittedKey, unlockKey]);
 
   const closePopup = () => {
     if (popupDismissKey && typeof window !== "undefined") {
@@ -207,8 +383,58 @@ function ResultContent({ config }: { config: QuizConfig }) {
     setShowPopup(false);
   };
 
+  const handleUnlockSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!result || !archetype || !unlockKey || !submittedKey) return;
+
+    setGateLoading(true);
+    setGateError(null);
+
+    try {
+      const response = await fetch("/api/capture-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: gateEmail.trim(),
+          quiz: `${activeConfig.slug}:${difficultyKey}`,
+          score: result.overallScore,
+          archetype: archetype.title,
+          dimensions: JSON.stringify(
+            result.dimensions.map((dimension) => ({
+              key: dimension.dimension,
+              label: dimension.label,
+              score: dimension.score,
+              earned: dimension.earned,
+              possible: dimension.possible,
+            }))
+          ),
+        }),
+      });
+
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(typeof payload?.error === "string" ? payload.error : "Unable to unlock results.");
+      }
+
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem(RESULT_GATE_EMAIL_KEY, gateEmail.trim());
+        window.localStorage.setItem(unlockKey, "1");
+        window.localStorage.setItem(submittedKey, "1");
+      }
+      track(`${prefix}_results_unlocked`, {
+        score: result.overallScore,
+        difficulty: difficultyKey,
+      });
+      setGateUnlocked(true);
+    } catch (error) {
+      setGateError(error instanceof Error ? error.message : "Unable to unlock results.");
+    } finally {
+      setGateLoading(false);
+    }
+  };
+
   const downloadCard = async () => {
-    if (!cardRef.current || !result || !archetype || downloading) return;
+    if (!cardRef.current || !result || !archetype || downloading || !gateUnlocked) return;
     track(`${prefix}_scorecard_dl`, {
       score: result.overallScore,
       archetype: archetype.title,
@@ -253,7 +479,7 @@ function ResultContent({ config }: { config: QuizConfig }) {
     );
   }
 
-  const shareMessage = `I just took "How well do you know ${activeConfig.toolName}?" and scored ${result.overallScore}/100 on ${difficultyKey} mode. That makes me a ${archetype.title}!\n\nThink you can beat my score? 6 rounds, ~3 min, no signup required.\n\nTry it yourself`;
+  const shareMessage = `I just took "How well do you know ${activeConfig.toolName}?" and scored ${result.overallScore}/100 on ${difficultyKey} mode. That makes me a ${archetype.title}!\n\nThink you can beat my score? ${activeConfig.rounds.length} rounds, ~3 min, no signup required.\n\nTry it yourself`;
 
   return (
     <>
@@ -273,6 +499,28 @@ function ResultContent({ config }: { config: QuizConfig }) {
             border: `1px solid ${activeConfig.scorecardDivider}`,
           }}
         >
+          {!gateUnlocked ? (
+            <ResultGate
+              toolName={activeConfig.toolName}
+              accentColor={cardAccent}
+              textColor="#111827"
+              textSecondary="#6B7280"
+              borderColor="#E5E7EB"
+              bgColor="#FFFFFF"
+              email={gateEmail}
+              setEmail={setGateEmail}
+              onSubmit={handleUnlockSubmit}
+              loading={gateLoading}
+              error={gateError}
+            />
+          ) : null}
+          <div
+            style={{
+              filter: gateUnlocked ? undefined : "blur(16px)",
+              pointerEvents: gateUnlocked ? undefined : "none",
+              userSelect: gateUnlocked ? undefined : "none",
+            }}
+          >
           <div
             style={{
               position: "absolute",
@@ -479,16 +727,23 @@ function ResultContent({ config }: { config: QuizConfig }) {
               howwellyouknow.com
             </span>
           </div>
+          </div>
         </div>
 
         <div className="w-full flex flex-col gap-3">
           <button
             onClick={() => {
+              if (!gateUnlocked) return;
               navigator.clipboard.writeText(`${shareMessage}\n\n${siteUrl}`);
               track(`${prefix}_share_copy`, { score: result.overallScore });
             }}
+            disabled={!gateUnlocked}
             className="flex items-center justify-center gap-2.5 py-3 rounded-xl text-sm font-semibold transition-all active:scale-[0.98]"
-            style={{ background: "var(--v5-accent)", color: activeConfig.ctaTextColor ?? "#FFFFFF" }}
+            style={{
+              background: "var(--v5-accent)",
+              color: activeConfig.ctaTextColor ?? "#FFFFFF",
+              opacity: gateUnlocked ? 1 : 0.45,
+            }}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />

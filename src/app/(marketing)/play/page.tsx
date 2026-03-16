@@ -4,23 +4,9 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink, Copy, Check, X } from "lucide-react";
-import { QUIZ_LIST, CATEGORIES } from "@/lib/quiz-directory";
+import { QUIZ_LIST, CATEGORIES, HIDDEN_PLAY_SLUGS } from "@/lib/quiz-directory";
 import CTASection from "@/components/marketing/CTASection";
 import PausedChallengeCard from "@/components/marketing/PausedChallengeCard";
-
-const HIDDEN_PLAY_SLUGS = new Set([
-  "clueso",
-  "stilta",
-  "expo",
-  "sanity",
-  "statsig",
-  "wealthsimple",
-  "voiceflow",
-  "apryse",
-  "onepassword",
-  "safetyculture",
-  "buildkite",
-]);
 
 export default function PlayDirectoryPage() {
   const [active, setActive] = useState("All");
@@ -62,7 +48,7 @@ export default function PlayDirectoryPage() {
             Play a challenge
           </h1>
           <p className="text-base" style={{ color: "var(--m-text-secondary)" }}>
-            Pick a tool. 15 questions. 3 minutes. Get your skill profile.
+            Pick a tool. 10 questions. 3 minutes. Get your skill profile.
           </p>
         </div>
 
@@ -147,7 +133,7 @@ export default function PlayDirectoryPage() {
                       ) : null}
                     </div>
                     <p className="text-xs" style={{ color: "var(--m-text-tertiary)" }}>
-                      15 questions &middot; ~3 min
+                      10 questions &middot; ~3 min
                     </p>
                   </div>
                 </button>

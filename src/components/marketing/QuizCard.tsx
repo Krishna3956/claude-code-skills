@@ -36,7 +36,7 @@ export default function QuizCard({ quiz }: { quiz: QuizCardData }) {
         How {quiz.toolName} Are You?
       </h3>
       <p className="mb-4 text-xs" style={{ color: "var(--m-text-tertiary)" }}>
-        15 questions &middot; ~3 min
+        10 questions &middot; ~3 min
       </p>
       <span
         className="text-sm font-medium transition-colors group-hover:opacity-80"

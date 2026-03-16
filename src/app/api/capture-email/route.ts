@@ -105,6 +105,16 @@ export async function POST(request: NextRequest) {
       ua,
     ];
 
+    const hasGoogleSheetsConfig =
+      Boolean(process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL) &&
+      Boolean(process.env.GOOGLE_PRIVATE_KEY) &&
+      Boolean(process.env.GOOGLE_SHEET_ID);
+
+    if (!hasGoogleSheetsConfig && process.env.NODE_ENV !== "production") {
+      console.warn("capture-email: missing Google Sheets credentials, using local dev fallback");
+      return NextResponse.json({ ok: true, devFallback: true });
+    }
+
     await appendToSheet(row);
 
     return NextResponse.json({ ok: true });

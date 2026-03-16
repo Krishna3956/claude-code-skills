@@ -47,3 +47,17 @@ export const QUIZ_LIST: QuizCardData[] = [
 ];
 
 export const CATEGORIES = ["All", "AI Tools", "Dev Tools", "Design", "Productivity", "Marketing"];
+
+export const HIDDEN_PLAY_SLUGS = new Set([
+  "clueso",
+  "stilta",
+  "expo",
+  "sanity",
+  "statsig",
+  "wealthsimple",
+  "voiceflow",
+  "apryse",
+  "onepassword",
+  "safetyculture",
+  "buildkite",
+]);
