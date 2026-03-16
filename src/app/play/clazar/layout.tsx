@@ -4,14 +4,14 @@ import { clazarConfig } from "@/quizzes/clazar";
 
 const canonicalUrl = "https://www.howwellyouknow.com/play/clazar";
 const description =
-  "Think you know Clazar? Prove it. AWS, Azure, GCP marketplaces, private offers, CPPOs, co-sell automation, Buyer 360, and CRM-native marketplace ops in 5 rounds.";
+  "Think you know Clazar? Prove it. CPPOs, private offers, Buyer 360, co-sell automation, Salesforce Experience, and serious cloud GTM operations in 5 rounds.";
 const ogImageUrl =
   "/api/og?title=How+Clazar+Are+You%3F&tool=Clazar&slug=clazar";
 
 export const metadata: Metadata = {
   title: "How Clazar Are You?",
   description,
-  icons: { icon: "/logos/clazar.png" },
+  icons: { icon: "/logos/clazar.svg" },
   alternates: { canonical: canonicalUrl },
   openGraph: {
     title: "How Clazar Are You?",

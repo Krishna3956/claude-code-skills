@@ -45,6 +45,8 @@ const QUIZ_COLORS: Record<string, { accent: string; bg: string }> = {
   calcom: { accent: "#111827", bg: "#F5F7FA" },
   mintlify: { accent: "#2563EB", bg: "#EFF6FF" },
   attio: { accent: "#0F172A", bg: "#F8FAFC" },
+  clazar: { accent: "#FF7748", bg: "#FFF8F4" },
+  lightfield: { accent: "#3D3D43", bg: "#F3F3F2" },
 };
 
 export async function GET(request: NextRequest) {

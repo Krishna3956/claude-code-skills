@@ -2,7 +2,7 @@ import type { QuizConfig } from "@/components/quiz/types";
 
 const clazarLogo = (
   <img
-    src="/logos/clazar.png"
+    src="/logos/clazar.svg"
     alt="Clazar"
     width={156}
     height={38}
@@ -13,9 +13,9 @@ const clazarLogo = (
 export const clazarConfig: QuizConfig = {
   slug: "clazar",
   toolName: "Clazar",
-  tagline: "5 rounds. ~3 min. No marketplace console required.",
+  tagline: "5 rounds. ~3 min. No cloud-marketplace login required.",
   subtitle:
-    "Medium difficulty for serious cloud GTM operators. Private offers, CPPOs, co-sell orchestration, buyer tracking, and CRM-first marketplace workflows.",
+    "Built for operators who actually run marketplace revenue. CPPOs, co-sell execution, Buyer 360, Salesforce-native workflow, and cross-cloud offer ops.",
   sansFont: "inter",
   serifFont: "source-serif-4",
   accentColor: "#FF7748",
@@ -41,7 +41,7 @@ export const clazarConfig: QuizConfig = {
   logo: clazarLogo,
   scorecardLogo: (
     <img
-      src="/logos/clazar.png"
+      src="/logos/clazar.svg"
       alt="Clazar"
       width={142}
       height={34}
@@ -63,7 +63,7 @@ export const clazarConfig: QuizConfig = {
       title: "Cloud GTM Operator",
       emoji: "☁️",
       description:
-        "You think across listings, offers, co-sell, buyer movement, and revenue systems as one operating layer. That is how strong marketplace teams actually run.",
+        "You think in partner, marketplace, CRM, and revenue-system handoffs as one motion. That is how serious marketplace teams actually operate.",
       minScore: 90,
       maxScore: 100,
     },
@@ -71,7 +71,7 @@ export const clazarConfig: QuizConfig = {
       title: "Marketplace Architect",
       emoji: "🏗️",
       description:
-        "You understand the moving parts well: CPPOs, partner-sourced revenue, CRM sync, and the workflows that keep cloud pipeline from turning into manual chaos.",
+        "You have strong command of CPPOs, co-sell, buyer tracking, and CRM-native execution. A few sharper calls move you into operator-top-tier territory.",
       minScore: 80,
       maxScore: 89,
     },
@@ -79,7 +79,7 @@ export const clazarConfig: QuizConfig = {
       title: "Revenue Motion Builder",
       emoji: "📈",
       description:
-        "You have strong Clazar instincts. A few sharper calls around systems design and partner-led execution would move you into the top tier.",
+        "You understand the mechanics well. The next step is tightening how partner-sourced pipeline, private offers, and systems orchestration fit together.",
       minScore: 70,
       maxScore: 79,
     },
@@ -87,7 +87,7 @@ export const clazarConfig: QuizConfig = {
       title: "Marketplace Manager",
       emoji: "🧭",
       description:
-        "You know the flow of cloud marketplace operations, though some of the deeper automation and attribution mechanics still need tightening.",
+        "You know the flow, though some of the harder operator distinctions across co-sell, buyer visibility, and execution surfaces still blur occasionally.",
       minScore: 60,
       maxScore: 69,
     },
@@ -95,7 +95,7 @@ export const clazarConfig: QuizConfig = {
       title: "Offer Runner",
       emoji: "📄",
       description:
-        "You can get important workflows over the line, but the full multi-team operating model is not fully mapped yet.",
+        "You can get deals over the line, but the full cloud-revenue operating model has not become second nature yet.",
       minScore: 50,
       maxScore: 59,
     },
@@ -103,7 +103,7 @@ export const clazarConfig: QuizConfig = {
       title: "Pipeline Chaser",
       emoji: "🏃",
       description:
-        "You know the broad story, but the practical differences between listing, private offer, co-sell, and buyer visibility still blur together sometimes.",
+        "You know the broad categories, but the difference between systems of record and systems of coordination still needs sharpening.",
       minScore: 40,
       maxScore: 49,
     },
@@ -111,7 +111,7 @@ export const clazarConfig: QuizConfig = {
       title: "Fresh Marketplace Rep",
       emoji: "🌱",
       description:
-        "You are early. The next layer is understanding how Clazar connects cloud marketplaces, CRM workflows, and partner motions into one system.",
+        "You are early. The next layer is understanding how Clazar ties listings, offers, co-sell, and CRM execution into one operating system.",
       minScore: 0,
       maxScore: 39,
     },
@@ -120,129 +120,129 @@ export const clazarConfig: QuizConfig = {
     {
       type: "truth_or_myth",
       id: 1,
-      dimension: "memory",
+      dimension: "orchestration",
       statement:
-        "Clazar positions itself as a unified platform for listing, managing, and co-selling across AWS, Azure, and GCP marketplaces",
+        "Clazar explicitly treats AWS, Azure, and GCP marketplace motions as one operating problem rather than three isolated workflows",
       isTrue: true,
       explanation:
-        "That is the core product framing on their site: one cloud-sales operating layer across the major hyperscaler marketplaces.",
+        "That is core to the product framing. The value is not just single-cloud tooling, but a unified operating layer across hyperscaler marketplaces.",
     },
     {
       type: "truth_or_myth",
       id: 2,
-      dimension: "automation",
+      dimension: "workflows",
       statement:
-        "Clazar only handles post-sale reporting, so private offers and co-sell workflows still have to be run manually outside the product",
+        "Buyer 360 is basically a post-close dashboard, so it is not meant to help teams reason about active buyer progression during marketplace deals",
       isTrue: false,
       explanation:
-        "That is false. Clazar explicitly sells marketplace automation and co-sell automation, not just passive reporting after the fact.",
+        "That is false. Buyer 360 is positioned around buyer visibility and journey context, which matters before the deal is closed, not just after it.",
     },
     {
       type: "this_or_that",
       id: 3,
       dimension: "extensibility",
       scenario:
-        "Your sales team already lives in Salesforce and wants to manage marketplace motions without context-switching. Which move is stronger?",
-      optionA: "Use Clazar's Salesforce Experience so private offers and co-sell motion can stay CRM-native",
-      optionB: "Force the team to manage everything in separate spreadsheets and paste status back into CRM later",
+        "Your sellers refuse to leave Salesforce just to manage private offers and marketplace status. Which move is stronger?",
+      optionA: "Adopt Clazar's Salesforce Experience so marketplace execution stays inside the CRM surface reps already use",
+      optionB: "Keep CRM as a summary system and run the real workflow in inboxes plus a side spreadsheet",
       correct: "A",
       explanation:
-        "Clazar explicitly offers a Salesforce Experience because marketplace workflow adoption is much stronger when reps can operate where pipeline already lives.",
+        "Clazar explicitly offers Salesforce Experience because operator-grade adoption happens when marketplace execution stays CRM-native rather than detached from pipeline.",
     },
     {
       type: "this_or_that",
       id: 4,
-      dimension: "orchestration",
+      dimension: "automation",
       scenario:
-        "A partner-led deal needs a CPPO plus clean tracking across approval and closure. Which move is stronger?",
-      optionA: "Treat the CPPO as an email-only side process disconnected from the rest of the deal",
-      optionB: "Run the offer through a system that tracks, routes, and manages partner-linked marketplace workflow end to end",
+        "A deal depends on partner participation, a private offer, and clean co-sell reporting. Which move is stronger?",
+      optionA: "Break the motion across email threads, partner notes, and manual status updates after the fact",
+      optionB: "Run the workflow through a system built to coordinate co-sell, approval steps, and marketplace execution end to end",
       correct: "B",
       explanation:
-        "CPPOs are exactly the sort of multi-step motion that break when they live only in inboxes. Clazar's value is operationalizing that flow, not just documenting it afterward.",
+        "This is exactly where Clazar is strongest. The hard part is not knowing the terms; it is keeping the motion operationally coherent across teams and systems.",
     },
     {
       type: "quick_pick",
       id: 5,
-      dimension: "workflows",
+      dimension: "prompting",
       scenario:
-        "Which Clazar feature is explicitly about understanding the buyer's path across the marketplace journey?",
-      blank: "Buyer 360",
-      options: ["Metering", "Buyer 360", "Trust Center"],
+        "Which Clazar surface is specifically framed around automating partner and hyperscaler co-sell motion from opportunity creation to closure?",
+      blank: "Co-Sell Automation",
+      options: ["Buyer 360", "Co-Sell Automation", "Metering"],
       explanation:
-        "Buyer 360 is the buyer-journey visibility surface in Clazar's marketplace automation stack.",
+        "That is the exact product surface. Clazar separates co-sell orchestration from broader marketplace management because it is a distinct operational motion.",
     },
     {
       type: "quick_pick",
       id: 6,
-      dimension: "prompting",
+      dimension: "workflows",
       scenario:
-        "Which Clazar product surface is designed to automate co-sell from opportunity creation to closure?",
-      blank: "Co-Sell Automation",
-      options: ["Analytics", "Listing", "Co-Sell Automation"],
+        "Which Clazar feature is explicitly about seeing the buyer's marketplace journey, not just internal team status?",
+      blank: "Buyer 360",
+      options: ["Offer Management", "Analytics", "Buyer 360"],
       explanation:
-        "That is Clazar's direct product framing for partner and hyperscaler-driven co-sell execution.",
+        "Buyer 360 is the buyer-context layer. It is not just internal workflow telemetry; it is intended to help teams understand the buyer path itself.",
     },
     {
       type: "speed_pick",
       id: 7,
       dimension: "memory",
-      prompt: "Tap every real Clazar marketplace-automation feature!",
+      prompt: "Tap every real Clazar product surface or feature family!",
       correctItems: ["Listing", "Offer Management", "Metering", "Buyer 360", "Analytics"],
-      wrongItems: ["Design tokens", "Video rendering", "Payroll sync", "Warehouse routing"],
+      wrongItems: ["Feature flag SDK", "Warehouse routing", "GPU scheduler", "Design system tokens"],
       timeLimit: 15,
       explanation:
-        "Those are all real Clazar feature surfaces under marketplace automation. The others belong to unrelated systems.",
+        "Those are the real marketplace-automation surfaces Clazar calls out. The others belong to entirely different categories of software.",
     },
     {
       type: "speed_pick",
       id: 8,
-      dimension: "automation",
-      prompt: "Tap every workflow Clazar is clearly built to reduce manual chaos around!",
+      dimension: "bestPractices",
+      prompt: "Tap every workflow a serious Clazar operator should want out of email-chaos mode!",
       correctItems: ["Private offers", "CPPOs", "Co-sell execution", "Marketplace pipeline tracking"],
-      wrongItems: ["Graphic design reviews", "Payroll approvals", "Laptop inventory", "Office seating"],
+      wrongItems: ["Laptop procurement", "Office seating", "Graphic design reviews", "Payroll approvals"],
       timeLimit: 15,
       explanation:
-        "Clazar is a cloud GTM operations system. Its strongest value comes from reducing manual coordination around marketplace and partner revenue workflows.",
+        "Clazar's value is strongest where revenue teams are otherwise stitching together partner-led cloud workflows manually.",
     },
     {
       type: "odd_one_out",
       id: 9,
       dimension: "bestPractices",
       prompt:
-        "One of these is NOT a strong Clazar-style cloud GTM instinct. Which one?",
+        "One of these is NOT a serious cloud-marketplace operating instinct. Which one?",
       items: [
         "Keep CRM and marketplace workflow connected",
-        "Track buyer progress and revenue motion in one system",
-        "Let private offers and co-sell stages live in disconnected inbox threads forever",
-        "Automate repetitive marketplace operations wherever possible",
+        "Track buyer movement and offer execution in one system",
+        "Let CPPO and private-offer status live in disconnected inbox threads forever",
+        "Automate repetitive marketplace handoffs wherever possible",
       ],
-      oddItem: "Let private offers and co-sell stages live in disconnected inbox threads forever",
+      oddItem: "Let CPPO and private-offer status live in disconnected inbox threads forever",
       explanation:
-        "That is the weak move. Clazar exists because manual email orchestration does not scale once cloud revenue becomes a real channel.",
+        "That is the weak move. Clazar exists because high-value marketplace motions break down when they remain email-native and system-disconnected.",
     },
     {
       type: "odd_one_out",
       id: 10,
       dimension: "extensibility",
       prompt:
-        "One of these is NOT a Clazar enterprise or systems surface mentioned on their site. Which one?",
+        "One of these is NOT a Clazar enterprise or integration surface mentioned on the site. Which one?",
       items: [
         "Salesforce Experience",
         "Automation Builder",
         "API",
-        "Native Figma plugin",
+        "Mobile MDM console",
       ],
-      oddItem: "Native Figma plugin",
+      oddItem: "Mobile MDM console",
       explanation:
-        "Salesforce Experience, Automation Builder, and API are all real Clazar surfaces. A native Figma plugin is not part of this product shape.",
+        "Salesforce Experience, Automation Builder, and API are all real Clazar surfaces. A mobile-device-management console is not part of this product.",
     },
   ],
   rounds: [
-    { name: "Truth or Myth", icon: "⚡", ids: [1, 2], tagline: "Cloud GTM reality or made-up marketplace lore?" },
-    { name: "This or That", icon: "🆚", ids: [3, 4], tagline: "Pick the scalable operating move" },
+    { name: "Truth or Myth", icon: "⚡", ids: [1, 2], tagline: "Operator reality or marketplace fiction?" },
+    { name: "This or That", icon: "🆚", ids: [3, 4], tagline: "Choose the scalable execution move" },
     { name: "Quick Pick", icon: "🎯", ids: [5, 6], tagline: "Name the exact Clazar surface" },
-    { name: "Speed Round", icon: "⏱️", ids: [7, 8], tagline: "Recognize the real workflow categories" },
-    { name: "Odd One Out", icon: "👀", ids: [9, 10], tagline: "Spot the bad cloud-GTM instinct" },
+    { name: "Speed Round", icon: "⏱️", ids: [7, 8], tagline: "Recognize the real operating categories" },
+    { name: "Odd One Out", icon: "👀", ids: [9, 10], tagline: "Spot the weak marketplace instinct" },
   ],
 };
