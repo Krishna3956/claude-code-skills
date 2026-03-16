@@ -50,6 +50,8 @@ const QUIZ_COLORS: Record<string, { accent: string; bg: string }> = {
   globalpayments: { accent: "#262AFF", bg: "#F7F8FF" },
   hostedai: { accent: "#4C64BF", bg: "#F6F8FD" },
   arize: { accent: "#FF008C", bg: "#FCF7FC" },
+  zensai: { accent: "#FF5E05", bg: "#FFF8F4" },
+  starbuzz: { accent: "#FE5901", bg: "#FFF8F4" },
 };
 
 export async function GET(request: NextRequest) {
