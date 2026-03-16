@@ -545,7 +545,7 @@ export default function AirtableeAnalyticsExperience() {
                       <CartesianGrid stroke={HEX_BORDER} horizontal={false} />
                       <XAxis type="number" domain={[0, 100]} tick={{ fill: HEX_TEXT_TER, fontSize: 12 }} axisLine={false} tickLine={false} unit="%" />
                       <YAxis dataKey="dimension" type="category" tick={{ fill: "#425466", fontSize: 13 }} axisLine={false} tickLine={false} width={130} />
-                      <Tooltip formatter={(v: number) => `${v}%`} />
+                      <Tooltip formatter={(v) => `${v}%`} />
                       <Bar dataKey="mastery" radius={[0, 4, 4, 0]} barSize={20} fill={CHART.blue} />
                     </BarChart>
                   </ResponsiveContainer>
