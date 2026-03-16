@@ -45,6 +45,7 @@ export const QUIZ_LIST: QuizCardData[] = [
   { slug: "safetyculture", toolName: "SafetyCulture", logoFile: "safetyculture.svg", category: "Productivity" },
   { slug: "buildkite", toolName: "Buildkite", logoFile: "buildkite.svg", category: "Dev Tools" },
   { slug: "storylane", toolName: "Storylane", logoFile: "storylane.svg", category: "Marketing" },
+  { slug: "clazar", toolName: "Clazar", logoFile: "clazar.png", category: "Marketing" },
 ];
 
 export const CATEGORIES = ["All", "AI Tools", "Dev Tools", "Design", "Productivity", "Marketing"];
