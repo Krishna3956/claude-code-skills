@@ -58,8 +58,8 @@ const COMPARISON: ComparisonSection[] = [
   {
     title: "Challenges",
     rows: [
-      { feature: "Number of challenges", growth: "7", scale: "Unlimited", enterprise: "Unlimited" },
-      { feature: "Cards per challenge", growth: "25", scale: "25", enterprise: "Custom" },
+      { feature: "Number of challenges", growth: "5", scale: "Unlimited", enterprise: "Unlimited" },
+      { feature: "Cards per challenge", growth: "15", scale: "15", enterprise: "Custom" },
       { feature: "Challenge types (all 5)", growth: true, scale: true, enterprise: true },
       { feature: "Auto-generated content", growth: true, scale: true, enterprise: true },
     ],

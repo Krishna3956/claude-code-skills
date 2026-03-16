@@ -22,8 +22,8 @@ const TIERS: Tier[] = [
     yearly: 79,
     tagline: "For growing teams",
     features: [
-      "7 challenges",
-      "25 cards per challenge",
+      "5 challenges",
+      "15 cards per challenge",
       "Custom branding (logo + color)",
       "Removable 'Powered by' badge",
       "Hosted page",
@@ -44,7 +44,7 @@ const TIERS: Tier[] = [
     tagline: "For serious CS teams",
     features: [
       "Unlimited challenges",
-      "25 cards per challenge",
+      "15 cards per challenge",
       "Full brand kit (colors, fonts, logo)",
       "Removable 'Powered by' badge",
       "Hosted page + embed code",
