@@ -122,7 +122,7 @@ export const clazarConfig: QuizConfig = {
       id: 1,
       dimension: "orchestration",
       statement:
-        "Clazar explicitly treats AWS, Azure, and GCP marketplace motions as one operating problem rather than three isolated workflows",
+        "Clazar is a unified platform for listing, managing, and co-selling across AWS, Azure, and GCP marketplaces",
       isTrue: true,
       explanation:
         "That is core to the product framing. The value is not just single-cloud tooling, but a unified operating layer across hyperscaler marketplaces.",

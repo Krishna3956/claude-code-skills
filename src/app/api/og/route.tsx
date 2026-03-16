@@ -47,6 +47,9 @@ const QUIZ_COLORS: Record<string, { accent: string; bg: string }> = {
   attio: { accent: "#0F172A", bg: "#F8FAFC" },
   clazar: { accent: "#FF7748", bg: "#FFF8F4" },
   lightfield: { accent: "#3D3D43", bg: "#F3F3F2" },
+  globalpayments: { accent: "#262AFF", bg: "#F7F8FF" },
+  hostedai: { accent: "#4C64BF", bg: "#F6F8FD" },
+  arize: { accent: "#FF008C", bg: "#FCF7FC" },
 };
 
 export async function GET(request: NextRequest) {
