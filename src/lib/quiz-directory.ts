@@ -52,6 +52,8 @@ export const QUIZ_LIST: QuizCardData[] = [
   { slug: "arize", toolName: "Arize", logoFile: "arize.svg", category: "AI Tools" },
   { slug: "zensai", toolName: "Zensai", logoFile: "zensai.svg", category: "Productivity" },
   { slug: "starbuzz", toolName: "Starbuzz.ai", logoFile: "starbuzz.png", category: "Marketing" },
+  { slug: "huddle01", toolName: "Huddle01 Cloud", logoFile: "huddle01-cloud.png", category: "Dev Tools" },
+  { slug: "gushwork", toolName: "Gushwork", logoFile: "gushwork.svg", category: "Marketing" },
 ];
 
 export const CATEGORIES = ["All", "AI Tools", "Dev Tools", "Design", "Productivity", "Marketing"];
