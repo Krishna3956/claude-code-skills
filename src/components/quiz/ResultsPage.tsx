@@ -284,7 +284,10 @@ function ResultContent({ config }: { config: QuizConfig }) {
   const prefix = activeConfig.analyticsPrefix;
   const cardAccent = activeConfig.scorecardAccentColor ?? activeConfig.accentColor;
   const archetype = result ? getArchetype(result.overallScore, activeConfig) : null;
-  const siteUrl = `https://www.howwellyouknow.com/play/${activeConfig.slug}?difficulty=${difficultyKey}`;
+  const hasDifficulty = (config.difficultyOptions?.length ?? 0) > 0;
+  const siteUrl = hasDifficulty
+    ? `https://www.howwellyouknow.com/play/${activeConfig.slug}?difficulty=${difficultyKey}`
+    : `https://www.howwellyouknow.com/play/${activeConfig.slug}`;
   const popupDismissKey = result
     ? getPopupDismissKey(activeConfig.slug, difficultyKey, result.overallScore)
     : null;
@@ -318,7 +321,7 @@ function ResultContent({ config }: { config: QuizConfig }) {
   }, [archetype, difficultyKey, prefix, result]);
 
   useEffect(() => {
-    if (isEmbed || !gateUnlocked || !popupDismissKey || popupDismissed || showPopup) return;
+    if (config.hidePopup || isEmbed || !gateUnlocked || !popupDismissKey || popupDismissed || showPopup) return;
     const timer = setTimeout(() => setShowPopup(true), 5000);
     return () => clearTimeout(timer);
   }, [gateUnlocked, isEmbed, popupDismissKey, popupDismissed, showPopup]);
@@ -447,7 +450,9 @@ function ResultContent({ config }: { config: QuizConfig }) {
       await toPng(cardRef.current, opts);
       const dataUrl = await toPng(cardRef.current, opts);
       const link = document.createElement("a");
-      link.download = `${activeConfig.slug}-${difficultyKey}-score-${result.overallScore}.png`;
+      link.download = activeConfig.customDownloadName
+        ? `${activeConfig.customDownloadName}.png`
+        : `${activeConfig.slug}-${difficultyKey}-score-${result.overallScore}.png`;
       link.href = dataUrl;
       link.click();
     } catch {
@@ -460,14 +465,14 @@ function ResultContent({ config }: { config: QuizConfig }) {
   if (!result || !archetype) {
     return (
       <>
-        {!isEmbed && <Navbar theme={navTheme} />}
+        {!isEmbed && !config.hideNavbar && <Navbar theme={navTheme} />}
         <div className="flex min-h-dvh items-center justify-center px-4">
           <div className="text-center">
             <p style={{ color: "var(--v5-text-secondary)" }} className="mb-4">
               No results found.
             </p>
             <Link
-              href={`/play/${activeConfig.slug}?difficulty=${difficultyKey}`}
+              href={hasDifficulty ? `/play/${activeConfig.slug}?difficulty=${difficultyKey}` : `/play/${activeConfig.slug}`}
               style={{ color: "var(--v5-accent)" }}
               className="hover:underline text-sm"
             >
@@ -479,11 +484,11 @@ function ResultContent({ config }: { config: QuizConfig }) {
     );
   }
 
-  const shareMessage = `I just took "How well do you know ${activeConfig.toolName}?" and scored ${result.overallScore}/100 on ${difficultyKey} mode. That makes me a ${archetype.title}!\n\nThink you can beat my score? ${activeConfig.rounds.length} rounds, ~3 min, no signup required.\n\nTry it yourself`;
+  const shareMessage = `I scored ${result.overallScore}/100 on the ${activeConfig.toolName} challenge and got "${archetype.title}"\n\n${activeConfig.rounds.length} rounds, ~2 min, no signup. Think you can beat that?`;
 
   return (
     <>
-      {!isEmbed && <Navbar theme={navTheme} />}
+      {!isEmbed && !config.hideNavbar && <Navbar theme={navTheme} />}
       <div className="flex min-h-dvh flex-col items-center px-4 py-8" style={isEmbed ? { zoom: 0.75 } : undefined}>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -705,6 +710,7 @@ function ResultContent({ config }: { config: QuizConfig }) {
             </div>
           </div>
 
+          {!activeConfig.hideScorecardBranding && (
           <div
             className="px-5 py-3 flex items-center justify-center gap-2"
             style={{
@@ -727,34 +733,52 @@ function ResultContent({ config }: { config: QuizConfig }) {
               howwellyouknow.com
             </span>
           </div>
+          )}
           </div>
         </div>
 
         <div className="w-full flex flex-col gap-3">
-          <button
-            onClick={() => {
-              if (!gateUnlocked) return;
-              navigator.clipboard.writeText(`${shareMessage}\n\n${siteUrl}`);
-              track(`${prefix}_share_copy`, { score: result.overallScore });
-            }}
-            disabled={!gateUnlocked}
-            className="flex items-center justify-center gap-2.5 py-3 rounded-xl text-sm font-semibold transition-all active:scale-[0.98]"
+          <a
+            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareMessage)}&url=${encodeURIComponent(siteUrl)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => { track(`${prefix}_share_x`, { score: result.overallScore }); }}
+            className="flex items-center justify-center gap-2.5 py-3 rounded-xl text-sm font-semibold transition-all active:scale-[0.98] no-underline"
             style={{
               background: "var(--v5-accent)",
               color: activeConfig.ctaTextColor ?? "#FFFFFF",
               opacity: gateUnlocked ? 1 : 0.45,
+              pointerEvents: gateUnlocked ? "auto" : "none",
             }}
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
-              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
             </svg>
-            Copy &amp; Share
-          </button>
+            Share on X
+          </a>
+          <a
+            href={`https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(`${shareMessage}\n\n${siteUrl}`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => { track(`${prefix}_share_linkedin`, { score: result.overallScore }); }}
+            className="flex items-center justify-center gap-2.5 py-3 rounded-xl text-sm font-semibold transition-all active:scale-[0.98] no-underline"
+            style={{
+              background: "var(--v5-bg-surface)",
+              color: "var(--v5-text)",
+              border: "1px solid var(--v5-border)",
+              opacity: gateUnlocked ? 1 : 0.45,
+              pointerEvents: gateUnlocked ? "auto" : "none",
+            }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+            </svg>
+            Share on LinkedIn
+          </a>
         </div>
 
         <Link
-          href={`/play/${activeConfig.slug}?difficulty=${difficultyKey}`}
+          href={hasDifficulty ? `/play/${activeConfig.slug}?difficulty=${difficultyKey}` : `/play/${activeConfig.slug}`}
           onClick={() => {
             track(`${prefix}_play_again`, {
               score: result.overallScore,
@@ -768,7 +792,7 @@ function ResultContent({ config }: { config: QuizConfig }) {
 
       </motion.div>
 
-        {showPopup && (
+        {showPopup && !config.hidePopup && (
           <PlayMorePopup
             accentColor={cardAccent}
             onClose={closePopup}

@@ -165,6 +165,10 @@ export interface QuizConfig {
   scorecardLogoBg?: string;
   scorecardLogoBorder?: string;
   navbarTheme?: "light" | "dark";
+  hideNavbar?: boolean;
+  hidePopup?: boolean;
+  hideScorecardBranding?: boolean;
+  customDownloadName?: string;
   ctaTextColor?: string;
   logo: React.ReactNode;
   scorecardLogo?: React.ReactNode;

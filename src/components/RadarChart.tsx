@@ -71,7 +71,7 @@ export default function RadarChart({ dimensions, accentColor = "#6366F1", gridCo
 
   return (
     <ResponsiveContainer width="100%" height={340}>
-      <RechartsRadarChart cx="50%" cy="50%" outerRadius="42%" data={data}>
+      <RechartsRadarChart cx="50%" cy="50%" outerRadius="34%" data={data}>
         <PolarGrid stroke={gridColor} strokeWidth={1} />
         <PolarAngleAxis
           dataKey="subject"
