@@ -1,129 +1,90 @@
 import Link from "next/link";
-import Image from "next/image";
 
-const COLUMNS = [
+const FOOTER_COLUMNS = [
   {
     title: "Product",
     links: [
-      { label: "Play", href: "/play" },
-      { label: "How It Works", href: "/how-it-works" },
+      { label: "Homepage", href: "/" },
+      { label: "How it works", href: "/how-it-works" },
+      { label: "Pricing", href: "/pricing" },
+      { label: "Challenge library", href: "/customers" },
     ],
   },
   {
-    title: "Use Cases",
+    title: "Use cases",
     links: [
-      { label: "Customer Onboarding", href: "/use-cases/onboarding" },
-      { label: "Community Engagement", href: "/use-cases/community" },
-      { label: "Lead Generation", href: "/use-cases/marketing" },
+      { label: "Onboarding", href: "/use-cases/onboarding" },
+      { label: "Community", href: "/use-cases/community" },
+      { label: "Lead generation", href: "/use-cases/marketing" },
       { label: "Documentation", href: "/use-cases/documentation" },
-      { label: "Product Teams", href: "/use-cases/product-teams" },
+      { label: "Feature launches", href: "/use-cases/product-teams" },
     ],
   },
   {
     title: "Company",
     links: [
       { label: "About", href: "/about" },
+      { label: "Blog", href: "/blog" },
       { label: "Contact", href: "/contact" },
+      { label: "Play a live challenge", href: "/play" },
     ],
   },
   {
     title: "Legal",
     links: [
-      { label: "Privacy Policy", href: "/privacy" },
-      { label: "Terms of Service", href: "/terms" },
+      { label: "Privacy", href: "/privacy" },
+      { label: "Terms", href: "/terms" },
+      { label: "hello@howwellyouknow.com", href: "mailto:hello@howwellyouknow.com" },
     ],
   },
 ];
 
 export default function Footer() {
   return (
-    <footer
-      className="border-t"
-      style={{
-        background: "var(--m-bg)",
-        borderColor: "var(--m-border)",
-      }}
-    >
-      <div className="mx-auto max-w-[1200px] px-4 py-8 sm:px-6 sm:py-12">
-        <div className="grid grid-cols-2 gap-6 sm:gap-8 md:grid-cols-4">
-          {COLUMNS.map((col) => (
-            <div key={col.title}>
-              <h4
-                className="mb-4 text-sm font-semibold"
-                style={{ color: "var(--m-text)" }}
-              >
-                {col.title}
-              </h4>
-              <ul className="flex flex-col gap-3">
-                {col.links.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="text-sm transition-colors hover:opacity-70"
-                      style={{ color: "var(--m-text-secondary)" }}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
+    <footer className="border-t border-[var(--mk-border)] bg-[color:var(--mk-bg-elevated)]">
+      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="grid gap-10 lg:grid-cols-[1.35fr_repeat(4,minmax(0,1fr))]">
+          <div className="max-w-sm">
+            <div className="mb-5 flex items-center gap-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[var(--mk-border-strong)] bg-[var(--mk-accent-soft)] text-sm font-semibold text-[var(--mk-accent)]">
+                HW
+              </div>
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--mk-text)]">
+                  How Well You Know
+                </p>
+                <p className="text-sm text-[var(--mk-text-muted)]">Your users do not read docs. They play challenges.</p>
+              </div>
+            </div>
+            <p className="text-sm leading-7 text-[var(--mk-text-soft)]">
+              Interactive product education for developer tools companies. Turn docs into 3-minute challenges, scorecards, and knowledge-gap analytics.
+            </p>
+          </div>
+
+      {FOOTER_COLUMNS.map((column) => (
+            <div key={column.title}>
+              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--mk-text-muted)]">
+                {column.title}
+              </p>
+              <div className="flex flex-col gap-3">
+                {column.links.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="text-sm text-[var(--mk-text-soft)] transition hover:text-[var(--mk-text)]"
+                  >
+                    {link.label}
+                  </Link>
                 ))}
-              </ul>
+              </div>
             </div>
           ))}
         </div>
 
-        <div
-          className="mt-8 flex flex-col items-center gap-4 border-t pt-6 sm:mt-12 sm:pt-8 md:flex-row md:justify-between"
-          style={{ borderColor: "var(--m-border)" }}
-        >
-          <div className="flex items-center gap-3 text-center md:text-left">
-            <Image
-              src="/logos/hwyk-logo.svg"
-              alt="How Well You Know logo"
-              width={24}
-              height={24}
-              className="shrink-0"
-            />
-            <p
-              className="text-xs sm:text-sm"
-              style={{ color: "var(--m-text-secondary)" }}
-            >
-              Interactive product challenges for B2B SaaS teams.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <a
-              href="mailto:hello@howwellyouknow.com"
-              aria-label="Email How Well You Know"
-              className="transition-opacity hover:opacity-70"
-              style={{ color: "var(--m-text-tertiary)" }}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect width="20" height="16" x="2" y="4" rx="2" />
-                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-              </svg>
-            </a>
-            <a
-              href="https://www.linkedin.com/company/how-well-you-know"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="How Well You Know on LinkedIn"
-              className="transition-opacity hover:opacity-70"
-              style={{ color: "var(--m-text-tertiary)" }}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3C4.17 3 3.5 3.72 3.5 4.67c0 .93.65 1.67 1.71 1.67h.02c1.1 0 1.77-.74 1.77-1.67C6.98 3.72 6.35 3 5.25 3ZM20.5 12.64c0-3.53-1.88-5.17-4.39-5.17-2.03 0-2.94 1.12-3.45 1.9V8.5H9.28c.04.57 0 11.5 0 11.5h3.38v-6.42c0-.34.02-.68.13-.92.27-.68.88-1.38 1.9-1.38 1.34 0 1.88 1.03 1.88 2.55V20h3.38v-7.36Z" />
-              </svg>
-            </a>
-          </div>
+        <div className="mt-12 flex flex-col gap-3 border-t border-[var(--mk-border)] pt-6 text-sm text-[var(--mk-text-muted)] md:flex-row md:items-center md:justify-between">
+          <p>Built for B2B SaaS teams that need product education to drive activation, retention, and feature adoption.</p>
+          <p>&copy; {new Date().getFullYear()} How Well You Know</p>
         </div>
-
-        <p
-          className="mt-6 text-center text-[11px]"
-          style={{ color: "var(--m-text-tertiary)", opacity: 0.7 }}
-        >
-          &copy; {new Date().getFullYear()} How Well You Know. All rights reserved.
-        </p>
       </div>
     </footer>
   );
