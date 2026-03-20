@@ -54,7 +54,6 @@ const QUIZ_COLORS: Record<string, { accent: string; bg: string }> = {
   starbuzz: { accent: "#FE5901", bg: "#FFF8F4" },
   huddle01: { accent: "#246BFD", bg: "#F5F9FF" },
   gushwork: { accent: "#0070FF", bg: "#F8F6F3" },
-  "merlin-ai": { accent: "#003DA5", bg: "#F3F7FD" },
 };
 
 export async function GET(request: NextRequest) {

@@ -40,7 +40,6 @@ export const QUIZ_LIST: QuizCardData[] = [
   { slug: "statsig", toolName: "Statsig", logoFile: "statsig.svg", category: "Dev Tools" },
   { slug: "wealthsimple", toolName: "Wealthsimple", logoFile: "wealthsimple.svg", category: "Productivity" },
   { slug: "voiceflow", toolName: "Voiceflow", logoFile: "voiceflow.svg", category: "AI Tools" },
-  { slug: "merlin-ai", toolName: "Merlin AI", logoFile: "zycus.webp", category: "AI Tools" },
   { slug: "apryse", toolName: "Apryse", logoFile: "apryse.svg", category: "Dev Tools" },
   { slug: "onepassword", toolName: "1Password", logoFile: "onepassword.svg", category: "Dev Tools" },
   { slug: "safetyculture", toolName: "SafetyCulture", logoFile: "safetyculture.svg", category: "Productivity" },
