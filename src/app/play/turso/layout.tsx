@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { QuizLayout } from "@/components/quiz";
-import { tursoConfig } from "@/quizzes/turso";
+import { tursoPilotConfig } from "@/quizzes/turso-pilot";
 
 const canonicalUrl = "https://www.howwellyouknow.com/play/turso";
-const description = "Think you know Turso? Test libSQL, replicas, and distributed SQLite architecture in 6 rounds.";
+const description = "Think you know Turso? Test libSQL, embedded replicas, vectors, branching, and more in 5 rounds.";
 const ogImageUrl = "/api/og?title=How+Turso+Are+You%3F&tool=Turso&slug=turso";
 
 export const metadata: Metadata = {
@@ -26,5 +26,5 @@ export const metadata: Metadata = {
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <QuizLayout config={tursoConfig}>{children}</QuizLayout>;
+  return <QuizLayout config={tursoPilotConfig}>{children}</QuizLayout>;
 }

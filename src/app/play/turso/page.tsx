@@ -1,8 +1,8 @@
 "use client";
 
 import { QuizPage } from "@/components/quiz";
-import { tursoConfig } from "@/quizzes/turso";
+import { tursoPilotConfig } from "@/quizzes/turso-pilot";
 
 export default function Page() {
-  return <QuizPage config={tursoConfig} />;
+  return <QuizPage config={tursoPilotConfig} />;
 }

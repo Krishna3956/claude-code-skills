@@ -1,7 +1,7 @@
 import type { QuizConfig } from "@/components/quiz/types";
 
 export const tursoPilotConfig: QuizConfig = {
-  slug: "turso-pilot",
+  slug: "turso",
   toolName: "Turso",
   tagline: "5 rounds. 12 questions. No signup required.",
   subtitle: "Just you vs. Turso knowledge challenge.",

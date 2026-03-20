@@ -1,8 +1,5 @@
-"use client";
-
-import { ResultsPage } from "@/components/quiz";
-import { tursoPilotConfig } from "@/quizzes/turso-pilot";
+import { redirect } from "next/navigation";
 
 export default function Page() {
-  return <ResultsPage config={tursoPilotConfig} />;
+  redirect("/play/turso/results");
 }
