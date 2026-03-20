@@ -3,7 +3,7 @@ import type { QuizConfig } from "@/components/quiz/types";
 export const tursoPilotConfig: QuizConfig = {
   slug: "turso-pilot",
   toolName: "Turso",
-  tagline: "6 rounds. ~2 min. No signup required.",
+  tagline: "5 rounds. 12 questions. No signup required.",
   subtitle: "Just you vs. Turso knowledge challenge.",
   sansFont: "inter",
   serifFont: "instrument-serif",
@@ -52,23 +52,29 @@ export const tursoPilotConfig: QuizConfig = {
     { title: "Getting Started", emoji: "🚀", description: "Great first step. The Turso docs at docs.turso.tech are your best next move.", minScore: 0, maxScore: 39 },
   ],
   challenges: [
+    // Round 1: Truth or Myth (ids: 1, 2, 3, 11, 12)
     { type: "truth_or_myth", id: 1, dimension: "memory", statement: "Turso is a rewrite of SQLite, written in Rust", isTrue: true, explanation: "Turso is a full rewrite of SQLite in Rust, currently in beta. Turso Cloud is currently powered by libSQL, a fork of SQLite from the same team." },
     { type: "truth_or_myth", id: 2, dimension: "workflows", statement: "Embedded replicas in Turso always send reads to the remote primary database", isTrue: false, explanation: "Reads are always served from the local replica. Only writes are sent to the remote primary database by default." },
     { type: "truth_or_myth", id: 3, dimension: "extensibility", statement: "Vector search in Turso requires a separate plugin or extension to be installed", isTrue: false, explanation: "Vector similarity search is built into Turso and libSQL as a native feature. No plugins needed." },
+    { type: "truth_or_myth", id: 11, dimension: "orchestration", statement: "Starting with version 0.5.0, Turso supports concurrent writes using MVCC", isTrue: true, explanation: "Turso supports concurrent writes using MVCC, the same algorithm used by Postgres. Unlike SQLite, Turso is not limited to a single writer." },
+    { type: "truth_or_myth", id: 12, dimension: "workflows", statement: "Turso Cloud is a service that focuses exclusively on synchronization of SQLite databases", isTrue: false, explanation: "Turso Cloud allows users to sync SQLite and Turso databases, but also supports direct querying of databases over the wire." },
+    // Round 2: This or That (ids: 4, 5)
     { type: "this_or_that", id: 4, dimension: "orchestration", scenario: "You want to create an isolated copy of your production database for testing. Best approach?", optionA: "Manually export and re-import the entire database", optionB: "Use turso db branch to create a copy-on-write branch", correct: "B", explanation: "The turso db branch command creates a new database from an existing one using copy-on-write, making it fast and ideal for testing." },
     { type: "this_or_that", id: 5, dimension: "workflows", scenario: "Your app needs to work offline but sync when connectivity returns. Which Turso feature?", optionA: "Partial sync with selective replication", optionB: "Point-in-time recovery", correct: "A", explanation: "Turso's partial sync feature supports selective replication for offline-capable apps. For older libSQL-based sync, embedded replicas with offline mode also work." },
+    // Round 3: Quick Pick (ids: 6, 7)
     { type: "quick_pick", id: 6, dimension: "automation", scenario: "What CLI command creates a new Turso database branch from an existing database?", blank: "turso db branch [source] [target]", options: ["turso branch new [source] --target [db]", "turso db fork [source] --copy [target]", "turso db branch [source] [target]"], explanation: "The turso db branch command is the newest way to create a branch from an existing database. The older turso db create --from-db also works." },
     { type: "quick_pick", id: 7, dimension: "extensibility", scenario: "Which function performs cosine similarity search on vectors in Turso?", blank: "vector_distance_cos", options: ["cosine_search", "similarity_match", "vector_distance_cos"], explanation: "vector_distance_cos is the built-in function for cosine distance calculations on vector columns in Turso." },
+    // Round 4: Speed Round (ids: 8)
     { type: "speed_pick", id: 8, dimension: "automation", prompt: "Tap every official Turso SDK language!", correctItems: ["TypeScript / JS", "Rust", "Go", "Python"], wrongItems: ["Haskell", "Erlang", "COBOL", "Fortran"], timeLimit: 12, explanation: "Turso provides official SDKs for TypeScript/JS, Rust, Go, Python, plus Android (Kotlin), Swift, PHP, and Ruby." },
+    // Round 5: Odd One Out (ids: 9, 10)
     { type: "odd_one_out", id: 9, dimension: "orchestration", prompt: "Which is NOT a Turso Cloud feature?", items: ["Embedded Replicas", "Database Branching", "Point-in-Time Recovery", "Automatic Schema Migration"], oddItem: "Automatic Schema Migration", explanation: "Turso Cloud offers embedded replicas, branching, and PITR. Schema migrations must be handled manually or with external tools." },
-    { type: "odd_one_out", id: 10, dimension: "memory", prompt: "Which encryption cipher is NOT supported by Turso's BYOK encryption?", items: ["AES-GCM", "ChaCha20-Poly1305", "AEGIS", "RSA-OAEP"], oddItem: "RSA-OAEP", explanation: "Turso BYOK encryption supports AES-GCM, ChaCha20-Poly1305, and AEGIS ciphers. RSA-OAEP is not a supported cipher." },
+    { type: "odd_one_out", id: 10, dimension: "memory", prompt: "Turso adds many features over SQLite. Pick the one that is NOT one of them.", items: ["Concurrent Writes", "User Defined Types", "File-level Encryption", "Columnar Storage Format"], oddItem: "User Defined Types", explanation: "Turso adds concurrent writes (via MVCC), file-level encryption, and a columnar storage format over SQLite. User Defined Types are not a Turso feature." },
   ],
   rounds: [
-    { name: "Truth or Myth", icon: "?", ids: [1, 2, 3], tagline: "Real feature or total BS?" },
+    { name: "Truth or Myth", icon: "?", ids: [1, 2, 3, 11, 12], tagline: "Real feature or total BS?" },
     { name: "This or That", icon: "vs", ids: [4, 5], tagline: "Pick the smarter move" },
     { name: "Quick Pick", icon: ">>", ids: [6, 7], tagline: "Name that command" },
     { name: "Speed Round", icon: "::", ids: [8], tagline: "Tap fast, think faster" },
-    { name: "Odd One Out", icon: "//", ids: [9], tagline: "Spot the fake" },
-    { name: "Final Boss", icon: "*", ids: [10], tagline: "One shot. Expert level." },
+    { name: "Odd One Out", icon: "//", ids: [9, 10], tagline: "Spot the fake" },
   ],
 };
