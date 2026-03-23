@@ -757,7 +757,7 @@ function ResultContent({ config }: { config: QuizConfig }) {
             Share on X
           </a>
           <a
-            href={`https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(`${shareMessage}\n\n${siteUrl}`)}`}
+            href={`https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(`${shareMessage}\n\nPlay it here: ${siteUrl}`)}`}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => { track(`${prefix}_share_linkedin`, { score: result.overallScore }); }}
