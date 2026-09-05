@@ -100,7 +100,7 @@ const CHART = {
   lavender: "#A78BFA",
 };
 
-const LOGIN_EMAIL = "demo@howwellyouknow.com";
+const LOGIN_EMAIL = "rushalee@howwellyouknow.com";
 const LOGIN_PASSWORD = "3956";
 const STORAGE_KEY = "hwyk_airtablee_analytics_auth";
 
@@ -385,7 +385,7 @@ export default function AirtableeAnalyticsExperience() {
             <form className="space-y-4" onSubmit={handleLogin}>
               <div>
                 <label className="mb-1.5 block text-sm font-medium" style={{ color: T.textSec }}>Email</label>
-                <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="demo@howwellyouknow.com" className="w-full rounded-lg border bg-white px-4 py-3 text-sm outline-none transition-colors focus:border-[#635BFF]" style={{ borderColor: T.border, color: T.text }} />
+                <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="rushalee@howwellyouknow.com" className="w-full rounded-lg border bg-white px-4 py-3 text-sm outline-none transition-colors focus:border-[#635BFF]" style={{ borderColor: T.border, color: T.text }} />
               </div>
               <div>
                 <label className="mb-1.5 block text-sm font-medium" style={{ color: T.textSec }}>Password</label>
