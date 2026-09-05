@@ -104,10 +104,10 @@ export default function Footer() {
               </svg>
             </a>
             <a
-              href="https://www.linkedin.com/company/how-well-you-know"
+              href="https://www.linkedin.com/in/rushalee/"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="How Well You Know on LinkedIn"
+              aria-label="Rushalee on LinkedIn"
               className="transition-opacity hover:opacity-70"
               style={{ color: "var(--m-text-tertiary)" }}
             >
