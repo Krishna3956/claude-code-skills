@@ -87,7 +87,7 @@ export default function PrivacyPage() {
           <p>
             We retain your email address and associated data for as long as you have an
             active relationship with us. You can request deletion of your data at any time
-            by emailing hello@howwellyouknow.com.
+            by emailing rushalee@howwellyouknow.com.
           </p>
 
           <h2 className="text-lg font-semibold" style={{ color: "var(--m-text)" }}>
@@ -99,7 +99,7 @@ export default function PrivacyPage() {
             <li>Request deletion of your data</li>
             <li>Opt out of marketing communications at any time</li>
           </ul>
-          <p>To exercise any of these rights, email hello@howwellyouknow.com.</p>
+          <p>To exercise any of these rights, email rushalee@howwellyouknow.com.</p>
 
           <h2 className="text-lg font-semibold" style={{ color: "var(--m-text)" }}>
             6. Cookies
@@ -139,7 +139,7 @@ export default function PrivacyPage() {
             10. Contact Us
           </h2>
           <p>
-            If you have questions about this Privacy Policy: hello@howwellyouknow.com
+            If you have questions about this Privacy Policy: rushalee@howwellyouknow.com
           </p>
         </div>
       </div>

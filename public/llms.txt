@@ -36,4 +36,4 @@ How Well You Know converts product knowledge into interactive challenges with 6 
 - Enterprise: Custom pricing, SSO, API access, dedicated support
 
 ## Contact
-Email: hello@howwellyouknow.com
+Email: rushalee@howwellyouknow.com

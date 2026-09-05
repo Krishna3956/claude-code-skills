@@ -152,8 +152,8 @@ export default function ContactPage() {
                   {
                     icon: Mail,
                     title: "Email us",
-                    desc: "hello@howwellyouknow.com",
-                    href: "mailto:hello@howwellyouknow.com",
+                    desc: "rushalee@howwellyouknow.com",
+                    href: "mailto:rushalee@howwellyouknow.com",
                   },
                   {
                     icon: Clock,

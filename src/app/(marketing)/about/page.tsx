@@ -102,8 +102,18 @@ export default function AboutPage() {
               style={{ color: "var(--m-text-secondary)" }}
             >
               <p>
-                How Well You Know started with an experiment. We built an interactive challenge about
-                Claude Code and posted it in a developer community.{" "}
+                I&apos;m{" "}
+                <a
+                  href="https://www.linkedin.com/in/rushalee/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold underline underline-offset-2"
+                  style={{ color: "var(--m-accent)" }}
+                >
+                  Rushalee Das
+                </a>
+                . I started How Well You Know as an experiment. We built an interactive
+                challenge about Claude Code and posted it in a developer community.{" "}
                 <strong style={{ color: "var(--m-text)" }}>6,000+ people played it in the first week.</strong>
               </p>
               <p>

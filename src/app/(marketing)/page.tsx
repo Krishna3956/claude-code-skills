@@ -473,7 +473,7 @@ export default function HomePage() {
               "Turn your product docs into 3-minute interactive challenges. Your customers learn your product. You see what they don't understand.",
             contactPoint: {
               "@type": "ContactPoint",
-              email: "hello@howwellyouknow.com",
+              email: "rushalee@howwellyouknow.com",
               contactType: "customer support",
             },
             sameAs: [],

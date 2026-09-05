@@ -93,7 +93,7 @@ export default function Footer() {
 
           <div className="flex items-center gap-4">
             <a
-              href="mailto:hello@howwellyouknow.com"
+              href="mailto:rushalee@howwellyouknow.com"
               aria-label="Email How Well You Know"
               className="transition-opacity hover:opacity-70"
               style={{ color: "var(--m-text-tertiary)" }}

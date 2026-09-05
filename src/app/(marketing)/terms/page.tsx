@@ -79,7 +79,7 @@ export default function TermsPage() {
           <p>These Terms shall be governed by and construed in accordance with the laws of the State of California, United States, without regard to its conflict of law provisions.</p>
 
           <h2 className="text-lg font-semibold" style={{ color: "var(--m-text)" }}>13. Contact</h2>
-          <p>If you have questions about these Terms: hello@howwellyouknow.com</p>
+          <p>If you have questions about these Terms: rushalee@howwellyouknow.com</p>
         </div>
       </div>
     </section>

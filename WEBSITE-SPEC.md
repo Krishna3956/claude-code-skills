@@ -923,7 +923,7 @@ Heading: We're building the fastest way to teach product knowledge
 
 ### Body Copy
 
-How Well You Know started with an experiment. We built an interactive challenge about Claude Code and posted it in a developer community. 380 people played it in the first week.
+[Rushalee Das](https://www.linkedin.com/in/rushalee/) started How Well You Know as an experiment. We built an interactive challenge about Claude Code and posted it in a developer community. 6,000+ people played it in the first week.
 
 Not a huge number. But think about what it means: people voluntarily spent 3 minutes learning about a developer tool through a game. Nobody made them. They chose to. Compare that to the average docs page, where only 12% of readers make it to the end.
 
@@ -938,7 +938,7 @@ We're building this for customer success teams, DevRel teams, and anyone who's t
 ### The Founder
 
 ```
-Krishna Goyal
+Rushalee Das
 Builder. Previously created TrackMCP (trackmcp.com), the world's largest MCP
 marketplace with 14,800+ tools indexed. Obsessed with making complex products
 easier to learn. Based in the Bay Area.
@@ -978,7 +978,7 @@ We read every message and reply within 24 hours.
 ### Left Column
 
 ```
-Email: hello@howwellyouknow.com
+Email: rushalee@howwellyouknow.com
 Twitter/X: @howwellyouknow
 LinkedIn: /company/howwellyouknow
 ```
@@ -1054,7 +1054,7 @@ third parties for marketing purposes.
 
 We retain your email address and associated data for as long as you have an
 active relationship with us. You can request deletion of your data at any time
-by emailing hello@howwellyouknow.com.
+by emailing rushalee@howwellyouknow.com.
 
 5. Your Rights
 
@@ -1064,7 +1064,7 @@ You have the right to:
 - Request deletion of your data
 - Opt out of marketing communications at any time
 
-To exercise any of these rights, email hello@howwellyouknow.com.
+To exercise any of these rights, email rushalee@howwellyouknow.com.
 
 6. Cookies
 
@@ -1097,7 +1097,7 @@ posting the new policy on this page and updating the "Last updated" date.
 10. Contact Us
 
 If you have questions about this Privacy Policy:
-Email: hello@howwellyouknow.com
+Email: rushalee@howwellyouknow.com
 ```
 
 ---
@@ -1224,7 +1224,7 @@ of law provisions.
 13. Contact
 
 If you have questions about these Terms:
-Email: hello@howwellyouknow.com
+Email: rushalee@howwellyouknow.com
 ```
 
 ---
