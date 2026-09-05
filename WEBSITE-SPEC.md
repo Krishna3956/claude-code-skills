@@ -923,7 +923,7 @@ Heading: We're building the fastest way to teach product knowledge
 
 ### Body Copy
 
-[Rushalee Das](https://www.linkedin.com/in/rushalee/) started How Well You Know as an experiment. We built an interactive challenge about Claude Code and posted it in a developer community. 6,000+ people played it in the first week.
+[Rushalee Das](https://www.linkedin.com/in/rushalee/) started How Well You Know as an experiment. We built an interactive challenge about Claude Code and posted it in a developer community. 6,000+ game plays in week 1.
 
 Not a huge number. But think about what it means: people voluntarily spent 3 minutes learning about a developer tool through a game. Nobody made them. They chose to. Compare that to the average docs page, where only 12% of readers make it to the end.
 

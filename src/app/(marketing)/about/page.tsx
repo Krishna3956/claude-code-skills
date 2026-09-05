@@ -5,26 +5,26 @@ import FadeIn from "@/components/marketing/FadeIn";
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "We're building the fastest way to teach product knowledge. 25+ interactive challenges, 6,000+ players in week one, and a 54% average completion rate.",
+    "We're building the fastest way to teach product knowledge. 25+ interactive challenges, 6,000+ game plays in week 1, and a 54% average completion rate.",
   alternates: {
     canonical: "https://www.howwellyouknow.com/about",
   },
   openGraph: {
     title: "About How Well You Know",
     description:
-      "We're building the fastest way to teach product knowledge. 25+ interactive challenges, 6,000+ players in week one, and a 54% average completion rate.",
+      "We're building the fastest way to teach product knowledge. 25+ interactive challenges, 6,000+ game plays in week 1, and a 54% average completion rate.",
     url: "https://www.howwellyouknow.com/about",
   },
   twitter: {
     title: "About How Well You Know",
     description:
-      "We're building the fastest way to teach product knowledge. 25+ interactive challenges, 6,000+ players, 54% completion rate.",
+      "We're building the fastest way to teach product knowledge. 25+ interactive challenges, 6,000+ game plays in week 1, 54% completion rate.",
   },
 };
 
 const MILESTONES = [
   { metric: "25+", label: "Challenges live" },
-  { metric: "6,000+", label: "Players in week one" },
+  { metric: "6,000+", label: "Game plays in week 1" },
   { metric: "54%", label: "Average completion rate" },
   { metric: "3 min", label: "Average play time" },
 ];
@@ -114,7 +114,7 @@ export default function AboutPage() {
                 </a>
                 . I started How Well You Know as an experiment. We built an interactive
                 challenge about Claude Code and posted it in a developer community.{" "}
-                <strong style={{ color: "var(--m-text)" }}>6,000+ people played it in the first week.</strong>
+                <strong style={{ color: "var(--m-text)" }}>6,000+ game plays in week 1.</strong>
               </p>
               <p>
                 Not a huge number. But think about what it means: people voluntarily spent 3 minutes learning
@@ -161,7 +161,7 @@ export default function AboutPage() {
             "@type": "AboutPage",
             name: "About How Well You Know",
             description:
-              "We're building the fastest way to teach product knowledge. 25+ interactive challenges, 6,000+ players, 54% completion rate.",
+              "We're building the fastest way to teach product knowledge. 25+ interactive challenges, 6,000+ game plays in week 1, 54% completion rate.",
             url: "https://www.howwellyouknow.com/about",
             mainEntity: {
               "@type": "Organization",

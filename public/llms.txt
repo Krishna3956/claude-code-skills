@@ -25,7 +25,7 @@ How Well You Know converts product knowledge into interactive challenges with 6 
 
 ## Stats
 - 25+ interactive challenges live
-- 6,000+ players in week one
+- 6,000+ game plays in week 1
 - 73% average completion rate
 - ~3 minute average play time
 
