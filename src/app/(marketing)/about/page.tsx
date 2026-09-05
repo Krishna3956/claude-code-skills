@@ -5,27 +5,27 @@ import FadeIn from "@/components/marketing/FadeIn";
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "We're building the fastest way to teach product knowledge. 25+ interactive challenges, 6,000+ players in week one, and a 73% average completion rate.",
+    "We're building the fastest way to teach product knowledge. 25+ interactive challenges, 6,000+ players in week one, and a 54% average completion rate.",
   alternates: {
     canonical: "https://www.howwellyouknow.com/about",
   },
   openGraph: {
     title: "About How Well You Know",
     description:
-      "We're building the fastest way to teach product knowledge. 25+ interactive challenges, 6,000+ players in week one, and a 73% average completion rate.",
+      "We're building the fastest way to teach product knowledge. 25+ interactive challenges, 6,000+ players in week one, and a 54% average completion rate.",
     url: "https://www.howwellyouknow.com/about",
   },
   twitter: {
     title: "About How Well You Know",
     description:
-      "We're building the fastest way to teach product knowledge. 25+ interactive challenges, 6,000+ players, 73% completion rate.",
+      "We're building the fastest way to teach product knowledge. 25+ interactive challenges, 6,000+ players, 54% completion rate.",
   },
 };
 
 const MILESTONES = [
   { metric: "25+", label: "Challenges live" },
   { metric: "6,000+", label: "Players in week one" },
-  { metric: "73%", label: "Average completion rate" },
+  { metric: "54%", label: "Average completion rate" },
   { metric: "3 min", label: "Average play time" },
 ];
 
@@ -151,7 +151,7 @@ export default function AboutPage() {
             "@type": "AboutPage",
             name: "About How Well You Know",
             description:
-              "We're building the fastest way to teach product knowledge. 25+ interactive challenges, 6,000+ players, 73% completion rate.",
+              "We're building the fastest way to teach product knowledge. 25+ interactive challenges, 6,000+ players, 54% completion rate.",
             url: "https://www.howwellyouknow.com/about",
             mainEntity: {
               "@type": "Organization",
