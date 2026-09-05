@@ -5,20 +5,20 @@ import FadeIn from "@/components/marketing/FadeIn";
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "We're building the fastest way to teach product knowledge. 25+ interactive challenges, 6,000+ game plays in week 1, and a 54% average completion rate.",
+    "I'm building the fastest way to teach product knowledge. 25+ interactive challenges, 6,000+ game plays in week 1, and a 54% average completion rate.",
   alternates: {
     canonical: "https://www.howwellyouknow.com/about",
   },
   openGraph: {
     title: "About How Well You Know",
     description:
-      "We're building the fastest way to teach product knowledge. 25+ interactive challenges, 6,000+ game plays in week 1, and a 54% average completion rate.",
+      "I'm building the fastest way to teach product knowledge. 25+ interactive challenges, 6,000+ game plays in week 1, and a 54% average completion rate.",
     url: "https://www.howwellyouknow.com/about",
   },
   twitter: {
     title: "About How Well You Know",
     description:
-      "We're building the fastest way to teach product knowledge. 25+ interactive challenges, 6,000+ game plays in week 1, 54% completion rate.",
+      "I'm building the fastest way to teach product knowledge. 25+ interactive challenges, 6,000+ game plays in week 1, 54% completion rate.",
   },
 };
 
@@ -52,7 +52,7 @@ export default function AboutPage() {
               className="mb-5 text-center text-2xl font-bold leading-tight sm:text-3xl md:text-[2.75rem] md:leading-[1.15]"
               style={{ color: "var(--m-text)" }}
             >
-              We&apos;re building the fastest way to{" "}
+              I&apos;m building the fastest way to{" "}
               <span style={{ color: "var(--m-accent)" }}>teach product knowledge</span>
             </h1>
             <p
@@ -60,7 +60,7 @@ export default function AboutPage() {
               style={{ color: "var(--m-text-secondary)" }}
             >
               Your users don&apos;t read docs. They skim, close the tab, and churn.
-              We turn documentation into 3-minute interactive challenges that actually stick.
+              I turn documentation into 3-minute interactive challenges that actually stick.
             </p>
           </FadeIn>
         </div>
@@ -102,7 +102,7 @@ export default function AboutPage() {
               style={{ color: "var(--m-text-secondary)" }}
             >
               <p>
-                I&apos;m{" "}
+                Hey, I&apos;m{" "}
                 <a
                   href="https://www.linkedin.com/in/rushalee/"
                   target="_blank"
@@ -110,9 +110,9 @@ export default function AboutPage() {
                   className="font-semibold underline underline-offset-2"
                   style={{ color: "var(--m-accent)" }}
                 >
-                  Rushalee Das
+                  Rushalee
                 </a>
-                . I started How Well You Know as an experiment. We built an interactive
+                . I started How Well You Know as an experiment. I built an interactive
                 challenge about Claude Code and posted it in a developer community.{" "}
                 <strong style={{ color: "var(--m-text)" }}>6,000+ game plays in week 1.</strong>
               </p>
@@ -122,7 +122,7 @@ export default function AboutPage() {
                 average docs page, where only 12% of readers make it to the end.
               </p>
               <p>
-                That gap is what we&apos;re building for. B2B software companies spend months writing documentation
+                That gap is what I&apos;m building for. B2B software companies spend months writing documentation
                 that nobody finishes. Enterprise LMS platforms cost $10,000+ per year and take
                 months to deploy. On the other end, there&apos;s nothing. Just docs, videos, and webinars.
               </p>
@@ -137,12 +137,12 @@ export default function AboutPage() {
                 </p>
               </div>
               <p>
-                Since that first experiment, we&apos;ve built 25+ interactive challenges covering tools like ChatGPT,
-                Figma, Notion, Cursor, Slack, Docker, and more. We&apos;re now opening the platform so any B2B SaaS
+                Since that first experiment, I&apos;ve built 25+ interactive challenges covering tools like ChatGPT,
+                Figma, Notion, Cursor, Slack, Docker, and more. I&apos;m now opening the platform so any B2B SaaS
                 team can create challenges for their own product.
               </p>
               <p>
-                We&apos;re building this for customer success teams, DevRel teams, and anyone who&apos;s tired of hearing
+                I&apos;m building this for customer success teams, DevRel teams, and anyone who&apos;s tired of hearing
                 &quot;I didn&apos;t know your product could do that&quot; from users who&apos;ve been paying for months.
               </p>
             </div>
@@ -161,7 +161,7 @@ export default function AboutPage() {
             "@type": "AboutPage",
             name: "About How Well You Know",
             description:
-              "We're building the fastest way to teach product knowledge. 25+ interactive challenges, 6,000+ game plays in week 1, 54% completion rate.",
+              "I'm building the fastest way to teach product knowledge. 25+ interactive challenges, 6,000+ game plays in week 1, 54% completion rate.",
             url: "https://www.howwellyouknow.com/about",
             mainEntity: {
               "@type": "Organization",

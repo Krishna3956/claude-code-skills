@@ -11,6 +11,7 @@ export default function CTASection({
   id?: string;
   source: string;
 }) {
+  const isAbout = source === "about";
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -84,7 +85,11 @@ export default function CTASection({
             You&apos;re in.
           </h2>
           <p className="text-base" style={{ color: "var(--m-text-secondary)" }}>
-            We&apos;ll reach out within 24 hours with next steps. Check your inbox.
+            {isAbout ? (
+              <>I&apos;ll reach out within 24 hours with next steps. Check your inbox.</>
+            ) : (
+              <>We&apos;ll reach out within 24 hours with next steps. Check your inbox.</>
+            )}
           </p>
         </div>
       </section>
@@ -122,8 +127,17 @@ export default function CTASection({
           className="mb-8 text-base leading-relaxed"
           style={{ color: "var(--m-text-secondary)" }}
         >
-          We&apos;re opening up early access to a small group of teams.
-          Drop your email and we&apos;ll reach out when your spot is ready.
+          {isAbout ? (
+            <>
+              I&apos;m opening up early access to a small group of teams.
+              Drop your email and I&apos;ll reach out when your spot is ready.
+            </>
+          ) : (
+            <>
+              We&apos;re opening up early access to a small group of teams.
+              Drop your email and we&apos;ll reach out when your spot is ready.
+            </>
+          )}
         </p>
 
         <form
@@ -168,7 +182,11 @@ export default function CTASection({
           className="mt-4 text-xs"
           style={{ color: "var(--m-text-tertiary)" }}
         >
-          No spam. We&apos;ll only reach out if it&apos;s a fit.
+          {isAbout ? (
+            <>No spam. I&apos;ll only reach out if it&apos;s a fit.</>
+          ) : (
+            <>No spam. We&apos;ll only reach out if it&apos;s a fit.</>
+          )}
         </p>
       </div>
     </section>

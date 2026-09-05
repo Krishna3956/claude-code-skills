@@ -918,27 +918,27 @@ Contact us about Enterprise pricing. We'll build a custom plan for teams that ne
 ### Hero
 
 ```
-Heading: We're building the fastest way to teach product knowledge
+Heading: I'm building the fastest way to teach product knowledge
 ```
 
 ### Body Copy
 
-[Rushalee Das](https://www.linkedin.com/in/rushalee/) started How Well You Know as an experiment. We built an interactive challenge about Claude Code and posted it in a developer community. 6,000+ game plays in week 1.
+[Rushalee](https://www.linkedin.com/in/rushalee/) started How Well You Know as an experiment. I built an interactive challenge about Claude Code and posted it in a developer community. 6,000+ game plays in week 1.
 
 Not a huge number. But think about what it means: people voluntarily spent 3 minutes learning about a developer tool through a game. Nobody made them. They chose to. Compare that to the average docs page, where only 12% of readers make it to the end.
 
-That gap is what we're building for. B2B software companies spend months writing documentation that nobody finishes. Enterprise education tools like Skilljar cost $10,000+ per year and take months to deploy. On the other end, there's nothing. Just docs, videos, and webinars.
+That gap is what I'm building for. B2B software companies spend months writing documentation that nobody finishes. Enterprise education tools like Skilljar cost $10,000+ per year and take months to deploy. On the other end, there's nothing. Just docs, videos, and webinars.
 
-We fill that gap. Paste a docs URL, get an interactive challenge in minutes. Your users learn through 5 different question formats across 6 rounds. They get a shareable scorecard. You get data on exactly which features they understand and which they don't.
+I fill that gap. Paste a docs URL, get an interactive challenge in minutes. Your users learn through 5 different question formats across 6 rounds. They get a shareable scorecard. You get data on exactly which features they understand and which they don't.
 
-Since that first experiment, we've built 25 interactive challenges covering tools like ChatGPT, Figma, Notion, Cursor, Slack, Docker, and more. We're now opening the platform so any B2B SaaS team can create challenges for their own product.
+Since that first experiment, I've built 25 interactive challenges covering tools like ChatGPT, Figma, Notion, Cursor, Slack, Docker, and more. I'm now opening the platform so any B2B SaaS team can create challenges for their own product.
 
-We're building this for customer success teams, DevRel teams, and anyone who's tired of hearing "I didn't know your product could do that" from users who've been paying for months.
+I'm building this for customer success teams, DevRel teams, and anyone who's tired of hearing "I didn't know your product could do that" from users who've been paying for months.
 
 ### The Founder
 
 ```
-Rushalee Das
+Rushalee
 Builder. Previously created TrackMCP (trackmcp.com), the world's largest MCP
 marketplace with 14,800+ tools indexed. Obsessed with making complex products
 easier to learn. Based in the Bay Area.
@@ -949,7 +949,7 @@ easier to learn. Based in the Bay Area.
 ### CTA
 
 ```
-We're looking for 10 founding design partners to shape the product.
+I'm looking for 10 founding design partners to shape the product.
 You'll get early access, 50% off for life, and a direct line to the founder.
 [Get Early Access]
 ```
